@@ -91,7 +91,7 @@ iframe {
     position: relative;
     background: transparent;
     left: -1px;
-    width: calc(100% - 3px);
+    width: calc(100% - 2px);
     height: 700px;
     display: block;
     border: 1px solid #e0e0e7;
@@ -122,7 +122,7 @@ iframe {
     align-items: center;
     justify-content: flex-end;
     border-right: 1px solid #e0e0e7;
-    margin-right: 2px;
+    margin-right: 1px;
 }
 
 
