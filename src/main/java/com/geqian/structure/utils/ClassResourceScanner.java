@@ -9,10 +9,11 @@ import org.springframework.util.SystemPropertyUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class ClassResourceScanner {
@@ -130,10 +131,13 @@ public class ClassResourceScanner {
         private void loadClass(Resource resource) {
             if (resource != null) {
                 try {
-                    String classpath = Objects.requireNonNull(this.getClass().getResource("/")).getPath();
-                    String path = resource.getURL().getPath().substring(classpath.length()).replace("/", ".");
-                    String fullClassName = path.substring(0, path.length() - 6);
-                    this.type = Class.forName(fullClassName);
+                    URL url = this.getClass().getResource("/");
+                    if (url != null) {
+                        String classpath = URLDecoder.decode(url.getPath(), "UTF-8");
+                        String path = resource.getURL().getPath().substring(classpath.length()).replace("/", ".");
+                        String fullClassName = path.substring(0, path.length() - 6);
+                        this.type = Class.forName(fullClassName);
+                    }
                 } catch (Exception ignore) {
                 }
             }
