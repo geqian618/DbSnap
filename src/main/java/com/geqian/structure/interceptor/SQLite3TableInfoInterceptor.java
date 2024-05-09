@@ -26,12 +26,6 @@ public class SQLite3TableInfoInterceptor implements ResultSetInterceptor<SQLite3
     @Override
     public List<SQLite3TableStructure> intercept(ResultSet resultSet) throws Exception {
         List<SQLite3TableStructure> structures = new ArrayList<>();
-        int columnCount = resultSet.getMetaData().getColumnCount();
-
-        for (int index = 0; index < columnCount; index++) {
-            String label = resultSet.getMetaData().getColumnLabel(index + 1);
-            System.out.println(label);
-        }
         while (resultSet.next()) {
             SQLite3TableStructure structure = new SQLite3TableStructure();
             String columnName = resultSet.getString("name");
