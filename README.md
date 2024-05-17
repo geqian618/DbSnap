@@ -1,22 +1,23 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">TableStructureGenerator</h1>
 
+![SpringBoot 2.4.2](https://img.shields.io/badge/SpringBoot-2.4.2-blue)
+![Vue 2](https://img.shields.io/badge/vue-2-blue)
+![element ui](https://img.shields.io/badge/elementui--blue)
 ![MySQL 8](https://img.shields.io/badge/MySQL-8-blue)
 ![Oracle 11g](https://img.shields.io/badge/Oracle-11g-blue)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL--blue)
 ![Sql Server](https://img.shields.io/badge/SqlServer-2017-blue)
-![DB2](https://img.shields.io/badge/DB2-blue)
-![MariaDB](https://img.shields.io/badge/MariaDB-blue)
+![DB2](https://img.shields.io/badge/DB2--blue)
+![MariaDB](https://img.shields.io/badge/MariaDB--blue)
 ![Clickhouse](https://img.shields.io/badge/Clickhouse-8-blue)
 ![达梦](https://img.shields.io/badge/达梦-8-blue)
-![TIDB](https://img.shields.io/badge/TIDB-blue)
+![TIDB](https://img.shields.io/badge/TIDB--blue)
 ![SQLite 3](https://img.shields.io/badge/SQLite-3-blue)
-![Derby](https://img.shields.io/badge/Derby-blue)
-![H2](https://img.shields.io/badge/H2-blue.svg)
+![Derby](https://img.shields.io/badge/Derby--blue)
+![H2](https://img.shields.io/badge/H2--blue)
 
 ## 简介
 一个简单易用且高效的数据库表结构文档生成工具，让编写数据库表结构文档变得简单
-
-<br>
 <br>
 
 ## 开发缘由
