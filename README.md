@@ -1,5 +1,5 @@
-# 数据库表结构文档生成工具
-
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">TableStructureGenerator</h1>
+[MySQL 8](https://img.shields.io/badge/MySQL-8-blue.svg)
 ## 开发缘由
 
 在工作中编写开发文档时，通常会涉及到数据库表结构这个部分。最开始使用各类文档编辑软件新建表格，然后逐个复制和粘贴内容，屏幕来回切换到头昏眼花，CV操作到手抽筋，不注意还可能看错数据或填写表格时填错数据。之前也有尝试过编码+修改配置文件的方式，但是在更改数据库连接信息、导出哪些表及列信息时需要手动修改配置文件，使用起来并不是很方便。于是就萌生了开发该项目的想法，以简化数据库文档的编写。
@@ -117,6 +117,17 @@
 
 <br>
 <br>
+
+## Docker安装
+拉取镜像
+```shell
+docker pull geqian/table-structure-generator:v2.0
+```
+启动容器
+```shell
+docker run --name table-structure-generator -d -p 8888:8888 geqian/table-structure-generator:v2.0
+```
+
 
 ## 赞赏
 <img src="src/main/resources/static/images/appreciation-code.jpg" alt="赞赏码" height="270">
