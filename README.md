@@ -1,5 +1,5 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">TableStructureGenerator</h1>
-[MySQL 8](https://img.shields.io/badge/MySQL-8-blue.svg)
+![MySQL 8](https://img.shields.io/badge/MySQL-8-blue.svg)
 
 ## 开发缘由
 
