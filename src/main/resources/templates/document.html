@@ -16,7 +16,7 @@
 
     <script src="/js/axios.min.js"></script>
 
-    <link rel="stylesheet" href="/css/generator.css">
+    <link rel="stylesheet" href="/css/document.css">
 </head>
 <body>
 <div id="app">
@@ -57,10 +57,17 @@
                     <div class="action-items">
                         <el-button @click="dialogVisible = true" type="text">选择列名</el-button>
                         <el-button @click="preview" type="text">预览文档</el-button>
-                        <el-button @click="downloadWord" type="text">下载word文档</el-button>
-                        <el-button @click="downloadPdf" type="text">下载pdf文档</el-button>
-                        <el-button @click="downloadMarkdown" type="text">下载markdown文档</el-button>
-                        <el-button @click="downloadHtml" type="text">下载HTML文档</el-button>
+                        <el-dropdown class="" @command="download" trigger="click">
+                          <span class="el-dropdown-link">下载文档<i
+                                  class="el-icon-arrow-down el-icon--right"></i>
+                          </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item command="1">Word</el-dropdown-item>
+                                <el-dropdown-item command="2">PDF</el-dropdown-item>
+                                <el-dropdown-item command="3">Markdown</el-dropdown-item>
+                                <el-dropdown-item command="4">HTML</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
                     </div>
                     <iframe id="iframe" :src="pdf"></iframe>
                     <div id="overIframeDiv">
@@ -217,6 +224,22 @@
                     this.showMessage("error", err.message)
                     this.loading = false
                 });
+            },
+            download(cmd) {
+                switch (cmd) {
+                    case "1":
+                        this.downloadWord();
+                        break;
+                    case "2":
+                        this.downloadPdf();
+                        break;
+                    case "3":
+                        this.downloadMarkdown();
+                        break;
+                    case "4":
+                        this.downloadHtml();
+                        break;
+                }
             },
             downloadWord() {
                 if (this.getCheckedNodes().length === 0) {

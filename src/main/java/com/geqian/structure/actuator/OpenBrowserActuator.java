@@ -19,7 +19,7 @@ import java.net.UnknownHostException;
  * @author Administrator
  */
 @Component
-@ConditionalOnProperty(prefix = "spring.application.start.openBrowser", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "spring.application.start.open-browser", name = "enable", havingValue = "true")
 public class OpenBrowserActuator implements ApplicationListener<ContextRefreshedEvent> {
 
     private final Logger log = LoggerFactory.getLogger(OpenBrowserActuator.class);

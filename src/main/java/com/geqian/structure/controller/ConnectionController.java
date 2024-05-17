@@ -28,9 +28,9 @@ public class ConnectionController {
     }
 
 
-    @GetMapping("/generator")
+    @GetMapping("/document")
     public String generator() {
-        return "generator";
+        return "document";
     }
 
     @ResponseBody

@@ -318,7 +318,7 @@
                     if (res.data.code === 200) {
                         this.showMessage('success', res.data.message)
                         setTimeout(() => {
-                            window.location.href = '/generator';
+                            window.location.href = '/document';
                         }, 500)
                     } else {
                         this.showMessage('error', res.data.message)
