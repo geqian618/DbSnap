@@ -57,7 +57,7 @@
                     <div class="action-items">
                         <el-button @click="dialogVisible = true" type="text">选择列名</el-button>
                         <el-button @click="preview" type="text">预览文档</el-button>
-                        <el-dropdown class="" @command="download" trigger="click">
+                        <el-dropdown class="unselectable" @command="download" trigger="click">
                           <span class="el-dropdown-link">下载文档<i
                                   class="el-icon-arrow-down el-icon--right"></i>
                           </span>

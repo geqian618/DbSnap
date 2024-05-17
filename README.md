@@ -1,8 +1,8 @@
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">TableStructureGenerator</h1>
 
 ![SpringBoot 2.4.2](https://img.shields.io/badge/SpringBoot-2.4.2-blue)
-![Vue 2](https://img.shields.io/badge/vue-2-blue)
-![element ui](https://img.shields.io/badge/elementui--blue)
+![Vue 2](https://img.shields.io/badge/VUE-2-blue)
+![element ui](https://img.shields.io/badge/ElementUI--blue)
 ![MySQL 8](https://img.shields.io/badge/MySQL-8-blue)
 ![Oracle 11g](https://img.shields.io/badge/Oracle-11g-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL--blue)
