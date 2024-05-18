@@ -155,6 +155,14 @@ docker run --name table-structure-generator -d -p 8888:8888 geqian/table-structu
 <br>
 <br>
 
+## 常见问题
+**tableStructureGenerator.exe 启动失败，可能原因**
+- ① 端口冲突：tableStructureGenerator.exe 所在目录下创建文件 tableStructureGenerator.exe.vmoptions, 添加如下配置并更改端口号
+  ```shell
+  -Dserver.port=8888
+  ```
+- ② 默认使用 win64 位操作系统环境，不兼容 win32 位操作系统环境（后续考略兼容）
+
 
 ## 参考说明
 
