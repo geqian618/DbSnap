@@ -9,7 +9,7 @@
 ![Sql Server](https://img.shields.io/badge/SqlServer-2017-blue)
 ![DB2](https://img.shields.io/badge/DB2--blue)
 ![MariaDB](https://img.shields.io/badge/MariaDB--blue)
-![Clickhouse](https://img.shields.io/badge/Clickhouse-8-blue)
+![Clickhouse](https://img.shields.io/badge/Clickhouse--blue)
 ![达梦](https://img.shields.io/badge/达梦-8-blue)
 ![TIDB](https://img.shields.io/badge/TIDB--blue)
 ![SQLite 3](https://img.shields.io/badge/SQLite-3-blue)
