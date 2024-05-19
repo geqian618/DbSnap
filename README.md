@@ -139,14 +139,7 @@
 <br>
 
 ## Docker安装
-拉取镜像
-```shell
-docker pull geqian/table-structure-generator:v2.0
-```
-启动容器
-```shell
-docker run --name table-structure-generator -d -p 8888:8888 geqian/table-structure-generator:v2.0
-```
+
 
 
 ## 赞赏
