@@ -128,15 +128,8 @@
 > 项目启成功后自动打开浏览器进行访问
 
 <br>
-
-## windows下载
-
-链接：https://pan.baidu.com/s/1XgEMOwAxNGvFjt46v1-Aow
-提取码：ywap
-> 由于安装包内置 JDK 环境，体积有点大，无法上传到 Gitee
-
 <br>
-<br>
+
 
 ## Docker安装
 <br>
