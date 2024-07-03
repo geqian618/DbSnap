@@ -9,4 +9,5 @@ public class TableStructureGeneratorApplication {
     public static void main(String[] args){
         SpringApplication.run(TableStructureGeneratorApplication.class, args);
     }
+
 }

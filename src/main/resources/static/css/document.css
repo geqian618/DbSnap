@@ -108,15 +108,24 @@ iframe {
 }
 
 
-.action-items .el-button, svg, .el-dropdown {
+.action-items .el-button, .el-dropdown {
     padding: 0;
     margin: 0;
     margin-right: 15px;
-
 }
+
 
 .action-items .el-dropdown span {
     color: #409EFF
+}
+
+.el-dropdown-menu__item {
+    display: flex;
+    align-items: center;
+}
+
+.el-dropdown-menu__item svg {
+    margin-right: 5px;
 }
 
 .el-dropdown span:hover {
