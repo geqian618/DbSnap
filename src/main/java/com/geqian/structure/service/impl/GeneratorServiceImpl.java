@@ -6,7 +6,7 @@ import com.geqian.document4j.html.HTMLStyle;
 import com.geqian.document4j.md.MarkDownBuilder;
 import com.geqian.document4j.md.MarkDownStyle;
 import com.geqian.document4j.pdf.PDFBuilder;
-import com.geqian.document4j.pdf.PdfStyle;
+import com.geqian.document4j.pdf.PDFStyle;
 import com.geqian.document4j.word.WordBuilder;
 import com.geqian.document4j.word.WordStyle;
 import com.geqian.structure.bo.LabelAndValue;
@@ -191,7 +191,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 String schemaName = schemaNode.getLabelName();
 
-                wordBuilder.addParagraph("数据库名称 " + schemaName, calibri, bold, titleFontSize);
+                wordBuilder.paragraph("数据库名称 " + schemaName, calibri, bold, titleFontSize);
 
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -220,11 +220,11 @@ public class GeneratorServiceImpl implements GeneratorService {
                 for (Future<TableInfo> future : futureList) {
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-                    wordBuilder.addParagraph(!StringUtils.hasText(tableDefinition.getTableComment())
+                    wordBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
                             ? tableDefinition.getTableName()
                             : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(), calibri, tableNameFontSize);
-                    wordBuilder.addTable(tableInfo.getDataList(), calibri, cellFontSize);
-                    wordBuilder.addCarriageReturn().addCarriageReturn();
+                    wordBuilder.table(tableInfo.getDataList(), calibri, cellFontSize);
+                    wordBuilder.blankRow().blankRow();
                 }
             }
         }
@@ -246,22 +246,22 @@ public class GeneratorServiceImpl implements GeneratorService {
             //过滤出全部 Schema节点
             List<TreeNode> schemaNodes = targetTableDto.getDataList().stream().filter(TreeNode::isSchemaNode).collect(Collectors.toList());
 
-            PdfStyle.Font bold = PdfStyle.Font.BOLD;
+            PDFStyle.Font bold = PDFStyle.Font.BOLD;
 
-            PdfStyle.Font titleFontSize = PdfStyle.Font.fontSize(20);
+            PDFStyle.Font titleFontSize = PDFStyle.Font.fontSize(20);
 
-            PdfStyle.Font tableNameFontSize = PdfStyle.Font.fontSize(15);
+            PDFStyle.Font tableNameFontSize = PDFStyle.Font.fontSize(15);
 
-            PdfStyle.Font cellFontSize = PdfStyle.Font.fontSize(10);
+            PDFStyle.Font cellFontSize = PDFStyle.Font.fontSize(10);
 
-            PdfStyle.Paragraph paragraphSpacing = PdfStyle.Paragraph.paragraphSpacing(1.3f);
+            PDFStyle.Paragraph paragraphSpacing = PDFStyle.Paragraph.paragraphSpacing(1.3f);
 
 
             for (TreeNode schemaNode : schemaNodes) {
 
                 String schemaName = schemaNode.getLabelName();
 
-                pdfBuilder.addParagraph("数据库名称 " + schemaName, bold, titleFontSize);
+                pdfBuilder.paragraph("数据库名称 " + schemaName, bold, titleFontSize);
 
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -289,12 +289,11 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
 
-                    pdfBuilder.addParagraph(!StringUtils.hasText(tableDefinition.getTableComment())
+                    pdfBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
                             ? tableDefinition.getTableName()
                             : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(), tableNameFontSize, paragraphSpacing);
-                    pdfBuilder.addTable(tableInfo.getDataList(), cellFontSize);
-                    pdfBuilder.addCarriageReturn();
-                    pdfBuilder.addCarriageReturn();
+                    pdfBuilder.table(tableInfo.getDataList(), cellFontSize);
+                    pdfBuilder.blankRow().blankRow();
                 }
             }
         }
@@ -309,6 +308,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         MarkDownBuilder markDownBuilder = MarkDownBuilder.create();
 
+        MarkDownStyle.Font fontSize = MarkDownStyle.Font.fontSize(19);
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -346,11 +346,12 @@ public class GeneratorServiceImpl implements GeneratorService {
                 }
 
                 for (Future<TableInfo> future : futureList) {
+
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-                    markDownBuilder.text(!StringUtils.hasText(tableDefinition.getTableComment())
+                    markDownBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
                             ? tableDefinition.getTableName()
-                            : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(),4, MarkDownStyle.Font.BOLD);
+                            : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(),fontSize, MarkDownStyle.Font.BOLD);
                     markDownBuilder.table(tableInfo.getDataList(), MarkDownStyle.CellAlignment.LEFT);
                     markDownBuilder.blankRow();
                 }
@@ -373,7 +374,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         HTMLStyle.Font bold = HTMLStyle.Font.BOLD;
         HTMLStyle.Font schemaNameFontSize = HTMLStyle.Font.fontsize("25px");
         HTMLStyle.Font tableNameFontSize = HTMLStyle.Font.fontsize("20px");
-        HTMLStyle.Common paddingBottom = HTMLStyle.Common.paddingBottom("15px");
+        HTMLStyle.Padding paddingBottom = HTMLStyle.Padding.bottom("15px");
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -386,7 +387,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 String schemaName = schemaNode.getLabelName();
 
-                htmlBuilder.addParagraph("数据库名称 " + schemaName, bold, schemaNameFontSize, paddingBottom);
+                htmlBuilder.paragraph("数据库名称 " + schemaName, bold, schemaNameFontSize, paddingBottom);
 
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -413,12 +414,11 @@ public class GeneratorServiceImpl implements GeneratorService {
                 for (Future<TableInfo> future : futureList) {
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-                    htmlBuilder.addParagraph(!StringUtils.hasText(tableDefinition.getTableComment())
+                    htmlBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
                             ? tableDefinition.getTableName()
                             : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(), bold, tableNameFontSize, paddingBottom);
-                    htmlBuilder.addTable(tableInfo.getDataList());
-                    htmlBuilder.blankRow();
-                    htmlBuilder.blankRow();
+                    htmlBuilder.table(tableInfo.getDataList());
+                    htmlBuilder.blankRow().blankRow();
                 }
                 htmlBuilder.blankRow();
                 htmlBuilder.blankRow();
