@@ -66,57 +66,59 @@
 - H2（内嵌式）
 - SQLite3（内嵌式）
 
-> 导出数据通过 SQL 查询的方式获取，本人技术水平有限，对许多数据库并不熟悉，绝大部分 SQL
-> 语句都是通过网络搜索获取的。如果导出的数据存在错误或不符合预期，望海涵，可以积极提出反馈哦。
-
 <br>
 
-## 支持文档类型
 
+## 支持文档类型
+  
 - Word
 - PDF
 - Markdown
 - HTML
 
 <br>
-<br>
 
 ## 项目演示
 
-**1. 数据库连接**
+**1. 创建数据库连接**
+![image-20230719021014570](src/main/resources/static/images/创建数据库连接.png)
+<br>
+<br>
 
-![image-20230719021014570](src/main/resources/static/images/数据库连接.png)
+**2. 连接数据库**
+![image-20230719021014570](src/main/resources/static/images/连接数据库.png)
+<br>
+<br>
 
-**2. 文档预览**
+**3. 文档预览**
 ![image-20230719021014570](src/main/resources/static/images/文档预览.png)
 <br>
 <br>
 
-**3. 选择导出列名**
-
+**4. 选择导出列名**
 ![image-20230719013433699](src/main/resources/static/images/选择列名.png)  
 <br>
 <br>
 
-**4. 下载pdf文档**
+**5. 下载pdf文档（示例）**
 
 ![image-20230719013337074](src/main/resources/static/images/pdf文档.png)
 <br>
 <br>
 
-**5. 下载word文档**
+**6. 下载word文档（示例）**
 
 ![image-20230719013403179](src/main/resources/static/images/word文档.png)  
 <br>
 <br>
 
-**6. 下载markdown文档**
+**7. 下载markdown文档（示例）**
 
 ![image-20230719013403179](src/main/resources/static/images/markdown文档.png)  
 <br>
 <br>
 
-**7. 下载HTML文档**
+**8. 下载HTML文档（示例）**
 
 ![image-20230719013403179](src/main/resources/static/images/html文档.png)  
 <br>
