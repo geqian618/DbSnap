@@ -124,6 +124,15 @@
 <br>
 <br>
 
+
+## windows下载
+```shell
+链接：https://pan.baidu.com/s/1PKHjclAsCJ5PnsV7JHRloA 
+提取码：w3xc
+```
+<br>
+<br>
+
 ## 使用说明
 
 **默认访问地址：http://localhost:8888/**
