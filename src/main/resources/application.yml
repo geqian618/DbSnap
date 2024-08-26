@@ -139,17 +139,24 @@ database:
         LEFT JOIN ${0}.sys.extended_properties AS ep 
         ON ep.major_id = t.object_id AND ep.minor_id = 0 AND ep.class = 1 AND ep.name = 'MS_Description'
 
-
       tableStructure: >
-        SELECT col.name AS columnName, tp.name AS columnType, col.max_length AS length,
-               CASE WHEN col.default_object_id IS NOT NULL THEN def.definition ELSE NULL END AS columnDefault,
-               CASE WHEN col.is_nullable = 1 THEN 'YES' ELSE 'NO' END AS isNullable,
-               ep.[value] AS columnComment
-        FROM ${0}.sys.columns col
-        INNER JOIN ${0}.sys.types tp ON col.user_type_id = tp.user_type_id
-        LEFT JOIN ${0}.sys.default_constraints def ON col.default_object_id = def.object_id
-        LEFT JOIN ${0}.sys.extended_properties ep ON ep.major_id = col.object_id AND ep.minor_id = 0 AND ep.class = 1 AND ep.name = 'MS_Description'
-        INNER JOIN ${0}.sys.tables tbl ON col.object_id = tbl.object_id
+        SELECT 
+            col.name AS columnName, 
+            tp.name AS columnType, 
+            col.max_length AS length,
+            def.definition AS columnDefault,
+            CASE WHEN col.is_nullable = 1 THEN 'YES' ELSE 'NO' END AS isNullable,
+            ep.[value] AS columnComment
+        FROM 
+            ${0}.sys.columns col
+        INNER JOIN 
+            ${0}.sys.types tp ON col.user_type_id = tp.user_type_id
+        LEFT JOIN 
+            ${0}.sys.default_constraints def ON col.default_object_id = def.object_id
+        LEFT JOIN 
+            ${0}.sys.extended_properties ep ON ep.major_id = col.object_id AND ep.minor_id = col.column_id AND ep.class = 1 AND ep.name = 'MS_Description'
+        INNER JOIN 
+            ${0}.sys.tables tbl ON col.object_id = tbl.object_id
         WHERE tbl.name = #{1};
 
     #########################################  clickhouse 数据库 #############################################
