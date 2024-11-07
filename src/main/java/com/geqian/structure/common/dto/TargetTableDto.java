@@ -1,5 +1,6 @@
 package com.geqian.structure.common.dto;
 
+import com.geqian.structure.bo.Formats;
 import com.geqian.structure.entity.TreeNode;
 import lombok.Data;
 
@@ -16,4 +17,6 @@ public class TargetTableDto {
     private List<String> defaultColumns;
 
     private List<TreeNode> dataList;
+
+    private Formats formats;
 }

@@ -161,3 +161,17 @@ iframe {
     -ms-user-select: none; /* IE 10+ */
     user-select: none; /* Standard syntax */
 }
+
+.el-form-item {
+    width: 380px;
+    margin-bottom: 10px;
+}
+
+.el-form-item .el-input {
+    width: 250px
+}
+
+
+.el-form-item .el-slider {
+    width: 200px
+}

@@ -9,6 +9,7 @@ import com.geqian.document4j.pdf.PDFBuilder;
 import com.geqian.document4j.pdf.PDFStyle;
 import com.geqian.document4j.word.WordBuilder;
 import com.geqian.document4j.word.WordStyle;
+import com.geqian.structure.bo.Formats;
 import com.geqian.structure.bo.LabelAndValue;
 import com.geqian.structure.bo.TableInfo;
 import com.geqian.structure.common.ResponseResult;
@@ -181,18 +182,24 @@ public class GeneratorServiceImpl implements GeneratorService {
             //过滤出全部 Schema节点
             List<TreeNode> schemaNodes = targetTableDto.getDataList().stream().filter(TreeNode::isSchemaNode).collect(Collectors.toList());
 
+            Formats formats = targetTableDto.getFormats();
+            String databaseFormat = formats.getDatabase().getFormat();
+            int databaseFontSize = formats.getDatabase().getFontSize();
+            Boolean databaseBold = formats.getDatabase().getBold();
+            String tableFormat = formats.getTable().getFormat();
+            int tableFontSize = formats.getTable().getFontSize();
+            Boolean tableBold = formats.getTable().getBold();
             WordStyle.Font calibri = WordStyle.Font.fontFamily("Calibri");
-            WordStyle.Font bold = WordStyle.Font.BOLD;
-            WordStyle.Font titleFontSize = WordStyle.Font.fontSize(20);
-            WordStyle.Font tableNameFontSize = WordStyle.Font.fontSize(15);
+            WordStyle.Font titleFontSize = WordStyle.Font.fontSize(databaseFontSize);
+            WordStyle.Font tableNameFontSize = WordStyle.Font.fontSize(tableFontSize);
             WordStyle.Font cellFontSize = WordStyle.Font.fontSize(10);
 
             for (TreeNode schemaNode : schemaNodes) {
-
                 String schemaName = schemaNode.getLabelName();
-
-                wordBuilder.paragraph("数据库名称 " + schemaName, calibri, bold, titleFontSize);
-
+                if (StringUtils.hasText(databaseFormat)) {
+                    String databaseName = databaseFormat.replace("${databaseName}", schemaName);
+                    wordBuilder.paragraph(databaseName, calibri, databaseBold ? WordStyle.Font.BOLD : null, titleFontSize);
+                }
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
                         .filter(data -> !data.isSchemaNode() && Objects.equals(data.getParentNodeId(), schemaNode.getNodeId()))
@@ -220,9 +227,10 @@ public class GeneratorServiceImpl implements GeneratorService {
                 for (Future<TableInfo> future : futureList) {
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-                    wordBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
-                            ? tableDefinition.getTableName()
-                            : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(), calibri, tableNameFontSize);
+                    if (StringUtils.hasText(tableFormat)) {
+                        String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
+                        wordBuilder.paragraph(tableName, calibri, tableBold ? WordStyle.Font.BOLD : null, tableNameFontSize);
+                    }
                     wordBuilder.table(tableInfo.getDataList(), calibri, cellFontSize);
                     wordBuilder.blankRow().blankRow();
                 }
@@ -246,11 +254,17 @@ public class GeneratorServiceImpl implements GeneratorService {
             //过滤出全部 Schema节点
             List<TreeNode> schemaNodes = targetTableDto.getDataList().stream().filter(TreeNode::isSchemaNode).collect(Collectors.toList());
 
-            PDFStyle.Font bold = PDFStyle.Font.BOLD;
+            Formats formats = targetTableDto.getFormats();
+            String databaseFormat = formats.getDatabase().getFormat();
+            int databaseFontSize = formats.getDatabase().getFontSize();
+            Boolean databaseBold = formats.getDatabase().getBold();
+            String tableFormat = formats.getTable().getFormat();
+            int tableFontSize = formats.getTable().getFontSize();
+            Boolean tableBold = formats.getTable().getBold();
 
-            PDFStyle.Font titleFontSize = PDFStyle.Font.fontSize(20);
+            PDFStyle.Font titleFontSize = PDFStyle.Font.fontSize(databaseFontSize);
 
-            PDFStyle.Font tableNameFontSize = PDFStyle.Font.fontSize(15);
+            PDFStyle.Font tableNameFontSize = PDFStyle.Font.fontSize(tableFontSize);
 
             PDFStyle.Font cellFontSize = PDFStyle.Font.fontSize(10);
 
@@ -261,7 +275,10 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 String schemaName = schemaNode.getLabelName();
 
-                pdfBuilder.paragraph("数据库名称 " + schemaName, bold, titleFontSize);
+                if (StringUtils.hasText(databaseFormat)) {
+                    String databaseName = databaseFormat.replace("${databaseName}", schemaName);
+                    pdfBuilder.paragraph(databaseName, databaseBold ? PDFStyle.Font.BOLD : null, titleFontSize);
+                }
 
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -288,10 +305,10 @@ public class GeneratorServiceImpl implements GeneratorService {
                 for (Future<TableInfo> future : futureList) {
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-
-                    pdfBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
-                            ? tableDefinition.getTableName()
-                            : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(), tableNameFontSize, paragraphSpacing);
+                    if (StringUtils.hasText(tableFormat)) {
+                        String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
+                        pdfBuilder.paragraph(tableName, tableBold ? PDFStyle.Font.BOLD : null, tableNameFontSize, paragraphSpacing);
+                    }
                     pdfBuilder.table(tableInfo.getDataList(), cellFontSize);
                     pdfBuilder.blankRow().blankRow();
                 }
@@ -304,11 +321,20 @@ public class GeneratorServiceImpl implements GeneratorService {
     @SneakyThrows(Exception.class)
     public byte[] buildMdDocument(TargetTableDto targetTableDto) {
 
+        Formats formats = targetTableDto.getFormats();
+        String databaseFormat = formats.getDatabase().getFormat();
+        int databaseFontSize = formats.getDatabase().getFontSize();
+        Boolean databaseBold = formats.getDatabase().getBold();
+        String tableFormat = formats.getTable().getFormat();
+        int tableFontSize = formats.getTable().getFontSize();
+        Boolean tableBold = formats.getTable().getBold();
+
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
         MarkDownBuilder markDownBuilder = MarkDownBuilder.create();
 
-        MarkDownStyle.Font fontSize = MarkDownStyle.Font.fontSize(19);
+        MarkDownStyle.Font databaseNameFontSize = MarkDownStyle.Font.fontSize(databaseFontSize);
+        MarkDownStyle.Font tableNameFontSize = MarkDownStyle.Font.fontSize(tableFontSize);
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -321,7 +347,10 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 String schemaName = schemaNode.getLabelName();
 
-                markDownBuilder.title("数据库名称 " + schemaName, MarkDownStyle.Title.THIRD);
+                if (StringUtils.hasText(databaseFormat)) {
+                    String databaseName = databaseFormat.replace("${databaseName}", schemaName);
+                    markDownBuilder.title(databaseName, MarkDownStyle.Title.THIRD, databaseBold ? MarkDownStyle.Font.BOLD : null, databaseNameFontSize);
+                }
 
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -349,9 +378,10 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-                    markDownBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
-                            ? tableDefinition.getTableName()
-                            : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(),fontSize, MarkDownStyle.Font.BOLD);
+                    if (StringUtils.hasText(tableFormat)) {
+                        String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
+                        markDownBuilder.paragraph(tableName, tableBold ? MarkDownStyle.Font.BOLD : null, tableNameFontSize);
+                    }
                     markDownBuilder.table(tableInfo.getDataList(), MarkDownStyle.CellAlignment.LEFT);
                     markDownBuilder.blankRow();
                 }
@@ -371,11 +401,17 @@ public class GeneratorServiceImpl implements GeneratorService {
         HTMLBuilder htmlBuilder = HTMLBuilder.create("2%", "2%", "20%", "20%");
         htmlBuilder.setInnerCssStyle("table{font-size:12px}");
 
-        HTMLStyle.Font bold = HTMLStyle.Font.BOLD;
-        HTMLStyle.Font schemaNameFontSize = HTMLStyle.Font.fontsize("25px");
-        HTMLStyle.Font tableNameFontSize = HTMLStyle.Font.fontsize("20px");
-        HTMLStyle.Padding paddingBottom = HTMLStyle.Padding.bottom("15px");
+        Formats formats = targetTableDto.getFormats();
+        String databaseFormat = formats.getDatabase().getFormat();
+        int databaseFontSize = formats.getDatabase().getFontSize();
+        Boolean databaseBold = formats.getDatabase().getBold();
+        String tableFormat = formats.getTable().getFormat();
+        int tableFontSize = formats.getTable().getFontSize();
+        Boolean tableBold = formats.getTable().getBold();
 
+        HTMLStyle.Font schemaNameFontSize = HTMLStyle.Font.fontsize(databaseFontSize + "px");
+        HTMLStyle.Font tableNameFontSize = HTMLStyle.Font.fontsize(tableFontSize + "px");
+        HTMLStyle.Padding paddingBottom = HTMLStyle.Padding.bottom("15px");
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
         if (!CollectionUtils.isEmpty(treeNodeList)) {
@@ -387,7 +423,10 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 String schemaName = schemaNode.getLabelName();
 
-                htmlBuilder.paragraph("数据库名称 " + schemaName, bold, schemaNameFontSize, paddingBottom);
+                if (StringUtils.hasText(databaseFormat)) {
+                    String databaseName = databaseFormat.replace("${databaseName}", schemaName);
+                    htmlBuilder.paragraph(databaseName, HTMLStyle.Title.THIRD, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, paddingBottom);
+                }
 
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -414,9 +453,10 @@ public class GeneratorServiceImpl implements GeneratorService {
                 for (Future<TableInfo> future : futureList) {
                     TableInfo tableInfo = future.get();
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
-                    htmlBuilder.paragraph(!StringUtils.hasText(tableDefinition.getTableComment())
-                            ? tableDefinition.getTableName()
-                            : tableDefinition.getTableName() + "  " + tableDefinition.getTableComment(), bold, tableNameFontSize, paddingBottom);
+                    if (StringUtils.hasText(tableFormat)) {
+                        String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
+                        htmlBuilder.paragraph(tableName, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, paddingBottom);
+                    }
                     htmlBuilder.table(tableInfo.getDataList());
                     htmlBuilder.blankRow().blankRow();
                 }
