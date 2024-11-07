@@ -425,7 +425,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    htmlBuilder.paragraph(databaseName, HTMLStyle.Title.THIRD, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, paddingBottom);
+                    htmlBuilder.paragraph(databaseName, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, paddingBottom);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
