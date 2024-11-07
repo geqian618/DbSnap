@@ -66,12 +66,14 @@ public class GeneratorServiceImpl implements GeneratorService {
         preview(targetTableDto, response);
     }
 
+
     @SneakyThrows(Exception.class)
     @Override
     public void preview(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] pdfBytes = buildPdfDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = "表结构文档_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".pdf";
+            String filename = targetTableDto.getFormats().getFileName();
+            filename = new SimpleDateFormat(filename).format(new Date()) + ".pdf";
             //byte[] pdfBytes = WordToPdfUtils.word2007ToPdf(wordBytes);
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
@@ -86,7 +88,8 @@ public class GeneratorServiceImpl implements GeneratorService {
     public void downloadWord(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] wordBytes = buildWordDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = "表结构文档_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".docx";
+            String filename = targetTableDto.getFormats().getFileName();
+            filename = new SimpleDateFormat(filename).format(new Date()) + ".docx";
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
@@ -100,7 +103,8 @@ public class GeneratorServiceImpl implements GeneratorService {
     public void downloadHtml(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] htmlBytes = buildHtmlDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = "表结构文档_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".html";
+            String filename = targetTableDto.getFormats().getFileName();
+            filename = new SimpleDateFormat(filename).format(new Date()) + ".html";
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
@@ -114,9 +118,10 @@ public class GeneratorServiceImpl implements GeneratorService {
     @SneakyThrows(Exception.class)
     @Override
     public void downloadMarkdown(TargetTableDto targetTableDto, HttpServletResponse response) {
+        byte[] mdBytes = buildMdDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            byte[] mdBytes = buildMdDocument(targetTableDto);
-            String filename = "表结构文档_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".md";
+            String filename = targetTableDto.getFormats().getFileName();
+            filename = new SimpleDateFormat(filename).format(new Date()) + ".md";
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
