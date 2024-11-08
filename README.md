@@ -137,15 +137,6 @@
 <br>
 <br>
 
-## windows下载
-
-```shell
-链接：https://pan.baidu.com/s/1PKHjclAsCJ5PnsV7JHRloA 
-提取码：w3xc
-```
-
-<br>
-<br>
 
 ## 自定义数据库类型
 
@@ -304,8 +295,16 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 <br>
 <br>
 
-## 常见问题
+## windows下载
 
+```shell
+链接：https://pan.baidu.com/s/1PKHjclAsCJ5PnsV7JHRloA 
+提取码：w3xc
+```
+<br>
+<br>
+
+## 常见问题
 **① tableStructureGenerator.exe 启动失败，可能原因**
 
 - 端口冲突：tableStructureGenerator.exe 所在目录下创建文件 tableStructureGenerator.exe.vmoptions, 添加如下配置并更改端口号
