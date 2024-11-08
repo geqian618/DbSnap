@@ -148,12 +148,24 @@
 
 
 ### 编码
-#### 1. 配置数据源及查询SQL语句
+
+#### 1.配置 JDBC 驱动依赖
+以 MySQL 为例
+```pom
+      <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
+      </dependency>
+```
+<br>
+
+#### 2.配置数据源及查询SQL语句
 在 `application.yml` 文件中配置数据源及相关SQL语句，如下以 MySQL 数据库为例
 ```yaml
 database:
   info:
-    # 作为定义 TableStructure 类的前缀（最好直接设置为数据库类型），mysql数据库定义为 MySQLTableStructure（步骤三类命名使用）
+    # 作为定义 TableStructure 类的前缀（最好直接设置为数据库类型），mysql数据库定义为 MySQLTableStructure（步骤四类命名使用）
     mysql:
       driverClass: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://${ip}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
@@ -180,11 +192,11 @@ database:
 - `url: jdbc:mysql://${ip}:${port}/${database}` 中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
 - #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值 
 - 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
-- <span style="color:red">特殊情况：某些查询SQL语句不支持起别名，请查看步骤4</sapn>
+- <span style="color:red">特殊情况：某些查询SQL语句不支持起别名，请查看步骤五</sapn>
 
 <br>
 
-#### 2. 定义表结构实体类
+#### 3.定义表结构实体类
 在 entity目录下创建 TableStructure 类，以 MySQL 为例
 ```java
 @Data
@@ -202,7 +214,7 @@ public class MySQLTableStructure extends TableStructure {
 }
 ```
 **说明：**
-- 自定义 TableStructure 类命名格式必须为 xxxTableStructure，其中 xxx 部分需与步骤一中 database.info 后面的 key （示例中的 mysql）的命名相相同，不区分大小写。例如 MySQL 数据库命名为 MySQLTableStructure 其中的 MySQL 前缀对应步骤一中的 mysql
+- 自定义 TableStructure 类命名格式必须为 xxxTableStructure，其中 xxx 部分需与步骤二中 database.info 后面的 key （示例中的 mysql）的命名相相同，不区分大小写。例如 MySQL 数据库命名为 MySQLTableStructure 其中的 MySQL 前缀对应步骤二中的 mysql
 - MySQLTableStructure 继承 TableStructure，TableStructure 默认包含了一些属性
 - MySQLTableStructure 中定义的属性为各类数据库表结构特有字段，可自定义所需属性
 - @TableField 中 value 表示表格标题，order 表示输出顺序，exclude 表示是否输出该列数据。enums 表示值映射，例如 0->NO 表示当属性的值为 0 时，将被替换为 NO 输出到表格中
@@ -237,7 +249,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 <br>
 
-#### 3. 配置前端数据
+#### 4.配置前端数据
 在 database-config.json 文件下配置前端数据，示例如下
 ```json
 [
@@ -280,7 +292,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 <br>
 
 
-#### 4. SQL不支持起别名情况
+#### 5.SQL不支持起别名情况
 创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
 ```java
 @Component
