@@ -139,10 +139,12 @@
 
 
 ## 自定义数据库类型
-
 ### 时序图
 ![image-20230719013403179](src/main/resources/static/images/时序图.png)
 > 说明：以 MySQL 数据库为示例
+
+<br>
+<br>
 
 
 ### 编码
