@@ -90,7 +90,7 @@
 <br>
 <br>
 
-**3. 格式编辑**
+**3. 输出格式编辑**
 ![image-20230719021014570](src/main/resources/static/images/格式编辑.png)
 
 - ① ${databaseName} 数据库名称
