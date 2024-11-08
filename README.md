@@ -142,6 +142,8 @@
 
 ### 时序图
 ![image-20230719013403179](src/main/resources/static/images/时序图.png)
+> 说明：以 MySQL 数据库为示例
+
 
 ### 编码
 #### 1. 配置数据源及查询SQL语句
