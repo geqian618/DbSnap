@@ -278,6 +278,40 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 <br>
 
+
+#### <span style="color:red">SQL不支持起别名情况</sapn>
+创建 ResultSetInterceptor 查询结果拦截器，并将其注入 Spring 容器
+```java
+@Component
+public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
+  /**
+   * 是否执行查询结果拦截
+   * @param productName 数据库产品名称
+   * @param sql 执行查询结果的 sql（未进行处理，与 application.yml中的一致，用于判断哪些SQL语句不能起别名，需拦截进行结果映射到实体对象）
+   * @return
+   */
+    @Override
+    public boolean support(String productName, String sql) {
+        //true 拦截, false 不拦截
+        return false;
+    }
+
+  /**
+   * 拦截查询结果
+   * @param resultSet jdbc原生查询结果集
+   * @return
+   * @throws Exception
+   */
+    @Override
+    public List<TableStructure> intercept(ResultSet resultSet) throws Exception {
+        // 返回封装后实体对象集合
+        return null;
+    }
+}
+```
+<br>
+
+
 ## 使用说明
 
 **默认访问地址：http://localhost:8888/**
