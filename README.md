@@ -149,7 +149,7 @@
 
 ### 编码
 
-#### 1.配置 JDBC 驱动依赖
+#### 1. 配置 JDBC 驱动依赖
 以 MySQL 为例
 ```pom
       <dependency>
@@ -160,7 +160,7 @@
 ```
 <br>
 
-#### 2.配置数据源及查询SQL语句
+#### 2. 配置数据源及查询SQL语句
 在 `application.yml` 文件中配置数据源及相关SQL语句，如下以 MySQL 数据库为例
 ```yaml
 database:
@@ -196,7 +196,7 @@ database:
 
 <br>
 
-#### 3.定义表结构实体类
+#### 3. 定义表结构实体类
 在 entity目录下创建 TableStructure 类，以 MySQL 为例
 ```java
 @Data
@@ -249,7 +249,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 <br>
 
-#### 4.配置前端数据
+#### 4. 配置前端数据
 在 database-config.json 文件下配置前端数据，示例如下
 ```json
 [
@@ -292,7 +292,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 <br>
 
 
-#### 5.SQL不支持起别名情况
+#### 5. SQL不支持起别名情况
 创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
 ```java
 @Component
