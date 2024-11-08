@@ -280,7 +280,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 
 #### <span style="color:red">SQL不支持起别名情况</sapn>
-创建 ResultSetInterceptor 查询结果拦截器，并将其注入 Spring 容器
+创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
 ```java
 @Component
 public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
@@ -309,6 +309,7 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
     }
 }
 ```
+<br>
 <br>
 
 
