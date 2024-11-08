@@ -181,10 +181,10 @@ database:
 ```
 
 **说明：**
-① `url: jdbc:mysql://${ip}:${port}/${database}`中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
-② #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值
-③ 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
-④ 上述SQL查询条件中的别名不能随意定义，需要与对应的 TableStructure 类中的属性名一致
+- `url: jdbc:mysql://${ip}:${port}/${database}`中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
+- #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值 
+- 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
+- 上述SQL查询条件中的别名不能随意定义，需要与对应的 TableStructure 类中的属性名一致
 
 <br>
 
@@ -207,10 +207,10 @@ public class MySQLTableStructure extends TableStructure {
 }
 ```
 **说明：**
-① 自定义 TableStructure 命名格式必须为 xxxTableStructure，其中 xxx 需与步骤一中 key 的命名相对应。例如 MySQL 命名为 MySQLTableStructure 其中的 MySQL 前缀对应步骤一的 mysql
-② MySQLTableStructure 继承 TableStructure，TableStructure 默认包含了一些属性
-③ MySQLTableStructure 中定义的属性为各类数据库表结构特有字段，可自定义所需属性
-④ @TableField 中 value 表示表格标题，order 表示输出顺序，exclude 表示是否输出该列数据。enums 表示值映射，例如 0->NO 表示当属性的值为 0 时，将被替换为 NO 输出到表格中
+- 自定义 TableStructure 命名格式必须为 xxxTableStructure，其中 xxx 需与步骤一中 key 的命名相对应。例如 MySQL 命名为 MySQLTableStructure 其中的 MySQL 前缀对应步骤一的 mysql
+- MySQLTableStructure 继承 TableStructure，TableStructure 默认包含了一些属性
+- MySQLTableStructure 中定义的属性为各类数据库表结构特有字段，可自定义所需属性
+- @TableField 中 value 表示表格标题，order 表示输出顺序，exclude 表示是否输出该列数据。enums 表示值映射，例如 0->NO 表示当属性的值为 0 时，将被替换为 NO 输出到表格中
 
 TableStructure 类结构如下
 ```java
