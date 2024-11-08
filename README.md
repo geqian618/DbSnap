@@ -160,18 +160,15 @@ database:
       url: jdbc:mysql://${ip}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
 
       # 查询所有数据库名称
-      databases: >
-        SELECT schema_name as labelName FROM information_schema.schemata
+      databases: SELECT schema_name as labelName FROM information_schema.schemata
 
       # 查询指定数据库下所有的表名称及表注释
-      tables: >
-        select table_name as labelName, table_comment as description
+      tables: select table_name as labelName, table_comment as description
         from information_schema.tables 
         where table_schema = #{0}
 
       # 查询指定指定数据库下指定的表字段信息
-      tableStructure: >
-        select column_name as columnName, data_type as columnType,
+      tableStructure: select column_name as columnName, data_type as columnType,
                column_comment as columnComment, is_nullable as isNullable,
                column_default as columnDefault, character_maximum_length as length,
                column_key as columnKey, extra as extra
