@@ -181,7 +181,7 @@ database:
 ```
 
 **说明：**
-- `url: jdbc:mysql://${ip}:${port}/${database}`中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
+- `url: jdbc:mysql://${ip}:${port}/${database}` 中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
 - #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值 
 - 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
 - 上述SQL查询条件中的别名不能随意定义，需要与对应的 TableStructure 类中的属性名一致
@@ -191,7 +191,6 @@ database:
 ### 2. 定义表结构实体类
 在 entity目录下创建 TableStructure 类，以 MySQL 为例
 ```java
-
 @Data
 public class MySQLTableStructure extends TableStructure {
 
