@@ -5,9 +5,14 @@ import com.geqian.structure.common.dto.ConnectionInfoDto;
 import com.geqian.structure.jdbc.DruidConnectionManager;
 import com.geqian.structure.service.ConnectionService;
 import com.geqian.structure.utils.ThrowableUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.derby.iapi.error.StandardException;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -38,4 +43,15 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
 
+    @Override
+    public ResponseResult<String> getDatabaseConfig() {
+        try {
+            ClassPathResource resource = new ClassPathResource("database-config.json");
+            File file = resource.getFile();
+            String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            return ResponseResult.success("success", content);
+        } catch (IOException e) {
+            return ResponseResult.success("success", "[]");
+        }
+    }
 }

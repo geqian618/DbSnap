@@ -44,5 +44,4 @@ public class MySQLTableStructure extends TableStructure {
         this.length = length;
     }
 
-
 }

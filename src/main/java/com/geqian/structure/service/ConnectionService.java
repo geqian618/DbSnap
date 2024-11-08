@@ -10,4 +10,7 @@ import com.geqian.structure.common.ResponseResult;
 public interface ConnectionService {
 
     ResponseResult<String> connection(ConnectionInfoDto dataSourceDto);
+
+    ResponseResult<String> getDatabaseConfig();
+
 }

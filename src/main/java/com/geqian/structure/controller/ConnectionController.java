@@ -33,6 +33,13 @@ public class ConnectionController {
         return "document";
     }
 
+
+    @ResponseBody
+    @GetMapping(value = "/database/config")
+    public ResponseResult<String> getDatabaseConfig() {
+        return connectionService.getDatabaseConfig();
+    }
+
     @ResponseBody
     @PostMapping(value = "/dataSource/connection")
     public ResponseResult<String> connection(@RequestBody ConnectionInfoDto dataSourceDto) {
