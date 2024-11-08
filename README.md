@@ -305,7 +305,7 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
    */
     @Override
     public List<TableStructure> intercept(ResultSet resultSet) throws Exception {
-        // 返回封装后实体对象集合
+        // 自行封装结果并返回实体对象集合
         return null;
     }
 }
