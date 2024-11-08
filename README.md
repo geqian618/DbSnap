@@ -284,14 +284,6 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 <br>
 
 ## Docker安装
-
-<br>
-<br>
-
-## 赞赏
-
-<img src="src/main/resources/static/images/appreciation-code.jpg" alt="赞赏码" height="270">
-
 <br>
 <br>
 
@@ -303,6 +295,12 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 ```
 <br>
 <br>
+
+## 赞赏
+<img src="src/main/resources/static/images/appreciation-code.jpg" alt="赞赏码" height="270">
+<br>
+<br>
+
 
 ## 常见问题
 **① tableStructureGenerator.exe 启动失败，可能原因**
