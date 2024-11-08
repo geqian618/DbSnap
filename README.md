@@ -149,8 +149,8 @@
 
 ## 自定义数据库类型
 
-### 1. 在 `application.yml` 文件中配置数据源及相关SQL语句，如下以 MySQL 数据库为例
-
+### 1. 配置数据源及查询SQL语句
+在 `application.yml` 文件中配置数据源及相关SQL语句，如下以 MySQL 数据库为例
 ```yaml
 database:
   info:
@@ -187,8 +187,10 @@ database:
 > ③ 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可<br>
 > ④ 上述SQL查询条件中的别名不能随意定义，需要与对应的 TableStructure 类中的属性名一致
 
-### 2. entity目录下创建 TableStructure 类，以 MySQL 为例
+<br>
 
+### 2. 定义表结构实体类
+在 entity目录下创建 TableStructure 类，以 MySQL 为例
 ```java
 
 @Data
@@ -215,7 +217,6 @@ public class MySQLTableStructure extends TableStructure {
 > 0 时，将被替换为 NO 输出到表格中
 
 TableStructure 类结构如下
-
 ```java
 
 @Data
@@ -243,8 +244,10 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 }
 ```
 
-### 4. 在 database-config.json 文件下配置前端数据，示例如下
+<br>
 
+### 3. 配置前端数据
+在 database-config.json 文件下配置前端数据，示例如下
 ```json
 [
   //非内嵌式数据库
@@ -283,6 +286,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 - usernameVisible: 隐藏用户名项
 - passwordVisible: 隐藏密码项
 
+<br>
 
 ## 使用说明
 
