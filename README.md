@@ -180,6 +180,7 @@ database:
 - `url: jdbc:mysql://${ip}:${port}/${database}` 中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
 - #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值 
 - 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
+- 特殊情况：某些查询SQL语句不支持起别名，请查看步骤4
 
 <br>
 
@@ -279,7 +280,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 <br>
 
 
-#### <span style="color:red">SQL不支持起别名情况</sapn>
+#### <span style="color:red">4. SQL不支持起别名情况</sapn>
 创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
 ```java
 @Component
