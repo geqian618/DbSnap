@@ -355,9 +355,9 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
 
 
 ## 常见问题
-**① tableStructureGenerator.exe 启动失败，可能原因**
+**① DbSnap.exe 启动失败，可能原因**
 
-- 端口冲突：tableStructureGenerator.exe 所在目录下创建文件 tableStructureGenerator.exe.vmoptions, 添加如下配置并更改端口号
+- 端口冲突：DbSnap.exe 所在目录下创建文件 DbSnap.exe.vmoptions, 添加如下配置并更改端口号
   ```shell
   -Dserver.port=8888
   ```
