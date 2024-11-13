@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * @author geqian
  * @date 3:13 2023/12/8
  */
-@PackageScan("com.geqian.structure.entity")
+@PackageScan("com.geqian.dbsnap.entity")
 public class TableStructureFactory {
 
     private static Map<String, Supplier<Class<? extends TableStructure>>> tableStructureMap;
