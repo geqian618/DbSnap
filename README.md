@@ -364,7 +364,3 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
 - 默认使用 win64 位操作系统环境，不兼容 win32 位操作系统环境（后续考虑兼容）
 <br>
 <br>
-
-
-## 参考说明
-数据库连接页面布局参考至：https://gitee.com/pomz/database-export
