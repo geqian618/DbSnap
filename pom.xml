@@ -8,11 +8,11 @@
         <version>2.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.geqian.structure</groupId>
-    <artifactId>table-structure-generator</artifactId>
+    <groupId>com.geqian.DbSnap</groupId>
+    <artifactId>DbSnap</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>table-structure-generator</name>
-    <description>table-structure-generator</description>
+    <name>DbSnap</name>
+    <description>DbSnap</description>
     <properties>
         <java.version>8</java.version>
     </properties>

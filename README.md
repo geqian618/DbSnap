@@ -1,4 +1,4 @@
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">TableStructureGenerator</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">DbSnap</h1>
 
 ![SpringBoot 2.4.2](https://img.shields.io/badge/SpringBoot-2.4.2-blue)
 ![Vue 2](https://img.shields.io/badge/VUE-2-blue)
