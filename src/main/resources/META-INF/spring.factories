@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.geqian.structure.processor.ConsoleLogCharsetProcessor
+  com.geqian.dbsnap.processor.ConsoleLogCharsetProcessor
