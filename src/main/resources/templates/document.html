@@ -179,7 +179,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
     <el-button size="small" @click="formatDialogVisible = false">取 消</el-button>
-    <el-button size="small" type="primary" @click="formatDialogVisible = false">确 定</el-button>
+    <el-button size="small" type="primary" @click="saveFormats">确 定</el-button>
   </span>
     </el-dialog>
 
@@ -543,10 +543,22 @@
                     document.removeEventListener("mouseup", stopDrag, false);
                 }
             },
+            saveFormats() {
+                let formatsJson = JSON.stringify(this.formats);
+                localStorage.setItem('DbSnap:format', formatsJson)
+                this.formatDialogVisible = false
+            },
+            initFormats() {
+                let formatsJson = localStorage.getItem('DbSnap:format');
+                if (localStorage.getItem('DbSnap:format')) {
+                    this.formats = JSON.parse(formatsJson)
+                }
+            }
         },
         mounted: function () {
             this.getTableColumns();
             this.initChangeBoxWidthEvent()
+            this.initFormats()
         }
     });
 </script>
