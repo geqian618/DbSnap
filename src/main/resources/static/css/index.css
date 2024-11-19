@@ -50,6 +50,7 @@
 .el-form-item {
     margin-left: 45px;
     width: 560px;
+    user-select: none
 }
 
 .unselectable {
