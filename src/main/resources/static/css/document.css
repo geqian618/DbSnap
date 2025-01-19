@@ -107,7 +107,6 @@ iframe {
     height: 100%;
 }
 
-
 .action-items .el-button, .el-dropdown {
     padding: 0;
     margin: 0;
@@ -116,7 +115,7 @@ iframe {
 
 
 .action-items .el-dropdown span {
-    color: #409EFF
+    color: #409EFF;
 }
 
 .el-dropdown-menu__item {
@@ -124,7 +123,7 @@ iframe {
     align-items: center;
 }
 
-.el-dropdown-menu__item svg {
+.el-dropdown-menu__item img {
     margin-right: 5px;
 }
 
@@ -151,8 +150,8 @@ iframe {
     align-items: center
 }
 
-.el-tree svg {
-    margin-right: 5px
+.el-tree img {
+    margin-right: 3px
 }
 
 .unselectable {

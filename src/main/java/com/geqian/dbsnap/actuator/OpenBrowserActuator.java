@@ -30,7 +30,7 @@ public class OpenBrowserActuator implements ApplicationListener<ContextRefreshed
     @Value("${server.servlet.context-path:}")
     private String contextPath;
 
-    @Value("${spring.application.start.openBrowser.access-url:}")
+    @Value("${spring.application.start.open-browser.access-url:}")
     private String accessUrl;
 
     @Override
