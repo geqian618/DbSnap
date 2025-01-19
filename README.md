@@ -260,7 +260,8 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
     "defaultPort": 3306,
     "label": "MySQL",
     "value": "mysql",
-    "icon": "<svg>...</svg>"
+    // 图标路径
+    "icon": ""
   },
   //内嵌式数据库
   {
@@ -272,7 +273,8 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
     "portVisible": false,
     "usernameVisible": false,
     "passwordVisible": false,
-    "icon": "<svg>...</svg>"
+    // 图标路径
+    "icon": ""
   }
 ]
 ```
