@@ -1,10 +1,10 @@
 :root {
     --nav-bar-height: 40px;
-    --aside-width: 300px;
-    --common-border: 2px solid #e0e0e7;
+    --aside-width: 280px;
+    --common-border: 1px solid #e0e0e7;
     --drag-bar-width: 10px;
-    --aside-min-width: 300px;
-    --content-min-width: 600px;
+    --aside-min-width: 280px;
+    --content-min-width: 0;
     --drag-bar-offsetLeft: calc(var(--aside-width) - var(--drag-bar-width) / 2);
 }
 
@@ -52,6 +52,8 @@
 
 .nav-bar .button-bar .el-button, .el-dropdown {
     margin-right: 10px;
+    color: #409EFF;
+    cursor: pointer;
 }
 
 .el-dropdown {
@@ -69,6 +71,10 @@
     border: var(--common-border);
     border-right: none;
     padding: 10px;
+    /* 水平方向超出隐藏 */
+    overflow-x: hidden;
+    /* 垂直方向超出显示滚动条 */
+    overflow-y: auto;
 }
 
 

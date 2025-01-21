@@ -450,7 +450,9 @@
 
                         // 设置值（保证拖动块一直在拖动盒子的相对位置）
                         aside.style.width = pointerOffset + "px";
-                        dragBar.style.left = (pointerOffset - dragBarWidth / 2) + "px";
+                        dragBar.style.left = (pointerOffset === maxWidth)
+                            ? pointerOffset + 'px'
+                            : (pointerOffset - dragBarWidth / 2) + "px";
                         content.style.left = pointerOffset + "px";
                         content.style.width = (container.clientWidth - pointerOffset) + 'px';
                         return false;
