@@ -1,5 +1,5 @@
 :root {
-    --nav-bar-height: 40px;
+    --nav-bar-height: 45px;
     --aside-width: 280px;
     --common-border: 1px solid #e0e0e7;
     --drag-bar-width: 10px;
@@ -54,6 +54,15 @@
     margin-right: 10px;
     color: #409EFF;
     cursor: pointer;
+}
+
+.el-dropdown-menu .el-dropdown-menu__item {
+    display: flex;
+    align-items: center;
+}
+
+.el-dropdown-menu .el-dropdown-menu__item span {
+    margin-left: 5px;
 }
 
 .el-dropdown {
