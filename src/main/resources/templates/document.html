@@ -13,129 +13,69 @@
     <link rel="stylesheet" href="/css/normalize.css">
     <!-- 引入组件库 -->
     <script src="/js/element.js"></script>
-
     <script src="/js/axios.min.js"></script>
-
     <link rel="stylesheet" href="/css/document.css">
 </head>
 <body>
 <div id="app">
-    <el-container v-loading="loading"
-                  element-loading-text="正在加载中..."
-                  element-loading-spinner="el-icon-loading"
-                  element-loading-background="rgba(0, 0, 0, 0.8)">
-        <el-aside width="300px" id="aside">
-            <div class="title">表结构文档生成工具</div>
-            <el-tree
-                    style="margin: 10px"
-                    ref="structureTree"
-                    :load="loadNode"
-                    @check-change="selectNode"
-                    lazy
-                    show-checkbox
-                    node-key="nodeId"
-                    :props="defaultProps">
-                <template v-slot="{ node, data }">
-                    <span>
-                        <img v-if="data.schemaNode" src="/icon/svg/database.svg" width="20" height="20" alt="">
-                        <img v-if="!data.schemaNode" src="/icon/svg/database-table.svg" width="20" height="20" alt="">
-                    {{ node.label }}
-                  </span>
-                </template>
-            </el-tree>
-        </el-aside>
-        <el-container id="container">
-            <div id="context">
-                <el-main>
-                    <div class="action-items">
-                        <el-button @click="formatDialogVisible = true" type="text">格式编辑</el-button>
-                        <el-button @click="fieldDialogVisible = true" type="text">选择列名</el-button>
-                        <el-button @click="preview" type="text">预览文档</el-button>
-                        <el-dropdown class="unselectable" @command="download" trigger="click">
-                            <span class="el-dropdown-link">下载文档<i
-                                    class="el-icon-arrow-down el-icon--right"></i></span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item command="1">
-                                    <img src="/icon/svg/word.svg" width="20" height="20" alt=""/>
-                                    <span>Word</span>
-                                </el-dropdown-item>
-                                <el-dropdown-item command="2">
-                                    <img alt="" src="/icon/svg/pdf.svg" width="20" height="20">
-                                    <span>PDF</span>
-                                </el-dropdown-item>
-                                <el-dropdown-item command="3">
-                                    <img src="/icon/svg/markdown.svg" width="20" height="20" alt="">
-                                    <span>Markdown</span>
-                                </el-dropdown-item>
-                                <el-dropdown-item command="4">
-                                    <img src="/icon/svg/html.svg" width="20" height="20" alt="">
-                                    <span>HTML</span>
-                                </el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </div>
-                    <iframe id="iframe" :src="pdf"></iframe>
-                    <div id="overIframeDiv">
-                        <div id="drag-tip"></div>
-                    </div>
-                </el-main>
+    <div class="document-layout">
+        <div class="container">
+            <div class="nav-bar">
+                <div class="title">数据库表结构生成工具</div>
+                <div class="button-bar">
+                    <el-button @click="formatDialogVisible = true" type="text">格式编辑</el-button>
+                    <el-button @click="fieldDialogVisible = true" type="text">选择列名</el-button>
+                    <el-button @click="preview" type="text">预览文档</el-button>
+                    <el-dropdown class="unselectable" @command="download" trigger="click">
+                        <span class="el-dropdown-link">下载文档
+                            <i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1">
+                                <img src="/icon/svg/word.svg" width="20" height="20" alt=""/>
+                                <span>Word</span>
+                            </el-dropdown-item>
+                            <el-dropdown-item command="2">
+                                <img alt="" src="/icon/svg/pdf.svg" width="20" height="20">
+                                <span>PDF</span>
+                            </el-dropdown-item>
+                            <el-dropdown-item command="3">
+                                <img src="/icon/svg/markdown.svg" width="20" height="20" alt="">
+                                <span>Markdown</span>
+                            </el-dropdown-item>
+                            <el-dropdown-item command="4">
+                                <img src="/icon/svg/html.svg" width="20" height="20" alt="">
+                                <span>HTML</span>
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
             </div>
-        </el-container>
-    </el-container>
-    <el-dialog
-            :lock-scroll="false"
-            title="选择列名"
-            :visible.sync="fieldDialogVisible"
-            width="550px">
-        <el-checkbox-group v-model="defaultColumns">
-            <el-checkbox class="checkbox" :key="item.value" v-for="item of allColumns" :label="item.value">
-                {{item.label}}
-            </el-checkbox>
-        </el-checkbox-group>
-        <span slot="footer" class="dialog-footer">
-    <el-button size="small" @click="fieldDialogVisible = false">取 消</el-button>
-    <el-button size="small" type="primary" @click="fieldDialogVisible = false">确 定</el-button>
-  </span>
-    </el-dialog>
-
-    <el-dialog
-            width="850px"
-            :lock-scroll="false"
-            title="格式编辑"
-            :visible.sync="formatDialogVisible">
-        <el-form label-width="80px" :model="formats" :inline="true">
-            <el-form-item label="数据库名称格式" label-width='120px'>
-                <el-input v-model="formats.database.format" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="字体大小" label-width='120px'>
-                <el-slider :min="10" :max="25" v-model="formats.database.fontSize" size="small"></el-slider>
-            </el-form-item>
-            <el-form-item label="字体样式" label-width='120px'>
-                <el-checkbox v-model="formats.database.bold">加粗</el-checkbox>
-            </el-form-item>
-            <el-form-item label="" label-width='120px'>
-            </el-form-item>
-            <el-form-item label="表名称格式" label-width='120px'>
-                <el-input v-model="formats.table.format" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="字体大小" label-width='120px'>
-                <el-slider :min="10" :max="25" v-model="formats.table.fontSize" size="small"></el-slider>
-            </el-form-item>
-            <el-form-item label="字体样式" label-width='120px'>
-                <el-checkbox v-model="formats.table.bold">加粗</el-checkbox>
-            </el-form-item>
-            <el-form-item label="" label-width='120px'>
-            </el-form-item>
-            <el-form-item label="文件名称格式" label-width='120px'>
-                <el-input v-model="formats.fileName" size="small"></el-input>
-            </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-    <el-button size="small" @click="formatDialogVisible = false">取 消</el-button>
-    <el-button size="small" type="primary" @click="saveFormats">确 定</el-button>
-  </span>
-    </el-dialog>
-
+            <div class="aside">
+                <el-tree
+                        ref="structureTree"
+                        :load="loadNode"
+                        @check-change="selectNode"
+                        lazy
+                        show-checkbox
+                        node-key="nodeId"
+                        :props="defaultProps">
+                    <template v-slot="{ node, data }">
+                        <div class="tree-node">
+                            <img v-if="data.schemaNode" src="/icon/svg/database.svg" width="20" height="20" alt="">
+                            <img v-if="!data.schemaNode" src="/icon/svg/database-table.svg" width="20" height="20"
+                                 alt="">
+                            <span>{{ node.label }}</span>
+                        </div>
+                    </template>
+                </el-tree>
+            </div>
+            <div class="drag-bar"></div>
+            <div class="content">
+                <iframe id="iframe" :src="pdf"></iframe>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     // 创建一个新的 Vue 实例
@@ -469,33 +409,6 @@
                     type: type,
                 });
             },
-            initChangeBoxWidthEvent() {
-                let dragHandle = document.getElementById("drag-tip");
-                let startX, startWidth;
-                dragHandle.addEventListener("mousedown", function (e) {
-                    startX = e.clientX;
-                    startWidth = parseInt(document.defaultView.getComputedStyle(document.getElementById("context")).width, 10);
-                    document.addEventListener("mousemove", doDrag, false);
-                    document.addEventListener("mouseup", stopDrag, false);
-                }, false);
-
-                function doDrag(e) {
-                    let reduceWidth = e.clientX - startX;
-                    let newWidth = startWidth - reduceWidth;
-                    if (newWidth > 0) {
-                        let container = document.getElementById("context");
-                        let aside = document.getElementById("aside");
-                        container.style.left = (container.style.left + reduceWidth) + 'px';
-                        container.style.width = newWidth + "px";
-                        aside.style.width = e.clientX + 'px'
-                    }
-                }
-
-                function stopDrag() {
-                    document.removeEventListener("mousemove", doDrag, false);
-                    document.removeEventListener("mouseup", stopDrag, false);
-                }
-            },
             saveFormats() {
                 let formatsJson = JSON.stringify(this.formats);
                 localStorage.setItem('DbSnap:format', formatsJson)
@@ -506,12 +419,60 @@
                 if (localStorage.getItem('DbSnap:format')) {
                     this.formats = JSON.parse(formatsJson)
                 }
+            },
+            enableDragBar() {
+                const container = document.querySelector('.container');
+                const dragBar = document.querySelector('.drag-bar');
+                const aside = document.querySelector('.aside');
+                const content = document.querySelector('.content');
+                const iframe = document.querySelector('iframe');
+                const contentMinWidth = Number.parseInt(window.getComputedStyle(content).minWidth.replace('px', ''));
+                const asideMinWidth = Number.parseInt(window.getComputedStyle(aside).minWidth.replace('px', ''));
+                const dragBarWidth = dragBar.clientWidth;
+                // 鼠标按下
+                dragBar.onmousedown = function (e) {
+                    // 鼠标开始的X轴坐标
+                    let startX = e.clientX;
+                    // 拖动块距离屏幕左侧的偏移量
+                    let offsetLeft = dragBar.offsetLeft;
+                    // 在拖拽期间禁用 iframe 的交互
+                    iframe.style.pointerEvents = 'none';
+                    // 鼠标移动
+                    document.onmousemove = function (e) {
+                        // 拖动块的最大移动距离
+                        let maxWidth = container.clientWidth - contentMinWidth;
+                        // 鼠标箭头移动位置
+                        let pointerOffset = offsetLeft + (e.clientX - startX);
+
+                        // 边界值处理
+                        pointerOffset < asideMinWidth && (pointerOffset = asideMinWidth);
+                        pointerOffset > maxWidth && (pointerOffset = maxWidth);
+
+                        // 设置值（保证拖动块一直在拖动盒子的相对位置）
+                        aside.style.width = pointerOffset + "px";
+                        dragBar.style.left = (pointerOffset - dragBarWidth / 2) + "px";
+                        content.style.left = pointerOffset + "px";
+                        content.style.width = (container.clientWidth - pointerOffset) + 'px';
+                        return false;
+                    };
+
+                    // 鼠标松开
+                    document.onmouseup = function (e) {
+                        document.onmousemove = null;
+                        document.onmouseup = null;
+                        dragBar.releaseCapture && dragBar.releaseCapture();
+                        // 拖拽结束后恢复 iframe 的交互
+                        iframe.style.pointerEvents = 'auto';
+                    };
+                    dragBar.setCapture && dragBar.setCapture();
+                    return false;
+                };
             }
         },
         mounted: function () {
             this.getTableColumns();
-            this.initChangeBoxWidthEvent()
-            this.initFormats()
+            this.initFormats();
+            this.enableDragBar();
         }
     });
 </script>
