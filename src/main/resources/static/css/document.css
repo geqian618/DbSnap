@@ -41,12 +41,11 @@
 
 
 .nav-bar .title {
-    font-family: 幼圆, serif; /* 保留原字体 */
+    font-family: '华文宋体', serif; /* 保留原字体 */
     user-select: none;
-    font-size: 22px; /* 适当增加字体大小 */
+    font-size: 21px; /* 适当增加字体大小 */
     color: #409EFF;
     font-weight: bold;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* 添加阴影 */
 }
 
 .nav-bar .button-bar {
