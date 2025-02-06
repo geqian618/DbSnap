@@ -31,19 +31,19 @@
                             <i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item command="1">
+                            <el-dropdown-item command="word">
                                 <img src="/icon/svg/word.svg" width="20" height="20" alt=""/>
                                 <span>Word</span>
                             </el-dropdown-item>
-                            <el-dropdown-item command="2">
+                            <el-dropdown-item command="pdf">
                                 <img alt="" src="/icon/svg/pdf.svg" width="20" height="20">
                                 <span>PDF</span>
                             </el-dropdown-item>
-                            <el-dropdown-item command="3">
+                            <el-dropdown-item command="markdown">
                                 <img src="/icon/svg/markdown.svg" width="20" height="20" alt="">
                                 <span>Markdown</span>
                             </el-dropdown-item>
-                            <el-dropdown-item command="4">
+                            <el-dropdown-item command="html">
                                 <img src="/icon/svg/html.svg" width="20" height="20" alt="">
                                 <span>HTML</span>
                             </el-dropdown-item>
@@ -71,7 +71,11 @@
                 </el-tree>
             </div>
             <div class="drag-bar"></div>
-            <div class="content">
+            <div class="content"
+                 v-loading="loading"
+                 :element-loading-text="loadingMessage"
+                 element-loading-spinner="el-icon-loading"
+                 element-loading-background="rgba(0, 0, 0, 0.8)">
                 <iframe id="iframe" :src="pdf"></iframe>
             </div>
         </div>
@@ -136,6 +140,7 @@
         data: {
             data: [],
             loading: false,
+            loadingMessage: '',
             fieldDialogVisible: false,
             formatDialogVisible: false,
             allColumns: [],
@@ -245,17 +250,18 @@
                         this.allColumns = res.data.data.allColumns;
                         this.defaultColumns = res.data.data.defaultColumns;
                     } else {
-                        this.showMessage("error", "数据加载失败!")
+                        this.showMessage("error", "数据加载失败")
                     }
                 }).catch(err => {
-                    this.showMessage("error", "数据加载失败!")
+                    this.showMessage("error", "数据加载失败")
                 })
             },
             preview() {
                 if (this.getCheckedNodes().length === 0) {
-                    this.showMessage("error", "当前未选中任何数据表!")
+                    this.showMessage("error", "当前未选中任何数据表")
                     return;
                 }
+                this.loadingMessage = '正在拼命加载中...'
                 this.loading = true
                 axios({
                     method: 'post',
@@ -267,7 +273,7 @@
                         const blob = new Blob([res.data], {type: "application/pdf"});
                         this.pdf = URL.createObjectURL(blob);
                     } else {
-                        this.showMessage("error", "预览失败!")
+                        this.showMessage("error", "预览失败")
                     }
                     this.loading = false
                 }).catch(err => {
@@ -275,31 +281,16 @@
                     this.loading = false
                 });
             },
-            download(cmd) {
-                switch (cmd) {
-                    case "1":
-                        this.downloadWord();
-                        break;
-                    case "2":
-                        this.downloadPdf();
-                        break;
-                    case "3":
-                        this.downloadMarkdown();
-                        break;
-                    case "4":
-                        this.downloadHtml();
-                        break;
-                }
-            },
-            downloadWord() {
+            download(type) {
                 if (this.getCheckedNodes().length === 0) {
                     this.showMessage("error", "当前未选中任何数据表")
                     return;
                 }
+                this.loadingMessage = '正在下载中...'
                 this.loading = true
                 axios({
                     method: 'post',
-                    url: '/document/word/download',
+                    url: `/document/${type}/download`,
                     responseType: 'blob', // 指定响应类型为二进制流
                     data: {
                         dataList: this.getCheckedNodes(),
@@ -319,123 +310,9 @@
                         downloadElement.click()
                         document.body.removeChild(downloadElement) // 下载完成移除元素
                         window.URL.revokeObjectURL(url) // 释放掉blob对象
-                        this.showMessage("success", "下载成功!")
+                        this.showMessage("success", "下载成功")
                     } else {
-                        this.showMessage("error", "下载失败!")
-                    }
-                    this.loading = false
-                }).catch(err => {
-                    this.showMessage("error", err.message)
-                    this.loading = false
-                });
-            },
-            downloadPdf() {
-                if (this.getCheckedNodes().length === 0) {
-                    this.showMessage("error", "当前未选中任何数据表!")
-                    return;
-                }
-                this.loading = true
-                axios({
-                    method: 'post',
-                    url: '/document/pdf/download',
-                    responseType: 'blob', // 指定响应类型为二进制流
-                    data: {
-                        dataList: this.getCheckedNodes(),
-                        contentType: this.contentType,
-                        defaultColumns: this.defaultColumns,
-                        formats: this.formats
-                    }
-                }).then(res => {
-                    if (res.status === 200) {
-                        let blob = new Blob([res.data])
-                        let url = window.URL.createObjectURL(blob)
-                        let downloadElement = document.createElement('a')
-                        downloadElement.style.display = 'none'
-                        downloadElement.href = url
-                        downloadElement.setAttribute('download', decodeURIComponent(res.headers['filename']))
-                        document.body.appendChild(downloadElement)
-                        downloadElement.click()
-                        document.body.removeChild(downloadElement) // 下载完成移除元素
-                        window.URL.revokeObjectURL(url) // 释放掉blob对象
-                        this.showMessage("success", "下载成功!")
-                    } else {
-                        this.showMessage("error", "下载失败!")
-                    }
-                    this.loading = false
-                }).catch(err => {
-                    this.showMessage("error", err.message)
-                    this.loading = false
-                });
-            },
-            downloadMarkdown() {
-                if (this.getCheckedNodes().length === 0) {
-                    this.showMessage("error", "当前未选中任何数据表!")
-                    return;
-                }
-                this.loading = true
-                axios({
-                    method: 'post',
-                    url: '/document/markdown/download',
-                    responseType: 'blob', // 指定响应类型为二进制流
-                    data: {
-                        dataList: this.getCheckedNodes(),
-                        contentType: this.contentType,
-                        defaultColumns: this.defaultColumns,
-                        formats: this.formats
-                    }
-                }).then(res => {
-                    if (res.status === 200) {
-                        let blob = new Blob([res.data])
-                        let url = window.URL.createObjectURL(blob)
-                        let downloadElement = document.createElement('a')
-                        downloadElement.style.display = 'none'
-                        downloadElement.href = url
-                        downloadElement.setAttribute('download', decodeURIComponent(res.headers['filename']))
-                        document.body.appendChild(downloadElement)
-                        downloadElement.click()
-                        document.body.removeChild(downloadElement) // 下载完成移除元素
-                        window.URL.revokeObjectURL(url) // 释放掉blob对象
-                        this.showMessage("success", "下载成功!")
-                    } else {
-                        this.showMessage("error", "下载失败!")
-                    }
-                    this.loading = false
-                }).catch(err => {
-                    this.showMessage("error", err.message)
-                    this.loading = false
-                });
-            },
-            downloadHtml() {
-                if (this.getCheckedNodes().length === 0) {
-                    this.showMessage("error", "当前未选中任何数据表!")
-                    return;
-                }
-                this.loading = true
-                axios({
-                    method: 'post',
-                    url: '/document/html/download',
-                    responseType: 'blob', // 指定响应类型为二进制流
-                    data: {
-                        dataList: this.getCheckedNodes(),
-                        contentType: this.contentType,
-                        defaultColumns: this.defaultColumns,
-                        formats: this.formats
-                    }
-                }).then(res => {
-                    if (res.status === 200) {
-                        let blob = new Blob([res.data])
-                        let url = window.URL.createObjectURL(blob)
-                        let downloadElement = document.createElement('a')
-                        downloadElement.style.display = 'none'
-                        downloadElement.href = url
-                        downloadElement.setAttribute('download', decodeURIComponent(res.headers['filename']))
-                        document.body.appendChild(downloadElement)
-                        downloadElement.click()
-                        document.body.removeChild(downloadElement) // 下载完成移除元素
-                        window.URL.revokeObjectURL(url) // 释放掉blob对象
-                        this.showMessage("success", "下载成功!")
-                    } else {
-                        this.showMessage("error", "下载失败!")
+                        this.showMessage("error", "下载失败")
                     }
                     this.loading = false
                 }).catch(err => {
