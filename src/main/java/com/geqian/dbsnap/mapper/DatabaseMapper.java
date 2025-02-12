@@ -60,6 +60,9 @@ public class DatabaseMapper {
         List<TreeNode> tableNodeList = jdbcHelper.selectList(sql, TreeNode.class, schemaName);
         for (TreeNode treeNode : tableNodeList) {
             treeNode.setSchemaNode(false);
+            if (treeNode.getDescription() == null) {
+                treeNode.setDescription("");
+            }
             treeNode.setNodeId(UUIDUtils.generateUUID());
             treeNode.setParentNodeId(parentNodeId);
         }
