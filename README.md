@@ -295,18 +295,25 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 
 #### 5. SQL不支持起别名情况
-创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
+
+**不能起别名的 sql 语句前添加 tag 标识（必须唯一）**
+```yml
+/* [TAG:xxx] */ PRAGMA database_list
+```
+
+
+**创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器**
 ```java
 @Component
 public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
   /**
    * 是否执行查询结果拦截
-   * @param productName 数据库产品名称
-   * @param sql 执行查询结果的 sql（未进行处理，与 application.yml中的一致，用于判断哪些SQL语句不能起别名，需拦截进行结果映射到实体对象）
+   * @param metaData jdbc原生 DatabaseMetaData 对象
+   * @param tag 结果特殊处理sql语句标识，即上述 sql 语句中设置的 tag 值 xxx
    * @return
    */
     @Override
-    public boolean support(String productName, String sql) {
+    public boolean support(DatabaseMetaData metaData, String tag) {
         //true 拦截, false 不拦截
         return false;
     }

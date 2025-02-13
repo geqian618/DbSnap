@@ -10,11 +10,9 @@ import java.util.List;
  */
 public interface ResultSetInterceptor<T> extends JDBCInterceptor {
 
-
-
     /**
      * @param metaData jdbc原生 DatabaseMetaData 对象
-     * @param tag         特殊结果处理sql语句标识
+     * @param tag  结果特殊处理sql语句标识（例如：无法起别名进行属性映射）
      * @return
      */
     boolean support(DatabaseMetaData metaData, String tag);
