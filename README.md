@@ -296,13 +296,13 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 #### 5. SQL不支持起别名情况
 
-**不能起别名的 sql 语句前添加 tag 标识（必须唯一）**
+不能起别名的 sql 语句前添加 tag 标识（必须唯一）
 ```yml
 /* [TAG:xxx] */ PRAGMA database_list
 ```
 
 
-**创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器**
+创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
 ```java
 @Component
 public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
