@@ -1,6 +1,6 @@
 package com.geqian.dbsnap.common.dto;
 
-import com.geqian.dbsnap.bo.Formats;
+import com.geqian.dbsnap.bo.FormatStyle;
 import com.geqian.dbsnap.entity.TreeNode;
 import lombok.Data;
 
@@ -18,5 +18,5 @@ public class TargetTableDto {
 
     private List<TreeNode> dataList;
 
-    private Formats formats;
+    private FormatStyle formatStyle;
 }

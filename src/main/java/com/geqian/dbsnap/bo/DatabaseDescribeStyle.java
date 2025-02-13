@@ -7,7 +7,7 @@ import lombok.Data;
  * @date 23:46 2024/11/7
  */
 @Data
-public class Table {
+public class DatabaseDescribeStyle {
 
     private String format;
 

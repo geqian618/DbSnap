@@ -7,11 +7,11 @@ import lombok.Data;
  * @date 23:44 2024/11/7
  */
 @Data
-public class Formats {
+public class FormatStyle {
 
-    private Database database;
+    private DatabaseDescribeStyle database;
 
-    private Table table;
+    private TableDescribeStyle table;
 
     private String fileName;
 }

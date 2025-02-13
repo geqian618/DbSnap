@@ -9,7 +9,7 @@ import com.geqian.document4j.pdf.PDFBuilder;
 import com.geqian.document4j.pdf.PDFStyle;
 import com.geqian.document4j.word.WordBuilder;
 import com.geqian.document4j.word.WordStyle;
-import com.geqian.dbsnap.bo.Formats;
+import com.geqian.dbsnap.bo.FormatStyle;
 import com.geqian.dbsnap.bo.LabelAndValue;
 import com.geqian.dbsnap.bo.TableInfo;
 import com.geqian.dbsnap.common.ResponseResult;
@@ -72,7 +72,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     public void preview(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] pdfBytes = buildPdfDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = targetTableDto.getFormats().getFileName();
+            String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".pdf";
             //byte[] pdfBytes = WordToPdfUtils.word2007ToPdf(wordBytes);
             response.setHeader("content-type", "application/octet-stream");
@@ -88,7 +88,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     public void downloadWord(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] wordBytes = buildWordDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = targetTableDto.getFormats().getFileName();
+            String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".docx";
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
@@ -103,7 +103,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     public void downloadHtml(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] htmlBytes = buildHtmlDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = targetTableDto.getFormats().getFileName();
+            String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".html";
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
@@ -120,7 +120,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     public void downloadMarkdown(TargetTableDto targetTableDto, HttpServletResponse response) {
         byte[] mdBytes = buildMdDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
-            String filename = targetTableDto.getFormats().getFileName();
+            String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".md";
             response.setHeader("content-type", "application/octet-stream");
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
@@ -187,13 +187,13 @@ public class GeneratorServiceImpl implements GeneratorService {
             //过滤出全部 Schema节点
             List<TreeNode> schemaNodes = targetTableDto.getDataList().stream().filter(TreeNode::isSchemaNode).collect(Collectors.toList());
 
-            Formats formats = targetTableDto.getFormats();
-            String databaseFormat = formats.getDatabase().getFormat();
-            int databaseFontSize = formats.getDatabase().getFontSize();
-            Boolean databaseBold = formats.getDatabase().getBold();
-            String tableFormat = formats.getTable().getFormat();
-            int tableFontSize = formats.getTable().getFontSize();
-            Boolean tableBold = formats.getTable().getBold();
+            FormatStyle formatStyle = targetTableDto.getFormatStyle();
+            String databaseFormat = formatStyle.getDatabase().getFormat();
+            int databaseFontSize = formatStyle.getDatabase().getFontSize();
+            Boolean databaseBold = formatStyle.getDatabase().getBold();
+            String tableFormat = formatStyle.getTable().getFormat();
+            int tableFontSize = formatStyle.getTable().getFontSize();
+            Boolean tableBold = formatStyle.getTable().getBold();
             WordStyle.Font calibri = WordStyle.Font.fontFamily("Calibri");
             WordStyle.Font titleFontSize = WordStyle.Font.fontSize(databaseFontSize);
             WordStyle.Font tableNameFontSize = WordStyle.Font.fontSize(tableFontSize);
@@ -259,13 +259,13 @@ public class GeneratorServiceImpl implements GeneratorService {
             //过滤出全部 Schema节点
             List<TreeNode> schemaNodes = targetTableDto.getDataList().stream().filter(TreeNode::isSchemaNode).collect(Collectors.toList());
 
-            Formats formats = targetTableDto.getFormats();
-            String databaseFormat = formats.getDatabase().getFormat();
-            int databaseFontSize = formats.getDatabase().getFontSize();
-            Boolean databaseBold = formats.getDatabase().getBold();
-            String tableFormat = formats.getTable().getFormat();
-            int tableFontSize = formats.getTable().getFontSize();
-            Boolean tableBold = formats.getTable().getBold();
+            FormatStyle formatStyle = targetTableDto.getFormatStyle();
+            String databaseFormat = formatStyle.getDatabase().getFormat();
+            int databaseFontSize = formatStyle.getDatabase().getFontSize();
+            Boolean databaseBold = formatStyle.getDatabase().getBold();
+            String tableFormat = formatStyle.getTable().getFormat();
+            int tableFontSize = formatStyle.getTable().getFontSize();
+            Boolean tableBold = formatStyle.getTable().getBold();
 
             PDFStyle.Font titleFontSize = PDFStyle.Font.fontSize(databaseFontSize);
 
@@ -326,13 +326,13 @@ public class GeneratorServiceImpl implements GeneratorService {
     @SneakyThrows(Exception.class)
     public byte[] buildMdDocument(TargetTableDto targetTableDto) {
 
-        Formats formats = targetTableDto.getFormats();
-        String databaseFormat = formats.getDatabase().getFormat();
-        int databaseFontSize = formats.getDatabase().getFontSize();
-        Boolean databaseBold = formats.getDatabase().getBold();
-        String tableFormat = formats.getTable().getFormat();
-        int tableFontSize = formats.getTable().getFontSize();
-        Boolean tableBold = formats.getTable().getBold();
+        FormatStyle formatStyle = targetTableDto.getFormatStyle();
+        String databaseFormat = formatStyle.getDatabase().getFormat();
+        int databaseFontSize = formatStyle.getDatabase().getFontSize();
+        Boolean databaseBold = formatStyle.getDatabase().getBold();
+        String tableFormat = formatStyle.getTable().getFormat();
+        int tableFontSize = formatStyle.getTable().getFontSize();
+        Boolean tableBold = formatStyle.getTable().getBold();
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
@@ -406,13 +406,13 @@ public class GeneratorServiceImpl implements GeneratorService {
         HTMLBuilder htmlBuilder = HTMLBuilder.create("2%", "2%", "20%", "20%");
         htmlBuilder.setInnerCssStyle("table{font-size:12px}");
 
-        Formats formats = targetTableDto.getFormats();
-        String databaseFormat = formats.getDatabase().getFormat();
-        int databaseFontSize = formats.getDatabase().getFontSize();
-        Boolean databaseBold = formats.getDatabase().getBold();
-        String tableFormat = formats.getTable().getFormat();
-        int tableFontSize = formats.getTable().getFontSize();
-        Boolean tableBold = formats.getTable().getBold();
+        FormatStyle formatStyle = targetTableDto.getFormatStyle();
+        String databaseFormat = formatStyle.getDatabase().getFormat();
+        int databaseFontSize = formatStyle.getDatabase().getFontSize();
+        Boolean databaseBold = formatStyle.getDatabase().getBold();
+        String tableFormat = formatStyle.getTable().getFormat();
+        int tableFontSize = formatStyle.getTable().getFontSize();
+        Boolean tableBold = formatStyle.getTable().getBold();
 
         HTMLStyle.Font schemaNameFontSize = HTMLStyle.Font.fontsize(databaseFontSize + "px");
         HTMLStyle.Font tableNameFontSize = HTMLStyle.Font.fontsize(tableFontSize + "px");

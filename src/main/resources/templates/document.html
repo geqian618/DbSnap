@@ -100,36 +100,36 @@
                :lock-scroll="false"
                title="格式编辑"
                :visible.sync="formatDialogVisible">
-        <el-form label-width="80px" :model="formats" :inline="true">
+        <el-form label-width="80px" :model="formatStyle" :inline="true">
             <el-form-item label="数据库名称格式" label-width='120px'>
-                <el-input v-model="formats.database.format" size="small"></el-input>
+                <el-input v-model="formatStyle.database.format" size="small"></el-input>
             </el-form-item>
             <el-form-item label="字体大小" label-width='120px'>
-                <el-slider :min="10" :max="25" v-model="formats.database.fontSize" size="small"></el-slider>
+                <el-slider :min="10" :max="25" v-model="formatStyle.database.fontSize" size="small"></el-slider>
             </el-form-item>
             <el-form-item label="字体样式" label-width='120px'>
-                <el-checkbox v-model="formats.database.bold">加粗</el-checkbox>
+                <el-checkbox v-model="formatStyle.database.bold">加粗</el-checkbox>
             </el-form-item>
             <el-form-item label="" label-width='120px'>
             </el-form-item>
             <el-form-item label="表名称格式" label-width='120px'>
-                <el-input v-model="formats.table.format" size="small"></el-input>
+                <el-input v-model="formatStyle.table.format" size="small"></el-input>
             </el-form-item>
             <el-form-item label="字体大小" label-width='120px'>
-                <el-slider :min="10" :max="25" v-model="formats.table.fontSize" size="small"></el-slider>
+                <el-slider :min="10" :max="25" v-model="formatStyle.table.fontSize" size="small"></el-slider>
             </el-form-item>
             <el-form-item label="字体样式" label-width='120px'>
-                <el-checkbox v-model="formats.table.bold">加粗</el-checkbox>
+                <el-checkbox v-model="formatStyle.table.bold">加粗</el-checkbox>
             </el-form-item>
             <el-form-item label="" label-width='120px'>
             </el-form-item>
             <el-form-item label="文件名称格式" label-width='120px'>
-                <el-input v-model="formats.fileName" size="small"></el-input>
+                <el-input v-model="formatStyle.fileName" size="small"></el-input>
             </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button size="small" @click="formatDialogVisible = false">取 消</el-button>
-            <el-button size="small" type="primary" @click="saveFormats">确 定</el-button>
+            <el-button size="small" type="primary" @click="saveFormatStyle">确 定</el-button>
         </span>
     </el-dialog>
 </div>
@@ -149,7 +149,7 @@
                 children: 'children',
                 label: 'labelName'
             },
-            formats: {
+            formatStyle: {
                 database: {
                     format: '数据库名称 ${databaseName}',
                     fontSize: 20,
@@ -267,7 +267,11 @@
                     method: 'post',
                     url: '/document/pdf/preview',
                     responseType: 'arraybuffer', // 指定响应类型为二进制流
-                    data: {dataList: this.getCheckedNodes(), defaultColumns: this.defaultColumns, formats: this.formats}
+                    data: {
+                        dataList: this.getCheckedNodes(),
+                        defaultColumns: this.defaultColumns,
+                        formatStyle: this.formatStyle
+                    }
                 }).then(res => {
                     if (res.status === 200) {
                         const blob = new Blob([res.data], {type: "application/pdf"});
@@ -296,7 +300,7 @@
                         dataList: this.getCheckedNodes(),
                         contentType: this.contentType,
                         defaultColumns: this.defaultColumns,
-                        formats: this.formats
+                        formatStyle: this.formatStyle
                     }
                 }).then(res => {
                     if (res.status === 200) {
@@ -338,15 +342,15 @@
                     type: type,
                 });
             },
-            saveFormats() {
-                let formatsJson = JSON.stringify(this.formats);
-                localStorage.setItem('DbSnap:format', formatsJson)
+            saveFormatStyle() {
+                let formatStyleJson = JSON.stringify(this.formatStyle);
+                localStorage.setItem('DbSnap:formatStyle', formatStyleJson)
                 this.formatDialogVisible = false
             },
-            initFormats() {
-                let formatsJson = localStorage.getItem('DbSnap:format');
-                if (localStorage.getItem('DbSnap:format')) {
-                    this.formats = JSON.parse(formatsJson)
+            initFormatStyle() {
+                const formatStyleJson = localStorage.getItem('DbSnap:format');
+                if (formatStyleJson) {
+                    this.formatStyle = JSON.parse(formatStyleJson)
                 }
             },
             enableDragBar() {
@@ -402,7 +406,7 @@
         },
         mounted: function () {
             this.getTableColumns();
-            this.initFormats();
+            this.initFormatStyle();
             this.enableDragBar();
         }
     });
