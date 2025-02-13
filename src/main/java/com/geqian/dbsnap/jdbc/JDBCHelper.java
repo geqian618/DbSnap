@@ -81,8 +81,7 @@ public class JDBCHelper {
 
         String tag = matchingSubString(sql, tagExpress, 1);
 
-        sql = sql.replace(tagExpress, "");
-
+        sql = sql.replaceFirst(tagExpress, "");
 
         PreparedStatement ps = null;
 
