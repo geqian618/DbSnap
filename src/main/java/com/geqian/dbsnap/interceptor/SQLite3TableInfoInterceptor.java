@@ -4,6 +4,7 @@ import com.geqian.dbsnap.entity.SQLite3TableStructure;
 import com.geqian.dbsnap.jdbc.ResultSetInterceptor;
 import org.springframework.stereotype.Component;
 
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,9 @@ import java.util.List;
 public class SQLite3TableInfoInterceptor implements ResultSetInterceptor<SQLite3TableStructure> {
 
 
-    private final String tableInfo = "PRAGMA ${0}.table_info(${1})";
-
     @Override
-    public boolean support(String productName, String sql) {
-        return "sqlite".equalsIgnoreCase(productName) && sql.equalsIgnoreCase(tableInfo);
+    public boolean support(DatabaseMetaData metaData, String tag) {
+        return "sqlite3_tableStructure".equals(tag);
     }
 
     @Override

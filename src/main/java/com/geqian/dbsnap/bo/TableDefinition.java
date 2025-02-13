@@ -1,4 +1,4 @@
-package com.geqian.dbsnap.entity;
+package com.geqian.dbsnap.bo;
 
 /**
  * 数据库表基本信息

@@ -6,6 +6,7 @@ import com.geqian.dbsnap.jdbc.ResultSetInterceptor;
 import org.apache.derby.catalog.TypeDescriptor;
 import org.springframework.stereotype.Component;
 
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +18,10 @@ import java.util.List;
 @Component
 public class DerbyInterceptor implements ResultSetInterceptor<TableStructure> {
 
-    private final String targetSql = "SELECT c.COLUMNNAME as \"columnName\", c.COLUMNDATATYPE as \"columnType\", c.COLUMNDEFAULT as \"columnDefault\"\n" +
-            "        FROM SYS.SYSTABLES t, SYS.SYSCOLUMNS c\n" +
-            "        WHERE c.REFERENCEID = t.TABLEID AND t.TABLENAME = #{1} ORDER BY c.COLUMNNUMBER";
 
     @Override
-    public boolean support(String productName, String sql) {
-        return "apache derby".equalsIgnoreCase(productName) && formatSql(targetSql).equals(sql);
+    public boolean support(DatabaseMetaData metaData, String tag) {
+        return "derby_tableStructure".equals(tag);
     }
 
     @Override

@@ -261,6 +261,7 @@ database:
 
       # 查询指定schema下指定数据表字段信息
       tableStructure: >
+        /* [TAG:derby_tableStructure] */ 
         SELECT c.COLUMNNAME as "columnName", c.COLUMNDATATYPE as "columnType", c.COLUMNDEFAULT as "columnDefault"
         FROM SYS.SYSTABLES t, SYS.SYSCOLUMNS c
         WHERE c.REFERENCEID = t.TABLEID AND t.TABLENAME = #{1} ORDER BY c.COLUMNNUMBER
@@ -301,7 +302,7 @@ database:
 
       # 查询所有schema
       databases: >
-        PRAGMA database_list
+        /* [TAG:sqlite3-databases] */ PRAGMA database_list
 
       # 查询指定schema下所有表
       tables: >
@@ -309,4 +310,4 @@ database:
 
       # 查询指定schema下指定数据表字段信息
       tableStructure: >
-        PRAGMA ${0}.table_info(${1})
+        /* [TAG:sqlite3_tableStructure] */ PRAGMA ${0}.table_info(${1})

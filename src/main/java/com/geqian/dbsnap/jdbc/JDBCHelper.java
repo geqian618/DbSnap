@@ -70,6 +70,20 @@ public class JDBCHelper {
      */
     public <T> List<T> selectList(String sql, Class<T> resultType, Object... args) {
 
+        if (sql == null || sql.trim().isEmpty()) {
+            throw new IllegalArgumentException("sql statement cannot be empty");
+        }
+
+        // 去除前后空格
+        sql = sql.trim();
+
+        final String tagExpress = "^/\\*\\s*\\[TAG:\\s*(\\S+)\\s*]\\s*\\*/\\s*";
+
+        String tag = matchingSubString(sql, tagExpress, 1);
+
+        sql = sql.replace(tagExpress, "");
+
+
         PreparedStatement ps = null;
 
         String precompiledSql = sql;
@@ -122,9 +136,8 @@ public class JDBCHelper {
             for (JDBCInterceptor interceptor : interceptors) {
                 if (interceptor instanceof ResultSetInterceptor) {
                     ResultSetInterceptor<?> resultSetInterceptor = (ResultSetInterceptor<?>) interceptor;
-                    String productName = connection.getMetaData().getDatabaseProductName();
-                    String formatSql = resultSetInterceptor.formatSql(sql);
-                    if (resultSetInterceptor.support(productName, formatSql)) {
+                    DatabaseMetaData metaData = connection.getMetaData();
+                    if (resultSetInterceptor.support(metaData, tag)) {
                         return (List<T>) resultSetInterceptor.intercept(resultSet);
                     }
                 }
@@ -440,4 +453,23 @@ public class JDBCHelper {
         // 进行替换
         return original.substring(0, index) + replacement + original.substring(index + search.length());
     }
+
+
+    /**
+     * 正则匹配子字符串
+     *
+     * @param str        字符串
+     * @param regex      匹配正则表达式
+     * @param groupIndex 分组下标
+     * @return
+     */
+    private String matchingSubString(String str, String regex, int groupIndex) {
+        Pattern compile = Pattern.compile(regex);
+        Matcher matcher = compile.matcher(str);
+        while (matcher.find()) {
+            return matcher.group(groupIndex);
+        }
+        return null;
+    }
+
 }

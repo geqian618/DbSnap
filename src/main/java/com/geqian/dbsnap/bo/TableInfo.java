@@ -1,7 +1,6 @@
 package com.geqian.dbsnap.bo;
 
 import com.geqian.dbsnap.entity.TableStructure;
-import com.geqian.dbsnap.entity.TableDefinition;
 import lombok.Data;
 
 import java.util.List;

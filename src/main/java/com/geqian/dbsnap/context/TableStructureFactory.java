@@ -1,6 +1,7 @@
-package com.geqian.dbsnap.entity;
+package com.geqian.dbsnap.context;
 
 import com.geqian.dbsnap.annotation.PackageScan;
+import com.geqian.dbsnap.entity.TableStructure;
 import com.geqian.dbsnap.utils.ClassResourceScanner;
 import org.springframework.util.CollectionUtils;
 

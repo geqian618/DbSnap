@@ -4,6 +4,7 @@ import com.geqian.dbsnap.entity.TreeNode;
 import com.geqian.dbsnap.jdbc.ResultSetInterceptor;
 import org.springframework.stereotype.Component;
 
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,10 @@ import java.util.List;
 @Component
 public class SQLite3DatabasesInterceptor implements ResultSetInterceptor<TreeNode> {
 
-    private final String databases = "PRAGMA database_list";
-
 
     @Override
-    public boolean support(String productName, String sql) {
-        return "sqlite".equalsIgnoreCase(productName) && sql.equalsIgnoreCase(databases);
+    public boolean support(DatabaseMetaData metaData, String tag) {
+        return "sqlite3-databases".equals(tag);
     }
 
     @Override
