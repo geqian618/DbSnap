@@ -83,16 +83,18 @@
 
     <el-dialog :lock-scroll="false"
                title="选择列名"
+               @close="resetColumns"
                :visible.sync="fieldDialogVisible"
                width="550px">
-        <el-checkbox-group v-model="defaultColumns">
-            <el-checkbox class="checkbox" :key="item.value" v-for="item of allColumns" :label="item.value">
-                {{item.label}}
+        <el-checkbox-group class="checkbox-group" v-model="tempDefaultColumns">
+            <el-checkbox class="checkbox" :key="index" v-for="(item,index) of tempColumns" :label="item.value">
+                <el-input size="small" v-model="item.label" :placeholder="placeholders[index]"></el-input>
             </el-checkbox>
         </el-checkbox-group>
         <span slot="footer" class="dialog-footer">
+             <el-button size="small" type="info" @click="resetDefault">恢复默认</el-button>
             <el-button size="small" @click="fieldDialogVisible = false">取 消</el-button>
-            <el-button size="small" type="primary" @click="fieldDialogVisible = false">确 定</el-button>
+            <el-button size="small" type="primary" @click="changeColumns">确 定</el-button>
         </span>
     </el-dialog>
 
@@ -144,7 +146,10 @@
             fieldDialogVisible: false,
             formatDialogVisible: false,
             allColumns: [],
+            tempColumns: [],
+            placeholders: [],
             defaultColumns: [],
+            tempDefaultColumns: [],
             defaultProps: {
                 children: 'children',
                 label: 'labelName'
@@ -165,6 +170,19 @@
             pdf: ''
         },
         methods: {
+            resetDefault() {
+                this.getTableColumns();
+            },
+            resetColumns() {
+                this.tempColumns = JSON.parse(JSON.stringify(this.allColumns));
+                this.tempDefaultColumns = [...this.defaultColumns];
+            },
+            changeColumns() {
+                this.allColumns = this.tempColumns;
+                this.defaultColumns = this.tempDefaultColumns;
+                this.saveColumnConfig()
+                this.fieldDialogVisible = false;
+            },
             async selectNode(data, selected) {
                 let structureTree = this.$refs.structureTree;
                 let node = structureTree.getNode(data)
@@ -244,17 +262,38 @@
                     });
                 });
             },
+            loadColumnConfig() {
+                const configStr = localStorage.getItem("column-config");
+                console.log(configStr)
+                if (configStr) {
+                    const config = JSON.parse(configStr);
+                    this.allColumns = config.allColumns;
+                    this.tempColumns = config.allColumns;
+                    this.defaultColumns = config.defaultColumns;
+                    this.tempDefaultColumns = config.defaultColumns;
+                } else {
+                    this.getTableColumns();
+                }
+            },
             getTableColumns() {
                 axios.get('/document/getTableColumnInfo').then(res => {
                     if (res.data.code === 200) {
                         this.allColumns = res.data.data.allColumns;
+                        this.tempColumns = JSON.parse(JSON.stringify(this.allColumns));
+                        this.placeholders = this.allColumns.map(item => item.label);
                         this.defaultColumns = res.data.data.defaultColumns;
+                        this.tempDefaultColumns = [...this.defaultColumns];
+                        this.saveColumnConfig()
                     } else {
                         this.showMessage("error", "数据加载失败")
                     }
                 }).catch(err => {
                     this.showMessage("error", "数据加载失败")
                 })
+            },
+            saveColumnConfig() {
+                let config = JSON.stringify({allColumns: this.allColumns, defaultColumns: this.defaultColumns});
+                localStorage.setItem("column-config", config);
             },
             preview() {
                 if (this.getCheckedNodes().length === 0) {
@@ -269,7 +308,7 @@
                     responseType: 'arraybuffer', // 指定响应类型为二进制流
                     data: {
                         dataList: this.getCheckedNodes(),
-                        defaultColumns: this.defaultColumns,
+                        defaultColumns: this.allColumns.filter(item => this.defaultColumns.includes(item.value)),
                         formatStyle: this.formatStyle
                     }
                 }).then(res => {
@@ -299,7 +338,7 @@
                     data: {
                         dataList: this.getCheckedNodes(),
                         contentType: this.contentType,
-                        defaultColumns: this.defaultColumns,
+                        defaultColumns: this.allColumns.filter(item => this.defaultColumns.includes(item.value)),
                         formatStyle: this.formatStyle
                     }
                 }).then(res => {
@@ -405,7 +444,7 @@
             }
         },
         mounted: function () {
-            this.getTableColumns();
+            this.loadColumnConfig();
             this.initFormatStyle();
             this.enableDragBar();
         }
