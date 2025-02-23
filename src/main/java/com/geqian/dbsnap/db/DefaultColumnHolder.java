@@ -1,5 +1,7 @@
 package com.geqian.dbsnap.db;
 
+import com.geqian.dbsnap.bo.LabelAndValue;
+
 import java.util.List;
 
 /**
@@ -9,13 +11,13 @@ import java.util.List;
 public class DefaultColumnHolder {
 
     //保存不排除字段
-    private static List<String> defaultColumns;
+    private static List<LabelAndValue> defaultColumns;
 
-    public static List<String> getDefaultColumns() {
+    public static List<LabelAndValue> getDefaultColumns() {
         return defaultColumns;
     }
 
-    public static void setDefaultColumns(List<String> defaultColumns) {
+    public static void setDefaultColumns(List<LabelAndValue> defaultColumns) {
         DefaultColumnHolder.defaultColumns = defaultColumns;
     }
 }

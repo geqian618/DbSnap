@@ -1,5 +1,6 @@
 package com.geqian.dbsnap.entity;
 
+import com.geqian.dbsnap.bo.LabelAndValue;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLTableInterceptor;
 import com.geqian.document4j.md.MarkdownTableInterceptor;
@@ -48,6 +49,25 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
     @TableField(value = "备注", order = 6, enums = "null-> ")
     private String columnComment;
 
+    @Override
+    public List<String> interceptHtmlHeaders(List<String> headers, Class<?> type) {
+        return getHeaders();
+    }
+
+    @Override
+    public List<String> interceptMdHeaders(List<String> headers, Class<?> type) {
+        return getHeaders();
+    }
+
+    @Override
+    public List<String> interceptPdfHeaders(Class<?> type, List<String> headers) {
+        return getHeaders();
+    }
+
+    @Override
+    public List<String> interceptWordHeaders(Class<?> type, List<Field> fields, List<String> headers) {
+        return getHeaders();
+    }
 
     @Override
     public List<Field> interceptPdfFields(Class<?> type, List<Field> fields) {
@@ -72,8 +92,8 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
     }
 
 
-
     private List<Field> getFields(Class<?> objectType) {
+        List<String> fields = DefaultColumnHolder.getDefaultColumns().stream().map(LabelAndValue::getValue).collect(Collectors.toList());
         List<Class<?>> classes = new ArrayList<>();
         Class<?> classType = objectType;
         while (!Objects.equals(classType, Object.class)) {
@@ -83,7 +103,15 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
         return classes.stream()
                 .map(pojoClass -> Stream.of(pojoClass.getDeclaredFields()).collect(Collectors.toList()))
                 .flatMap(Collection::stream)
-                .filter(field -> field.isAnnotationPresent(TableField.class) && DefaultColumnHolder.getDefaultColumns().contains(field.getName()))
+                .filter(field -> field.isAnnotationPresent(TableField.class) && fields.contains(field.getName()))
+                .collect(Collectors.toList());
+    }
+
+
+    private List<String> getHeaders() {
+        return DefaultColumnHolder.getDefaultColumns()
+                .stream()
+                .map(LabelAndValue::getLabel)
                 .collect(Collectors.toList());
     }
 

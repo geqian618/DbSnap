@@ -152,6 +152,12 @@ iframe {
     user-select: none; /* Standard syntax */
 }
 
+.checkbox-group {
+    padding: 0 25px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .el-dialog .el-checkbox {
     margin-bottom: 10px;
 }
@@ -168,3 +174,4 @@ iframe {
 .el-dialog .el-form-item .el-slider {
     width: 200px
 }
+
