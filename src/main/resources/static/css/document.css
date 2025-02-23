@@ -45,7 +45,7 @@
 .nav-bar .title {
     font-family: '华文宋体', serif; /* 保留原字体 */
     user-select: none;
-    font-size: 21px; /* 适当增加字体大小 */
+    font-size: 20px; /* 适当增加字体大小 */
     color: #409EFF;
     font-weight: bold;
 }
