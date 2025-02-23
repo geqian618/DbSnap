@@ -264,13 +264,13 @@
             },
             loadColumnConfig() {
                 const configStr = localStorage.getItem("column-config");
-                console.log(configStr)
                 if (configStr) {
                     const config = JSON.parse(configStr);
                     this.allColumns = config.allColumns;
                     this.tempColumns = config.allColumns;
                     this.defaultColumns = config.defaultColumns;
                     this.tempDefaultColumns = config.defaultColumns;
+                    this.placeholders = this.allColumns.map(item => item.label);
                 } else {
                     this.getTableColumns();
                 }
