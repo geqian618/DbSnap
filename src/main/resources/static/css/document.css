@@ -6,6 +6,7 @@
     --aside-min-width: 280px;
     --content-min-width: 0;
     --drag-bar-offsetLeft: calc(var(--aside-width) - var(--drag-bar-width) / 2);
+    --drag-bar-height: calc(100% - var(--nav-bar-height));
     --main-background-color: var(--main-background-color);
 }
 
@@ -113,10 +114,10 @@
 
 .drag-bar {
     z-index: 10;
-    height: 100%;
     width: var(--drag-bar-width);
+    height: var(--drag-bar-height);
     position: absolute;
-    top: 0;
+    top: var(--nav-bar-height);
     left: var(--drag-bar-offsetLeft);
     background-color: transparent;
 }
