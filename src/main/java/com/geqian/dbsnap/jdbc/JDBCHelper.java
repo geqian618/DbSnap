@@ -88,10 +88,10 @@ public class JDBCHelper {
         String precompiledSql = sql;
 
         // 替换字符串映射
-        List<Map.Entry<String, String>> replaceSymbols = findExpressions(precompiledSql, "(\\$\\{(\\d+)})", 1, 2);
+        List<Map.Entry<String, String>> replaceSymbols = findExpressions(precompiledSql, "(\\$\\s*\\{\\s*(\\d+)\\s*})", 1, 2);
 
         // 占位符字符串映射
-        List<Map.Entry<String, String>> placeholders = findExpressions(precompiledSql, "(\\#\\{(\\d+)})", 1, 2);
+        List<Map.Entry<String, String>> placeholders = findExpressions(precompiledSql, "(\\#\\s*\\{\\s*(\\d+)\\s*})", 1, 2);
 
         // 处理替换字符串
         for (Map.Entry<String, String> entry : replaceSymbols) {
@@ -155,7 +155,7 @@ public class JDBCHelper {
                     Field field = entry.getValue();
                     Object value = null;
                     try {
-                        value = resultSet.getObject(columnName);
+                        value = resultSet.getObject(columnName, field.getType());
                         field.set(instance, value);
                     } catch (IllegalArgumentException e) {
                         field.set(instance, Convert.convert(field.getType(), value));
