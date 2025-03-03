@@ -397,7 +397,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        HTMLBuilder htmlBuilder = HTMLBuilder.create(outputStream).setCatalogue(false);
+        HTMLBuilder htmlBuilder = HTMLBuilder.create(outputStream).setCatalogue(true);
 
         htmlBuilder.setStyleSelector("table{font-size:12px}");
         FormatStyle formatStyle = targetTableDto.getFormatStyle();
