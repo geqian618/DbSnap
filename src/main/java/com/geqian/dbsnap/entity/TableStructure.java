@@ -4,7 +4,7 @@ import com.geqian.dbsnap.bo.FieldDefinition;
 import com.geqian.dbsnap.db.DefaultColumnHolder;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLTableInterceptor;
-import com.geqian.document4j.md.MarkdownTableInterceptor;
+import com.geqian.document4j.markdown.MarkdownTableInterceptor;
 import com.geqian.document4j.pdf.PDFTableInterceptor;
 import com.geqian.document4j.word.WordTableInterceptor;
 import lombok.Data;
