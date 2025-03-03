@@ -23,8 +23,8 @@
             <div class="nav-bar">
                 <div class="title">数据库文档导出助手</div>
                 <div class="button-bar">
-                    <el-button @click="formatDialogVisible = true" type="text">格式编辑</el-button>
-                    <el-button @click="fieldDialogVisible = true" type="text">选择列名</el-button>
+                    <el-button @click="formatDialogVisible = true" type="text">输出格式</el-button>
+                    <el-button @click="fieldDialogVisible = true" type="text">列名编辑</el-button>
                     <el-button @click="preview" type="text">预览文档</el-button>
                     <el-dropdown class="unselectable" @command="download" trigger="click">
                         <span class="el-dropdown-link">下载文档
@@ -82,7 +82,7 @@
     </div>
 
     <el-dialog :lock-scroll="false"
-               title="选择列名"
+               title="列名编辑"
                @close="resetColumns"
                :visible.sync="fieldDialogVisible"
                width="660px">
@@ -103,7 +103,7 @@
 
     <el-dialog width="850px"
                :lock-scroll="false"
-               title="格式编辑"
+               title="输出格式"
                :visible.sync="formatDialogVisible">
         <el-form label-width="80px" :model="formatStyle" :inline="true">
             <el-form-item label="数据库名称格式" label-width='120px'>
