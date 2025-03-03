@@ -1,6 +1,6 @@
 package com.geqian.dbsnap.common.vo;
 
-import com.geqian.dbsnap.bo.LabelAndValue;
+import com.geqian.dbsnap.bo.FieldDefinition;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class ColumnsVo {
 
-    private List<LabelAndValue> allColumns;
+    private List<FieldDefinition> allColumns;
 
     private List<String> defaultColumns;
 }

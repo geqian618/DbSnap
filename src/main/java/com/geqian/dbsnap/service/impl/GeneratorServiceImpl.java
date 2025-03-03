@@ -1,5 +1,21 @@
 package com.geqian.dbsnap.service.impl;
 
+import com.geqian.dbsnap.bo.FieldDefinition;
+import com.geqian.dbsnap.bo.FormatStyle;
+import com.geqian.dbsnap.bo.TableDefinition;
+import com.geqian.dbsnap.bo.TableInfo;
+import com.geqian.dbsnap.common.ResponseResult;
+import com.geqian.dbsnap.common.dto.TableSelectDto;
+import com.geqian.dbsnap.common.dto.TargetTableDto;
+import com.geqian.dbsnap.common.vo.ColumnsVo;
+import com.geqian.dbsnap.context.TableStructureFactory;
+import com.geqian.dbsnap.db.DefaultColumnHolder;
+import com.geqian.dbsnap.entity.TableStructure;
+import com.geqian.dbsnap.entity.TreeNode;
+import com.geqian.dbsnap.jdbc.DruidConnectionManager;
+import com.geqian.dbsnap.mapper.DatabaseMapper;
+import com.geqian.dbsnap.service.GeneratorService;
+import com.geqian.dbsnap.utils.ReflectionUtils;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLBuilder;
 import com.geqian.document4j.html.HTMLStyle;
@@ -9,22 +25,6 @@ import com.geqian.document4j.pdf.PDFBuilder;
 import com.geqian.document4j.pdf.PDFStyle;
 import com.geqian.document4j.word.WordBuilder;
 import com.geqian.document4j.word.WordStyle;
-import com.geqian.dbsnap.bo.FormatStyle;
-import com.geqian.dbsnap.bo.LabelAndValue;
-import com.geqian.dbsnap.bo.TableInfo;
-import com.geqian.dbsnap.common.ResponseResult;
-import com.geqian.dbsnap.common.dto.TableSelectDto;
-import com.geqian.dbsnap.common.dto.TargetTableDto;
-import com.geqian.dbsnap.common.vo.ColumnsVo;
-import com.geqian.dbsnap.db.DefaultColumnHolder;
-import com.geqian.dbsnap.bo.TableDefinition;
-import com.geqian.dbsnap.entity.TableStructure;
-import com.geqian.dbsnap.context.TableStructureFactory;
-import com.geqian.dbsnap.entity.TreeNode;
-import com.geqian.dbsnap.jdbc.DruidConnectionManager;
-import com.geqian.dbsnap.mapper.DatabaseMapper;
-import com.geqian.dbsnap.service.GeneratorService;
-import com.geqian.dbsnap.utils.ReflectionUtils;
 import com.itextpdf.text.PageSize;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -154,9 +154,9 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         List<Field> fields = ReflectionUtils.getFieldAllContainSuperclass(classType, field -> true);
 
-        List<LabelAndValue> labelAndValues = fields.stream()
+        List<FieldDefinition> fieldDefinitions = fields.stream()
                 .sorted(Comparator.comparingInt(field -> field.getAnnotation(TableField.class).order()))
-                .map(field -> new LabelAndValue(field.getAnnotation(TableField.class).value(), field.getName()))
+                .map(field -> new FieldDefinition(field.getAnnotation(TableField.class).value(), field.getName(),field.getAnnotation(TableField.class).order()))
                 .collect(Collectors.toList());
 
         List<String> defaultColumns = fields.stream()
@@ -165,7 +165,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 .map(Field::getName)
                 .collect(Collectors.toList());
 
-        columnsVo.setAllColumns(labelAndValues);
+        columnsVo.setAllColumns(fieldDefinitions);
 
         columnsVo.setDefaultColumns(defaultColumns);
 
