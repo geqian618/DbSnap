@@ -4,7 +4,7 @@ import com.geqian.dbsnap.bo.FieldDefinition;
 import com.geqian.dbsnap.db.DefaultColumnHolder;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLTableInterceptor;
-import com.geqian.document4j.md.MarkdownTableInterceptor;
+import com.geqian.document4j.markdown.MarkdownTableInterceptor;
 import com.geqian.document4j.pdf.PDFTableInterceptor;
 import com.geqian.document4j.word.WordTableInterceptor;
 import lombok.Data;
@@ -48,47 +48,14 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
     private String columnComment;
 
     @Override
-    public List<String> interceptHtmlHeaders(List<String> headers, Class<?> type) {
+    public List<String> interceptTableHeaders(List<String> headers, Class<?> type) {
         return getHeaders();
     }
 
     @Override
-    public List<String> interceptMdHeaders(List<String> headers, Class<?> type) {
-        return getHeaders();
-    }
-
-    @Override
-    public List<String> interceptPdfHeaders(Class<?> type, List<String> headers) {
-        return getHeaders();
-    }
-
-    @Override
-    public List<String> interceptWordHeaders(Class<?> type, List<Field> fields, List<String> headers) {
-        return getHeaders();
-    }
-
-    @Override
-    public List<Field> interceptPdfFields(Class<?> type, List<Field> fields) {
+    public List<Field> interceptFields(Class<?> type, List<Field> fields) {
         return getFields(type);
     }
-
-
-    @Override
-    public List<Field> interceptWordFields(Class<?> type, List<Field> fields) {
-        return getFields(type);
-    }
-
-
-    @Override
-    public List<Field> interceptMdFields(Class<?> type, List<Field> fields) {
-        return getFields(type);
-    }
-
-    @Override
-    public List<Field> interceptHtmlFields(List<Field> fields, Class<?> type) {
-        return getFields(type);
-    }
-
 
     private List<Field> getFields(Class<?> objectType) {
         List<Class<?>> classes = new ArrayList<>();
@@ -111,6 +78,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
                 .collect(Collectors.toList());
 
     }
+
 
 
     private List<String> getHeaders() {
