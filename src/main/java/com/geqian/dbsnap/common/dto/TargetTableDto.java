@@ -1,7 +1,7 @@
 package com.geqian.dbsnap.common.dto;
 
+import com.geqian.dbsnap.bo.FieldDefinition;
 import com.geqian.dbsnap.bo.FormatStyle;
-import com.geqian.dbsnap.bo.LabelAndValue;
 import com.geqian.dbsnap.entity.TreeNode;
 import lombok.Data;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class TargetTableDto {
 
-    private List<LabelAndValue> defaultColumns;
+    private List<FieldDefinition> defaultColumns;
 
     private List<TreeNode> dataList;
 

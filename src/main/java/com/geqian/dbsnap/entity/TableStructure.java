@@ -1,19 +1,17 @@
 package com.geqian.dbsnap.entity;
 
-import com.geqian.dbsnap.bo.LabelAndValue;
+import com.geqian.dbsnap.bo.FieldDefinition;
+import com.geqian.dbsnap.db.DefaultColumnHolder;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLTableInterceptor;
 import com.geqian.document4j.md.MarkdownTableInterceptor;
 import com.geqian.document4j.pdf.PDFTableInterceptor;
 import com.geqian.document4j.word.WordTableInterceptor;
-import com.geqian.dbsnap.db.DefaultColumnHolder;
 import lombok.Data;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,7 +24,7 @@ import java.util.stream.Stream;
 @Data
 public abstract class TableStructure implements WordTableInterceptor, PDFTableInterceptor, MarkdownTableInterceptor, HTMLTableInterceptor {
 
-    @TableField(value = "序号", order = 0)
+    @TableField(value = "序号", order = 1)
     private Integer number;
 
 
@@ -93,25 +91,32 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 
     private List<Field> getFields(Class<?> objectType) {
-        List<String> fields = DefaultColumnHolder.getDefaultColumns().stream().map(LabelAndValue::getValue).collect(Collectors.toList());
         List<Class<?>> classes = new ArrayList<>();
         Class<?> classType = objectType;
         while (!Objects.equals(classType, Object.class)) {
             classes.add(classType);
             classType = classType.getSuperclass();
         }
-        return classes.stream()
+
+        Map<String, Field> fieldMap = classes.stream()
                 .map(pojoClass -> Stream.of(pojoClass.getDeclaredFields()).collect(Collectors.toList()))
                 .flatMap(Collection::stream)
-                .filter(field -> field.isAnnotationPresent(TableField.class) && fields.contains(field.getName()))
+                .filter(field -> field.isAnnotationPresent(TableField.class))
+                .collect(Collectors.toMap(Field::getName, Function.identity(), (oldVal, newVal) -> oldVal));
+
+        List<FieldDefinition> fieldDefinitions = DefaultColumnHolder.getDefaultColumns();
+
+        return fieldDefinitions.stream()
+                .map(fieldDefinition -> fieldMap.get(fieldDefinition.getValue()))
                 .collect(Collectors.toList());
+
     }
 
 
     private List<String> getHeaders() {
         return DefaultColumnHolder.getDefaultColumns()
                 .stream()
-                .map(LabelAndValue::getLabel)
+                .map(FieldDefinition::getLabel)
                 .collect(Collectors.toList());
     }
 

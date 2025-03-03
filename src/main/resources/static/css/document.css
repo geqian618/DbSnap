@@ -156,16 +156,30 @@ iframe {
 .checkbox-group {
     padding: 0 25px;
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.el-dialog .el-checkbox {
-    margin-bottom: 10px;
+.checkbox-group {
+    padding: 0 25px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.checkbox-group .el-checkbox .el-checkbox__label {
+    width: 150px;
+}
+
+.checkbox-group .el-input-number {
+    width: 100px;
+}
+
+.checkbox-item {
+    padding: 5px 0;
 }
 
 .el-dialog .el-form-item {
     width: 380px;
-    margin-bottom: 10px;
 }
 
 .el-dialog .el-form-item .el-input {

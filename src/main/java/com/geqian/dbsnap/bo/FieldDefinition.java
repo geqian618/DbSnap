@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LabelAndValue {
+public class FieldDefinition {
 
     private String label;
 
     private String value;
+
+    private int order;
 
 }

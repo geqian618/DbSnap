@@ -85,11 +85,14 @@
                title="选择列名"
                @close="resetColumns"
                :visible.sync="fieldDialogVisible"
-               width="550px">
+               width="660px">
         <el-checkbox-group class="checkbox-group" v-model="tempDefaultColumns">
-            <el-checkbox class="checkbox" :key="index" v-for="(item,index) of tempColumns" :label="item.value">
-                <el-input size="small" v-model="item.label" :placeholder="placeholders[index]"></el-input>
-            </el-checkbox>
+            <div :key="index" v-for="(item,index) of tempColumns" class="checkbox-item">
+                <el-checkbox class="checkbox" :label="item.value">
+                    <el-input size="small" v-model="item.label" :placeholder="placeholders[index]"></el-input>
+                </el-checkbox>
+                <el-input-number size="small" v-model="item.order"></el-input-number>
+            </div>
         </el-checkbox-group>
         <span slot="footer" class="dialog-footer">
              <el-button size="small" type="info" @click="resetDefault">恢复默认</el-button>
@@ -107,7 +110,7 @@
                 <el-input v-model="formatStyle.database.format" size="small"></el-input>
             </el-form-item>
             <el-form-item label="字体大小" label-width='120px'>
-                <el-slider :min="10" :max="25" v-model="formatStyle.database.fontSize" size="small"></el-slider>
+                <el-slider v-model="formatStyle.database.fontSize" size="small"></el-slider>
             </el-form-item>
             <el-form-item label="字体样式" label-width='120px'>
                 <el-checkbox v-model="formatStyle.database.bold">加粗</el-checkbox>
