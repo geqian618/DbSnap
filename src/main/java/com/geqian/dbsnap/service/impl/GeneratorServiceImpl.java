@@ -19,13 +19,12 @@ import com.geqian.dbsnap.utils.ReflectionUtils;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLBuilder;
 import com.geqian.document4j.html.HTMLStyle;
-import com.geqian.document4j.md.MarkDownBuilder;
-import com.geqian.document4j.md.MarkDownStyle;
+import com.geqian.document4j.markdown.MarkDownBuilder;
+import com.geqian.document4j.markdown.MarkDownStyle;
 import com.geqian.document4j.pdf.PDFBuilder;
 import com.geqian.document4j.pdf.PDFStyle;
 import com.geqian.document4j.word.WordBuilder;
 import com.geqian.document4j.word.WordStyle;
-import com.itextpdf.text.PageSize;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,7 +69,6 @@ public class GeneratorServiceImpl implements GeneratorService {
     @SneakyThrows(Exception.class)
     @Override
     public void preview(TargetTableDto targetTableDto, HttpServletResponse response) {
-        byte[] pdfBytes = buildPdfDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
             String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".pdf";
@@ -79,14 +77,13 @@ public class GeneratorServiceImpl implements GeneratorService {
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-            out.write(pdfBytes);
+            buildPdfDocument(targetTableDto, out);
         }
     }
 
     @SneakyThrows(Exception.class)
     @Override
     public void downloadWord(TargetTableDto targetTableDto, HttpServletResponse response) {
-        byte[] wordBytes = buildWordDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
             String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".docx";
@@ -94,14 +91,13 @@ public class GeneratorServiceImpl implements GeneratorService {
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-            out.write(wordBytes);
+            buildWordDocument(targetTableDto, out);
         }
     }
 
     @SneakyThrows(Exception.class)
     @Override
     public void downloadHtml(TargetTableDto targetTableDto, HttpServletResponse response) {
-        byte[] htmlBytes = buildHtmlDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
             String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".html";
@@ -109,8 +105,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-
-            out.write(htmlBytes);
+            buildHtmlDocument(targetTableDto, out);
         }
     }
 
@@ -118,7 +113,6 @@ public class GeneratorServiceImpl implements GeneratorService {
     @SneakyThrows(Exception.class)
     @Override
     public void downloadMarkdown(TargetTableDto targetTableDto, HttpServletResponse response) {
-        byte[] mdBytes = buildMdDocument(targetTableDto);
         try (OutputStream out = response.getOutputStream()) {
             String filename = targetTableDto.getFormatStyle().getFileName();
             filename = new SimpleDateFormat(filename).format(new Date()) + ".md";
@@ -126,7 +120,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             response.setHeader("filename", URLEncoder.encode(filename, "UTF-8"));
             //文件设置为附件
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-            out.write(mdBytes);
+            buildMdDocument(targetTableDto, out);
         }
     }
 
@@ -156,7 +150,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         List<FieldDefinition> fieldDefinitions = fields.stream()
                 .sorted(Comparator.comparingInt(field -> field.getAnnotation(TableField.class).order()))
-                .map(field -> new FieldDefinition(field.getAnnotation(TableField.class).value(), field.getName(),field.getAnnotation(TableField.class).order()))
+                .map(field -> new FieldDefinition(field.getAnnotation(TableField.class).value(), field.getName(), field.getAnnotation(TableField.class).order()))
                 .collect(Collectors.toList());
 
         List<String> defaultColumns = fields.stream()
@@ -174,11 +168,11 @@ public class GeneratorServiceImpl implements GeneratorService {
 
 
     @SneakyThrows(Exception.class)
-    public byte[] buildWordDocument(TargetTableDto targetTableDto) {
+    public void buildWordDocument(TargetTableDto targetTableDto, OutputStream outputStream) {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        WordBuilder wordBuilder = WordBuilder.create();
+        WordBuilder wordBuilder = WordBuilder.create(outputStream);
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -241,16 +235,16 @@ public class GeneratorServiceImpl implements GeneratorService {
                 }
             }
         }
-        return wordBuilder.asBytes();
+        wordBuilder.build();
     }
 
 
     @SneakyThrows(Exception.class)
-    public byte[] buildPdfDocument(TargetTableDto targetTableDto) {
+    public void buildPdfDocument(TargetTableDto targetTableDto, OutputStream outputStream) {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        PDFBuilder pdfBuilder = PDFBuilder.create(PageSize.A4, 90, 90, 36, 36);
+        PDFBuilder pdfBuilder = PDFBuilder.create(outputStream);
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -319,12 +313,12 @@ public class GeneratorServiceImpl implements GeneratorService {
                 }
             }
         }
-        return pdfBuilder.asBytes();
+        pdfBuilder.build();
     }
 
 
     @SneakyThrows(Exception.class)
-    public byte[] buildMdDocument(TargetTableDto targetTableDto) {
+    public void buildMdDocument(TargetTableDto targetTableDto, OutputStream outputStream) {
 
         FormatStyle formatStyle = targetTableDto.getFormatStyle();
         String databaseFormat = formatStyle.getDatabase().getFormat();
@@ -336,7 +330,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        MarkDownBuilder markDownBuilder = MarkDownBuilder.create();
+        MarkDownBuilder markDownBuilder = MarkDownBuilder.create(outputStream);
 
         MarkDownStyle.Font databaseNameFontSize = MarkDownStyle.Font.fontSize(databaseFontSize);
         MarkDownStyle.Font tableNameFontSize = MarkDownStyle.Font.fontSize(tableFontSize);
@@ -354,7 +348,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    markDownBuilder.title(databaseName, MarkDownStyle.Title.THIRD, databaseBold ? MarkDownStyle.Font.BOLD : null, databaseNameFontSize);
+                    markDownBuilder.title(databaseName, MarkDownStyle.Title.LEVEL_3, databaseBold ? MarkDownStyle.Font.BOLD : null, databaseNameFontSize);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
@@ -394,18 +388,18 @@ public class GeneratorServiceImpl implements GeneratorService {
                 markDownBuilder.blankRow();
             }
         }
-        return markDownBuilder.asBytes();
+        markDownBuilder.build();
     }
 
 
     @SneakyThrows(Exception.class)
-    public byte[] buildHtmlDocument(TargetTableDto targetTableDto) {
+    public void buildHtmlDocument(TargetTableDto targetTableDto, OutputStream outputStream) {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        HTMLBuilder htmlBuilder = HTMLBuilder.create("2%", "2%", "20%", "20%");
-        htmlBuilder.setInnerCssStyle("table{font-size:12px}");
+        HTMLBuilder htmlBuilder = HTMLBuilder.create(outputStream).setCatalogue(false);
 
+        htmlBuilder.setStyleSelector("table{font-size:12px}");
         FormatStyle formatStyle = targetTableDto.getFormatStyle();
         String databaseFormat = formatStyle.getDatabase().getFormat();
         int databaseFontSize = formatStyle.getDatabase().getFontSize();
@@ -430,7 +424,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    htmlBuilder.paragraph(databaseName, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, paddingBottom);
+                    htmlBuilder.title(databaseName, HTMLStyle.Title.LEVEL_1, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, paddingBottom);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
@@ -460,7 +454,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        htmlBuilder.paragraph(tableName, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, paddingBottom);
+                        htmlBuilder.title(tableName, HTMLStyle.Title.LEVEL_2, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, paddingBottom);
                     }
                     htmlBuilder.table(tableInfo.getDataList());
                     htmlBuilder.blankRow().blankRow();
@@ -471,7 +465,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 htmlBuilder.blankRow();
             }
         }
-        return htmlBuilder.asBytes();
+        htmlBuilder.build();
     }
 
 }
