@@ -108,8 +108,8 @@
 <br>
 <br>
 
-**5. 选择导出列名**
-![image-20230719013433699](src/main/resources/static/images/选择列名.png)  
+**5. 列名编辑**
+![image-20230719013433699](src/main/resources/static/images/列名编辑.png)  
 <br>
 <br>
 
