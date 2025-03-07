@@ -21,7 +21,7 @@
     <div class="document-layout">
         <div class="container">
             <div class="nav-bar">
-                <div class="title">数据库文档导出助手</div>
+                <el-page-header @back="goBack" class="title" content="数据库文档导出助手"></el-page-header>
                 <div class="button-bar">
                     <el-button @click="formatDialogVisible = true" type="text">输出格式</el-button>
                     <el-button @click="fieldDialogVisible = true" type="text">列名编辑</el-button>
@@ -173,6 +173,9 @@
             pdf: ''
         },
         methods: {
+            goBack() {
+                window.location.href = '/'
+            },
             resetDefault() {
                 this.getTableColumns();
             },

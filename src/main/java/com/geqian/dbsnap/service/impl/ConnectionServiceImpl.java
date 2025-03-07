@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * @author geqian
@@ -28,10 +27,8 @@ public class ConnectionServiceImpl implements ConnectionService {
     @Override
     public ResponseResult<String> connection(ConnectionInfoDto connectionInfoDto) {
         try {
-            if (!Objects.equals(connectionInfoDto, DruidConnectionManager.getConnectionInfo())) {
-                DruidConnectionManager.setConnectionInfo(connectionInfoDto);
-                DruidConnectionManager.clearDatasource();
-            }
+            DruidConnectionManager.clearDatasource();
+            DruidConnectionManager.setConnectionInfo(connectionInfoDto);
             DruidConnectionManager.getConnection();
         } catch (Exception e) {
             DruidConnectionManager.clearDatasource();

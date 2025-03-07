@@ -2,6 +2,7 @@ package com.geqian.dbsnap.controller;
 
 import com.geqian.dbsnap.common.dto.ConnectionInfoDto;
 import com.geqian.dbsnap.common.ResponseResult;
+import com.geqian.dbsnap.jdbc.DruidConnectionManager;
 import com.geqian.dbsnap.service.ConnectionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class ConnectionController {
 
     @GetMapping("/")
     public String index() {
+        DruidConnectionManager.clearDatasource();
         return "index";
     }
 

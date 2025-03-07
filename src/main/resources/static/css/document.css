@@ -39,9 +39,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px 0 50px;
+    padding: 0 20px 0 15px;
 }
 
+.el-page-header__left::after {
+    right: -10px;
+}
+
+.el-page-header__left {
+    margin-right: 20px;
+}
+
+.el-page-header__content {
+    font-size: 18px;
+    color: #409EFF;
+}
 
 .nav-bar .title {
     font-family: '华文宋体', serif; /* 保留原字体 */
