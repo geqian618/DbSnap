@@ -1,5 +1,6 @@
 package com.geqian.dbsnap.context;
 
+import com.geqian.dbsnap.DbSnapApplication;
 import com.geqian.dbsnap.annotation.PackageScan;
 import com.geqian.dbsnap.entity.TableStructure;
 import com.geqian.dbsnap.utils.ClassResourceScanner;
@@ -15,7 +16,6 @@ import java.util.function.Supplier;
  * @author geqian
  * @date 3:13 2023/12/8
  */
-@PackageScan("com.geqian.dbsnap.entity")
 public class TableStructureFactory {
 
     private static Map<String, Supplier<Class<? extends TableStructure>>> tableStructureMap;
@@ -31,7 +31,7 @@ public class TableStructureFactory {
 
         Predicate<ClassResourceScanner.ClassResourceWrapper> typeFilter = wrapper -> wrapper.isClass() && TableStructure.class.isAssignableFrom(wrapper.getType());
 
-        PackageScan packageScan = TableStructureFactory.class.getAnnotation(PackageScan.class);
+        PackageScan packageScan = DbSnapApplication.class.getAnnotation(PackageScan.class);
 
         List<ClassResourceScanner.ClassResourceWrapper> wrappers = classScanner.doScan(packageScan.value(), typeFilter);
 
