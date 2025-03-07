@@ -1,5 +1,5 @@
 database:
-  info:
+  definitions:
     ######################################### MySQL数据库 #############################################
     mysql:
       driverClass: com.mysql.cj.jdbc.Driver

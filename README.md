@@ -32,9 +32,8 @@
 ### 后端
 
 - 采用 SpringBoot 作为基础框架
-- 采用 apache poi 生成word文档
-- 采用 itextpdf 生成pdf文档
-- 采用 snakeyaml 解析yaml文件
+- 采用 apache poi 生成 word 文档
+- 采用 itextpdf 生成 pdf 文档
 
 ### 前端
 
