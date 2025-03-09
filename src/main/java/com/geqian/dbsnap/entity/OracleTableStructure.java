@@ -1,5 +1,7 @@
 package com.geqian.dbsnap.entity;
 
+import com.geqian.document4j.common.annotation.TableField;
+
 /**
  * 列字段信息
  *
@@ -9,4 +11,14 @@ package com.geqian.dbsnap.entity;
 
 public class OracleTableStructure extends TableStructure {
 
+    @TableField(value = "长度", order = 7, exclude = true, enums = "null-> ")
+    private Long length;
+
+    public Long getLength() {
+        return length;
+    }
+
+    public void setLength(Long length) {
+        this.length = length;
+    }
 }

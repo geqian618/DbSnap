@@ -126,7 +126,7 @@ public class JDBCHelper {
                 int index = Integer.parseInt(entry.getValue());
                 Object arg = args[index];
                 ps.setObject(i + 1, arg);
-                completeSQL = replaceFirst(completeSQL, "?", arg.toString());
+                completeSQL = replaceFirst(completeSQL, "?", arg instanceof String ? "'" + arg + "'" : arg.toString());
             }
 
             //执行并获取结果集

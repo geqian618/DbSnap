@@ -62,20 +62,24 @@ database:
         SELECT USERNAME as "labelName" FROM ALL_USERS
 
       tables: >
-        SELECT comm.TABLE_NAME as "labelName", comm.COMMENTS as "description"
+        SELECT comm.table_name AS "labelName", comm.comments as "description"
         FROM all_tables tab 
-        inner join all_tab_comments comm 
-        on tab.OWNER = comm.OWNER and tab.TABLE_NAME = comm.TABLE_NAME 
-        WHERE tab.OWNER = #{0}
+        INNER JOIN all_tab_comments comm 
+        ON tab.owner = comm.owner AND tab.table_name = comm.table_name 
+        WHERE tab.owner = #{0}
+      
 
       tableStructure: >
-        SELECT col.COLUMN_NAME as "columnName", col.DATA_TYPE as "columnType",
-        comm.COMMENTS as "columnComment", col.NULLABLE as "isNullable",
-        col.DATA_DEFAULT as "columnDefault" 
-        FROM all_tab_columns col 
-        inner join ALL_COL_COMMENTS comm 
-        on col.OWNER = comm.OWNER and col.TABLE_NAME = comm.TABLE_NAME 
-        WHERE comm.owner = #{0} AND comm.TABLE_NAME = #{1}
+        SELECT col.column_name AS "columnName",
+               col.data_type AS "columnType",
+               col.data_length AS "length",
+               col.nullable AS "isNullable",
+               col.data_default AS "columnDefault",
+               com.comments AS "columnComment"
+        FROM all_tab_columns col
+        LEFT JOIN all_col_comments com
+        ON col.owner = com.owner AND col.table_name = com.table_name AND col.column_name = com.column_name
+        WHERE col.owner = #{0} AND col.table_name = #{1}
 
     ######################################### DB2数据库 #############################################
     db2:
