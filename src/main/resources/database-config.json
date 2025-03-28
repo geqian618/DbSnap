@@ -69,7 +69,7 @@
     "defaultPort": 5866,
     "label": "瀚高",
     "value": "highgo",
-    "icon": ""
+    "icon": "/icon/svg/database/瀚高.svg"
   },
   {
     "developed": false,
@@ -77,15 +77,15 @@
     "defaultPort": 54321,
     "label": "人大金仓",
     "value": "kingbase",
-    "icon": ""
+    "icon": "/icon/svg/database/人大金仓.svg"
   },
   {
-    "embedded": false,
     "developed": false,
+    "embedded": false,
     "defaultPort": 5138,
     "label": "虚谷",
     "value": "xugu",
-    "icon": ""
+    "icon": "/icon/svg/database/虚谷.svg"
   },
   {
     "developed": true,
@@ -100,7 +100,7 @@
     "embedded": true,
     "label": "Derby",
     "value": "derby",
-    "ipVisible": false,
+    "hostVisible": false,
     "portVisible": false,
     "icon": "/icon/svg/database/derby.svg"
   },
@@ -109,7 +109,7 @@
     "embedded": true,
     "label": "H2",
     "value": "h2",
-    "ipVisible": false,
+    "hostVisible": false,
     "portVisible": false,
     "icon": "/icon/svg/database/H2.svg"
   },
@@ -118,7 +118,7 @@
     "embedded": true,
     "label": "SQLite3",
     "value": "sqlite3",
-    "ipVisible": false,
+    "hostVisible": false,
     "portVisible": false,
     "usernameVisible": false,
     "passwordVisible": false,

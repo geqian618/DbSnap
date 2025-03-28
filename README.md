@@ -268,7 +268,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
     "embedded": true,
     "label": "SQLite3",
     "value": "sqlite3",
-    "ipVisible": false,
+    "hostVisible": false,
     "portVisible": false,
     "usernameVisible": false,
     "passwordVisible": false,
@@ -285,7 +285,7 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 - label 数据库名称
 - value 匹配 application.yml 文件中数据源及 SQL 语句的 key（一般设置为数据库名称）
 - icon 数据库图标，值为 svg 编码
-- ipVisible 隐藏IP地址项，部分内嵌式数据库通过文件地址读取数据
+- hostVisible 隐藏IP地址项，部分内嵌式数据库通过文件地址读取数据
 - portVisible: 隐藏端口项，部分内嵌式数据库通过文件地址读取数据
 - usernameVisible: 隐藏用户名项
 - passwordVisible: 隐藏密码项

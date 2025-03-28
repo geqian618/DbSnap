@@ -15,9 +15,10 @@
     padding: 0 50px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
     justify-content: flex-start;
     align-items: center;
+    overflow-y: auto;
 }
 
 .icon-item {
@@ -26,6 +27,7 @@
     direction: rtl;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     font-size: 25px;
     width: 200px;

@@ -58,12 +58,12 @@
                @close="closeDialog"
                :visible.sync="dialogFormVisible">
         <el-form :model="form" :rules="rules" ref="ruleForm">
-            <el-form-item v-show="form.ipVisible" label="IP地址" :label-width="formLabelWidth" prop="ip">
-                <el-input v-model="form.ip" placeholder="请输入IP地址"></el-input>
+            <el-form-item v-show="form.hostVisible" label="主机" :label-width="formLabelWidth" prop="host">
+                <el-input v-model="form.host" placeholder="请输入主机"></el-input>
             </el-form-item>
 
             <el-form-item v-show="form.portVisible" label="端 口" :label-width="formLabelWidth" prop="port">
-                <el-input v-model="form.port" placeholder="请输入IP地址"></el-input>
+                <el-input v-model="form.port" placeholder="请输入端口号"></el-input>
             </el-form-item>
 
             <el-form-item v-show="form.databaseVisible" :label="form.label" :label-width="formLabelWidth"
@@ -99,8 +99,8 @@
             form: {
                 label: '数据库',
                 databaseType: '',
-                ip: '127.0.0.1',
-                ipVisible: true,
+                host: '127.0.0.1',
+                hostVisible: true,
                 port: 0,
                 portVisible: true,
                 username: '',
@@ -111,14 +111,14 @@
                 databaseVisible: true,
             },
             rules: {
-                ip: [
-                    {required: true, message: '不能为空', trigger: 'blur'}
+                host: [
+                    {required: true, message: '主机不能为空', trigger: 'blur'}
                 ],
                 port: [
-                    {required: true, message: '不能为空', trigger: 'blur'}
+                    {required: true, message: '端口不能为空', trigger: 'blur'}
                 ],
                 database: [
-                    {required: true, message: '不能为空', trigger: 'blur'}
+                    {required: true, message: '数据不能为空', trigger: 'blur'}
                 ],
             },
             options: [],
@@ -141,7 +141,7 @@
                 this.form.database = ''
                 this.form.databaseType = item.value;
                 this.form.port = item.defaultPort || 0
-                this.form.ipVisible = item.ipVisible !== undefined ? item.ipVisible : true
+                this.form.hostVisible = item.hostVisible !== undefined ? item.hostVisible : true
                 this.form.portVisible = item.portVisible !== undefined ? item.portVisible : true
                 this.form.databaseVisible = item.databaseVisible !== undefined ? item.databaseVisible : true
                 this.form.usernameVisible = item.usernameVisible !== undefined ? item.usernameVisible : true
