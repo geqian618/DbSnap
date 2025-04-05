@@ -4,7 +4,7 @@ database:
     mysql:
       driverClass: com.mysql.cj.jdbc.Driver
 
-      url: jdbc:mysql://${ip}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
 
       # 查询所有schemata
       databases: >
@@ -30,7 +30,7 @@ database:
     mariadb:
       driverClass: org.mariadb.jdbc.Driver
 
-      url: jdbc:mariadb://${ip}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&ueSSL=false
+      url: jdbc:mariadb://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&ueSSL=false
 
       # 查询所有schemata
       databases: >
@@ -56,7 +56,7 @@ database:
     oracle:
       driverClass: oracle.jdbc.OracleDriver
 
-      url: jdbc:oracle:thin:@${ip}:${port}:${database}
+      url: jdbc:oracle:thin:@${host}:${port}:${database}
 
       databases: >
         SELECT USERNAME as "labelName" FROM ALL_USERS
@@ -85,7 +85,7 @@ database:
     db2:
       driverClass: com.ibm.db2.jcc.DB2Driver
 
-      url: jdbc:db2://${ip}:${port}/${database}
+      url: jdbc:db2://${host}:${port}/${database}
 
       databases: >
         SELECT SCHEMANAME as "labelName" FROM SYSCAT.SCHEMATA
@@ -106,7 +106,7 @@ database:
 
       driverClass: org.postgresql.Driver
 
-      url: jdbc:postgresql://${ip}:${port}/${database}
+      url: jdbc:postgresql://${host}:${port}/${database}
 
       databases: >
         SELECT schema_name AS "labelName" FROM information_schema.schemata;
@@ -132,7 +132,7 @@ database:
 
       driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
-      url: jdbc:sqlserver://${ip}:${port};DatabaseName=${database}
+      url: jdbc:sqlserver://${host}:${port};DatabaseName=${database}
 
       databases: >
         SELECT name as labelName FROM sys.databases
@@ -167,7 +167,7 @@ database:
     clickhouse:
       driverClass: ru.yandex.clickhouse.ClickHouseDriver
 
-      url: jdbc:clickhouse://${ip}:${port}/${database}
+      url: jdbc:clickhouse://${host}:${port}/${database}
 
       # 查询所有数据库
       databases: >
@@ -191,7 +191,7 @@ database:
     dm8:
       driverClass: dm.jdbc.driver.DmDriver
 
-      url: jdbc:dm://${ip}:${port}/${database}
+      url: jdbc:dm://${host}:${port}/${database}
 
       # 查询所有数据库
       databases: >
@@ -225,7 +225,7 @@ database:
     tidb:
       driverClass: com.mysql.cj.jdbc.Driver
 
-      url: jdbc:mysql://${ip}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
 
       # 查询所有schema
       databases: >

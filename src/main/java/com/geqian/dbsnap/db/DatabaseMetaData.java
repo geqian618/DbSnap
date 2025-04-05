@@ -19,8 +19,8 @@ public class DatabaseMetaData {
     private String tableStructure;
 
 
-    public String getUrl(String database, String ip, int port) {
-        return url.replace("${database}", database).replace("${ip}", ip).replace("${port}", String.valueOf(port));
+    public String getUrl(String database, String host, int port) {
+        return url.replace("${database}", database).replace("${host}", host).replace("${port}", String.valueOf(port));
     }
 
 }

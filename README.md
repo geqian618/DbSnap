@@ -167,7 +167,7 @@ database:
     # 作为定义 TableStructure 类的前缀（最好直接设置为数据库类型），mysql数据库定义为 MySQLTableStructure（步骤四类命名使用）
     mysql:
       driverClass: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://${ip}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
 
       # 查询所有数据库名称
       databases: SELECT schema_name as labelName FROM information_schema.schemata
@@ -188,7 +188,7 @@ database:
 ```
 
 **说明：**
-- `url: jdbc:mysql://${ip}:${port}/${database}` 中的 ${ip}、${port}、${database} 为占位标识，分别表示 ip 地址、数据库端口号、创建连接的数据库名称的具体值<br>
+- `url: jdbc:mysql://${host}:${port}/${database}` 中的 ${host}、${port}、${database} 为占位标识，分别表示  主机名称、数据库端口号、创建连接的数据库名称的具体值<br>
 - #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值 
 - 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
 - <span style="color:red">特殊情况：某些查询SQL语句不支持起别名，请查看步骤五</sapn>
