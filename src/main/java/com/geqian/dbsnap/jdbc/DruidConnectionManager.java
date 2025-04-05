@@ -29,7 +29,7 @@ public class DruidConnectionManager {
         try {
             DatabaseMetaData metadata = DatabaseMetadataFactory.getMetaData(connectionInfo.getDatabaseType());
             Class.forName(metadata.getDriverClass());
-            String url = metadata.getUrl(connectionInfo.getDatabase(), connectionInfo.getIp(), connectionInfo.getPort());
+            String url = metadata.getUrl(connectionInfo.getDatabase(), connectionInfo.getHost(), connectionInfo.getPort());
             Properties properties = new Properties();
             String threadSize = String.valueOf(Runtime.getRuntime().availableProcessors() + 1);
             //初始化连接数量

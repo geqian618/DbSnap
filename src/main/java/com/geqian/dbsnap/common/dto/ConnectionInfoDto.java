@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class ConnectionInfoDto {
 
-    private String ip;
+    private String host;
 
     private Integer port;
 
