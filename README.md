@@ -366,6 +366,7 @@ https://pan.baidu.com/s/1EfNnO_ps8EP-jHrBrMDeLQ?pwd=gkv7
 ## 赞赏
 <img src="src/main/resources/static/images/赞赏码.jpg" alt="赞赏码" width="300">
 <br>
+<br>
 
 ## 常见问题
 **① DbSnap.exe 启动失败，可能原因**
