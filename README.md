@@ -357,17 +357,15 @@ https://pan.baidu.com/s/1EfNnO_ps8EP-jHrBrMDeLQ?pwd=gkv7
 
 
 ## 推荐工作给作者
-作者23届毕业，现居重庆，大四有过9个月左右开发实习经验，到目前还没找到工作，有工作推荐的可以联系我，非常感谢。<br>
-vx：Serendipity_liuyin
-
+作者23届毕业，现居重庆，大四有过9个月左右开发实习经验，到目前还没找到工作，有工作推荐的可以联系我，非常感谢。
 <br>
+<br>
+<img style="border: 1px solid gainsboro;" src="src/main/resources/static/images/wchat.jpg" alt="微信码"  width="300">
 
 
 ## 赞赏
-<img src="src/main/resources/static/images/appreciation-code.jpg" alt="赞赏码" height="270">
+<img src="src/main/resources/static/images/赞赏码.jpg" alt="赞赏码" width="300">
 <br>
-<br>
-
 
 ## 常见问题
 **① DbSnap.exe 启动失败，可能原因**
