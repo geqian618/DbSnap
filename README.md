@@ -357,7 +357,8 @@ https://pan.baidu.com/s/1EfNnO_ps8EP-jHrBrMDeLQ?pwd=gkv7
 
 
 ## 推荐工作给作者
-作者找不到工作啦，有工作推荐的可以联系我，非常感谢。vx：Serendipity_liuyin
+作者23届毕业，现居重庆，大四有过9个月左右开发实习经验，到目前还没找到工作，有工作推荐的可以联系我，非常感谢。<br>
+vx：Serendipity_liuyin
 
 <br>
 
