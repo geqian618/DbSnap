@@ -7,7 +7,7 @@
     --content-min-width: 0;
     --drag-bar-offsetLeft: calc(var(--aside-width) - var(--drag-bar-width) / 2);
     --drag-bar-height: calc(100% - var(--nav-bar-height));
-    --main-background-color: var(--main-background-color);
+    --main-background-color: #FFFFFF;
 }
 
 * {
@@ -72,6 +72,7 @@
     margin-right: 10px;
     color: #409EFF;
     cursor: pointer;
+    font-weight: normal;
 }
 
 .el-dropdown-menu .el-dropdown-menu__item {
