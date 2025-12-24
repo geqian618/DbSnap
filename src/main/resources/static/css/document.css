@@ -193,6 +193,7 @@ iframe {
 
 .el-dialog .el-form-item {
     width: 380px;
+    margin-bottom: 0;
 }
 
 .el-dialog .el-form-item .el-input {
