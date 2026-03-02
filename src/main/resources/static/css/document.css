@@ -39,8 +39,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px 0 10px;
+    padding: 0 20px 0 20px;
 }
+
+.nav-bar .title-bar {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-bar .title-bar .logo {
+    height: 27px;
+}
+
+.nav-bar .title-bar .title {
+    font-size: 22px;
+    color: #1296DB;
+    font-family: '幼圆体', serif; /* 保留原字体 */
+    user-select: none;
+    font-weight: bold;
+}
+
 
 .el-page-header__left::after {
     right: -10px;
@@ -53,14 +74,6 @@
 .el-page-header__content {
     font-size: 18px;
     color: #409EFF;
-}
-
-.nav-bar .title {
-    font-family: '华文宋体', serif; /* 保留原字体 */
-    user-select: none;
-    font-size: 20px; /* 适当增加字体大小 */
-    color: #409EFF;
-    font-weight: bold;
 }
 
 .nav-bar .button-bar {

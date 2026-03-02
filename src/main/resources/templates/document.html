@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>数据库文档导出助手</title>
+    <title>DbSnap</title>
     <script src="/js/vue.js"></script>
     <link rel="icon" type="image/x-icon" href="/icon/favicon.ico">
     <!-- 引入样式 -->
@@ -21,7 +21,10 @@
     <div class="document-layout">
         <div class="container">
             <div class="nav-bar">
-                <el-page-header @back="goBack" class="title" content="数据库文档导出助手"></el-page-header>
+                <div class="title-bar">
+                    <img class="logo" src="/icon/favicon.ico" />
+                    <div class="title">DbSnap</div>
+                </div>
                 <div class="button-bar">
                     <el-button @click="formatDialogVisible = true" type="text">输出格式</el-button>
                     <el-button @click="fieldDialogVisible = true" type="text">列名编辑</el-button>
