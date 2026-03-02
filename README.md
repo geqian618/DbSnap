@@ -349,7 +349,7 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
 ## windows下载
 
 ```shell
-https://pan.baidu.com/s/1EfNnO_ps8EP-jHrBrMDeLQ?pwd=gkv7
+百度网盘链接：https://pan.baidu.com/s/175okyv8fiVAQBOB_q2jKjg?pwd=w7rq
 ```
 
 <br>
