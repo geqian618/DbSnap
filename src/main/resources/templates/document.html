@@ -22,15 +22,10 @@
         <div class="container">
             <div class="nav-bar">
                 <el-tooltip class="box-item"
-                        effect="dark"
-                        content="首页"
-                        placement="bottom">
-                    <div class="title-bar" @click="goBack">
-                        <img class="logo" src="/icon/favicon.ico"/>
-                        <div class="title">DbSnap</div>
-                    </div>
-                </el-tooltip>
-
+                <div class="title-bar" @click="goBack">
+                    <img class="logo" src="/icon/favicon.ico"/>
+                    <div class="title">DbSnap</div>
+                </div>
                 <div class="button-bar">
                     <el-button @click="formatDialogVisible = true" type="text">输出格式</el-button>
                     <el-button @click="fieldDialogVisible = true" type="text">列名编辑</el-button>
