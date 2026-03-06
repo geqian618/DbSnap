@@ -51,11 +51,11 @@
 }
 
 .nav-bar .title-bar .logo {
-    height: 27px;
+    height: 25px;
 }
 
 .nav-bar .title-bar .title {
-    font-size: 22px;
+    font-size: 20px;
     color: #1296DB;
     font-family: '幼圆体', serif; /* 保留原字体 */
     user-select: none;
