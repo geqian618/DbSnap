@@ -204,13 +204,14 @@ iframe {
     padding: 5px 0;
 }
 
+
 .el-dialog .el-form-item {
-    width: 380px;
+    width: 350px;
     margin-bottom: 0;
 }
 
 .el-dialog .el-form-item .el-input {
-    width: 250px
+    width: 230px
 }
 
 .el-dialog .el-form-item .el-slider {
