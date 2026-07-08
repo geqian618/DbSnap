@@ -356,9 +356,7 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
 
 
 
-## 推荐工作给作者
-作者23届毕业，现居重庆，大四有过9个月左右开发实习经验，到目前还没找到工作，有工作推荐的可以联系我，非常感谢。
-<br>
+## 联系作者
 <br>
 <img style="border: 1px solid gainsboro;" src="src/main/resources/static/images/wchat.jpg" alt="微信码"  width="300">
 
