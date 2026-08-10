@@ -60,7 +60,7 @@
                @close="closeDialog"
                :visible.sync="dialogFormVisible">
         <el-form :model="form" :rules="rules" ref="ruleForm">
-            <el-form-item v-for="(value, key, index) in database"
+            <el-form-item v-for="(value, key, index) in properties"
                           :key="index"
                           :label="value.label"
                           :label-width="formLabelWidth"
@@ -86,7 +86,8 @@
             formLabelWidth: '120px',
             loading: false,
             form: {},
-            database: {},
+            properties: {},
+            databases: [],
             rules: {
                 host: [
                     {required: true, message: '主机不能为空', trigger: 'blur'}
@@ -98,7 +99,6 @@
                     {required: true, message: '数据不能为空', trigger: 'blur'}
                 ],
             },
-            databases: [],
         },
         mounted() {
 
@@ -113,18 +113,21 @@
         methods: {
             selectDatabase(args) {
                 this.dialogFormVisible = true;
-                const obj = JSON.parse(JSON.stringify(args))
-                for (let key in obj) {
-                    const value = obj[key];
-                    this.$set(this.form, key, '')
-                    if (typeof value !== 'object') {
-                        Reflect.deleteProperty(obj, key);
-                        this.form[key] = value;
-                    } else {
-                        this.form[key] = value.value
+                if (args && typeof args === 'object') {
+                    // 遍历传入对象的每个键值对
+                    for (const [key, value] of Object.entries(args)) {
+                        if (key === 'properties' && typeof value === 'object') {
+                            const properties = value;
+                            for (const [propKey, propValue] of Object.entries(properties)) {
+                                this.$set(this.form, propKey, propValue?.value);
+                            }
+                            this.properties = properties;
+                        } else {
+                            // 普通值直接赋值
+                            this.$set(this.form, key, value);
+                        }
                     }
                 }
-                this.database = obj
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
