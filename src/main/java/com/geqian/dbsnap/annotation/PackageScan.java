@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface PackageScan {
 
-    String value();
+    String[] value();
 
 }

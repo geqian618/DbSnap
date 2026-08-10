@@ -1,7 +1,7 @@
 database:
   definitions:
     ######################################### MySQL数据库 #############################################
-    mysql:
+    MySQL:
       driverClass: com.mysql.cj.jdbc.Driver
 
       url: jdbc:mysql://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
@@ -27,7 +27,7 @@ database:
         order by ordinal_position
 
     ######################################### mariadb 数据库 #############################################
-    mariadb:
+    MariaDB:
       driverClass: org.mariadb.jdbc.Driver
 
       url: jdbc:mariadb://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&ueSSL=false
@@ -53,10 +53,10 @@ database:
         order by ordinal_position;
 
     ######################################### Oracle数据库 #############################################
-    oracle:
+    Oracle:
       driverClass: oracle.jdbc.OracleDriver
 
-      url: jdbc:oracle:thin:@${host}:${port}:${database}
+      url: jdbc:oracle:thin:@${host}:${port}:${sid}
 
       databases: >
         SELECT USERNAME as "labelName" FROM ALL_USERS
@@ -82,7 +82,7 @@ database:
         WHERE col.owner = #{0} AND col.table_name = #{1}
 
     ######################################### DB2数据库 #############################################
-    db2:
+    DB2:
       driverClass: com.ibm.db2.jcc.DB2Driver
 
       url: jdbc:db2://${host}:${port}/${database}
@@ -102,7 +102,7 @@ database:
         WHERE TABSCHEMA= #{0} AND TABNAME= #{0}
 
     #########################################  Postgresql 数据库 #############################################
-    postgresql:
+    PostgreSQL:
 
       driverClass: org.postgresql.Driver
 
@@ -128,7 +128,7 @@ database:
         WHERE cols.table_schema = #{0} AND cols.table_name = #{1}
 
     #########################################  sqlserver 数据库 #############################################
-    sqlserver:
+    SqlServer:
 
       driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
@@ -164,7 +164,7 @@ database:
         WHERE tbl.name = #{1};
 
     #########################################  clickhouse 数据库 #############################################
-    clickhouse:
+    Clickhouse:
       driverClass: ru.yandex.clickhouse.ClickHouseDriver
 
       url: jdbc:clickhouse://${host}:${port}/${database}
@@ -188,7 +188,7 @@ database:
         WHERE COLUMNS.table_schema = #{0} and table_name = #{1}
 
     #########################################  达梦数据库 #############################################
-    dm8:
+    Dm8:
       driverClass: dm.jdbc.driver.DmDriver
 
       url: jdbc:dm://${host}:${port}/${database}
@@ -222,7 +222,7 @@ database:
         order by atc.column_id
 
     ######################################### TIDB 数据库 #############################################
-    tidb:
+    TIDB:
       driverClass: com.mysql.cj.jdbc.Driver
 
       url: jdbc:mysql://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
@@ -248,7 +248,7 @@ database:
         order by ordinal_position;
 
     ######################################### Derby 数据库 #############################################
-    derby:
+    Derby:
       driverClass: org.apache.derby.jdbc.EmbeddedDriver
 
       url: jdbc:derby:${database}
@@ -271,7 +271,7 @@ database:
         WHERE c.REFERENCEID = t.TABLEID AND t.TABLENAME = #{1} ORDER BY c.COLUMNNUMBER
 
     ######################################### H2 数据库 #############################################
-    h2:
+    H2:
       driverClass: org.h2.Driver
 
       url: jdbc:h2:${database}
@@ -299,7 +299,7 @@ database:
         AND TABLE_NAME = #{1}
 
     ######################################### sqlite3 数据库 #############################################
-    sqlite3:
+    SQLite3:
       driverClass: org.sqlite.JDBC
 
       url: jdbc:sqlite:${database}

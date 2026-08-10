@@ -1,5 +1,7 @@
 package com.geqian.dbsnap.entity;
 
+import com.geqian.dbsnap.annotation.Marker;
+import com.geqian.dbsnap.constants.DatabaseTypes;
 import com.geqian.document4j.common.annotation.TableField;
 
 /**
@@ -8,7 +10,7 @@ import com.geqian.document4j.common.annotation.TableField;
  * @author geqian
  * @date 10:45 2023/1/5
  */
-
+@Marker(DatabaseTypes.H2)
 public class H2TableStructure extends TableStructure {
 
     @TableField(value = "长度", order = 7, exclude = true, enums = "null-> ")

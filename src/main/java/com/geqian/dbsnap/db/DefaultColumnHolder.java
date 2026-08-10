@@ -1,6 +1,6 @@
 package com.geqian.dbsnap.db;
 
-import com.geqian.dbsnap.bo.FieldDefinition;
+import com.geqian.dbsnap.common.bo.FieldDefinition;
 
 import java.util.Comparator;
 import java.util.List;

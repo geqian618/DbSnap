@@ -1,6 +1,6 @@
 package com.geqian.dbsnap.entity;
 
-import com.geqian.dbsnap.bo.FieldDefinition;
+import com.geqian.dbsnap.common.bo.FieldDefinition;
 import com.geqian.dbsnap.db.DefaultColumnHolder;
 import com.geqian.document4j.common.annotation.TableField;
 import com.geqian.document4j.html.HTMLTableInterceptor;

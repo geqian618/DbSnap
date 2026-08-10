@@ -1,11 +1,14 @@
 package com.geqian.dbsnap.entity;
 
+import com.geqian.dbsnap.annotation.Marker;
+import com.geqian.dbsnap.constants.DatabaseTypes;
 import com.geqian.document4j.common.annotation.TableField;
 
 /**
  * @author geqian
  * @date 16:41 2024/4/16
  */
+@Marker(DatabaseTypes.DM8)
 public class Dm8TableStructure extends TableStructure {
 
     @TableField(value = "长度", order = 7, exclude = true, enums = "null-> ")

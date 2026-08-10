@@ -2,7 +2,7 @@ package com.geqian.dbsnap.service.impl;
 
 import cn.hutool.core.io.IoUtil;
 import com.geqian.dbsnap.common.ResponseResult;
-import com.geqian.dbsnap.common.dto.ConnectionInfoDto;
+import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.jdbc.DruidConnectionManager;
 import com.geqian.dbsnap.service.ConnectionService;
 import com.geqian.dbsnap.utils.ThrowableUtils;
@@ -25,10 +25,10 @@ public class ConnectionServiceImpl implements ConnectionService {
 
 
     @Override
-    public ResponseResult<String> connection(ConnectionInfoDto connectionInfoDto) {
+    public ResponseResult<String> connection(AbstractDataSourceProperties properties) {
         try {
             DruidConnectionManager.clearDatasource();
-            DruidConnectionManager.setConnectionInfo(connectionInfoDto);
+            DruidConnectionManager.setConnectionInfo(properties);
             DruidConnectionManager.getConnection();
         } catch (Exception e) {
             DruidConnectionManager.clearDatasource();

@@ -1,11 +1,14 @@
 package com.geqian.dbsnap.entity;
 
+import com.geqian.dbsnap.annotation.Marker;
+import com.geqian.dbsnap.constants.DatabaseTypes;
 import com.geqian.document4j.common.annotation.TableField;
 
 /**
  * @author geqian
  * @date 17:16 2024/3/1
  */
+@Marker(DatabaseTypes.POSTGRESQL)
 public class PostgreSqlTableStructure extends TableStructure {
 
     @TableField(value = "长度", order = 7, exclude = true, enums = "null-> ")

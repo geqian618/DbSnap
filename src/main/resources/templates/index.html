@@ -40,11 +40,13 @@
 
         </div>
         <div class="icon-grid">
-            <div v-if="item.developed" class="icon-item unselectable" @click="selectDatabase(item)"
-                 v-for="(item, index) in options"
-                 :key="index">
-                <img :src="item.icon" width="100" height="100" alt=""/>
-                <span>{{ item.label }}</span>
+            <div class="icon-item unselectable"
+                 v-for="(database, index) in databases"
+                 v-if="database.developed"
+                 :key="index"
+                 @click="selectDatabase(database)">
+                <img :src="database.icon" width="100" height="100" alt=""/>
+                <span>{{ database.name || database.type }}</span>
             </div>
         </div>
     </div>
@@ -58,25 +60,12 @@
                @close="closeDialog"
                :visible.sync="dialogFormVisible">
         <el-form :model="form" :rules="rules" ref="ruleForm">
-            <el-form-item v-show="form.hostVisible" label="主机" :label-width="formLabelWidth" prop="host">
-                <el-input v-model="form.host" placeholder="请输入主机"></el-input>
-            </el-form-item>
-
-            <el-form-item v-show="form.portVisible" label="端 口" :label-width="formLabelWidth" prop="port">
-                <el-input v-model="form.port" placeholder="请输入端口号"></el-input>
-            </el-form-item>
-
-            <el-form-item v-show="form.databaseVisible" :label="form.label" :label-width="formLabelWidth"
-                          prop="database">
-                <el-input v-model="form.database" :placeholder="'请输入'+ form.label"></el-input>
-            </el-form-item>
-
-            <el-form-item v-show="form.usernameVisible" label="用户名" :label-width="formLabelWidth" prop="username">
-                <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-
-            <el-form-item v-show="form.passwordVisible" label="密码" :label-width="formLabelWidth" prop="password">
-                <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
+            <el-form-item v-for="(value, key, index) in database"
+                          :key="index"
+                          :label="value.label"
+                          :label-width="formLabelWidth"
+                          :prop="key">
+                <el-input v-model="form[key]" :placeholder="`请输入${value.label}`"></el-input>
             </el-form-item>
         </el-form>
 
@@ -96,20 +85,8 @@
             appreciationCodeVisible: false,
             formLabelWidth: '120px',
             loading: false,
-            form: {
-                label: '数据库',
-                databaseType: '',
-                host: '127.0.0.1',
-                hostVisible: true,
-                port: 0,
-                portVisible: true,
-                username: '',
-                usernameVisible: true,
-                password: '',
-                passwordVisible: true,
-                database: '',
-                databaseVisible: true,
-            },
+            form: {},
+            database: {},
             rules: {
                 host: [
                     {required: true, message: '主机不能为空', trigger: 'blur'}
@@ -121,7 +98,7 @@
                     {required: true, message: '数据不能为空', trigger: 'blur'}
                 ],
             },
-            options: [],
+            databases: [],
         },
         mounted() {
 
@@ -134,27 +111,20 @@
             });
         },
         methods: {
-            selectDatabase(item) {
+            selectDatabase(args) {
                 this.dialogFormVisible = true;
-                this.form.username = ''
-                this.form.password = ''
-                this.form.database = ''
-                this.form.databaseType = item.value;
-                this.form.port = item.defaultPort || 0
-                this.form.hostVisible = item.hostVisible !== undefined ? item.hostVisible : true
-                this.form.portVisible = item.portVisible !== undefined ? item.portVisible : true
-                this.form.databaseVisible = item.databaseVisible !== undefined ? item.databaseVisible : true
-                this.form.usernameVisible = item.usernameVisible !== undefined ? item.usernameVisible : true
-                this.form.passwordVisible = item.passwordVisible !== undefined ? item.passwordVisible : true
-                if (item.value === 'oracle') {
-                    this.form.label = 'SID'
-                } else if (item.value === 'sqlite3') {
-                    this.form.label = '数据库文件'
-                } else if (item.value === 'derby' && item.value === 'h2') {
-                    this.form.label = '数据库路径'
-                } else {
-                    this.form.label = '数据库'
+                const obj = JSON.parse(JSON.stringify(args))
+                for (let key in obj) {
+                    const value = obj[key];
+                    this.$set(this.form, key, '')
+                    if (typeof value !== 'object') {
+                        Reflect.deleteProperty(obj, key);
+                        this.form[key] = value;
+                    } else {
+                        this.form[key] = value.value
+                    }
                 }
+                this.database = obj
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -194,7 +164,7 @@
             getDatabaseConfig() {
                 axios.get('/database/config').then(res => {
                     if (res.data.code === 200) {
-                        this.options = JSON.parse(res.data.data);
+                        this.databases = JSON.parse(res.data.data);
                     } else {
                         this.showMessage('error', res.data.message)
                     }

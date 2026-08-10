@@ -1,127 +1,359 @@
 [
   {
+    "type": "MySQL",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 3306,
-    "label": "MySQL",
-    "value": "mysql",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1",
+      "required": true
+    },
+    "port": {
+      "label": "端口",
+      "value": 3306,
+      "required": true
+    },
+    "database": {
+      "label": "数据库",
+      "value": "mysql",
+      "required": true
+    },
+    "username": {
+      "label": "用户名",
+      "value": "",
+      "required": false
+    },
+    "password": {
+      "label": "密码",
+      "value": "",
+      "required": false
+    },
     "icon": "/icon/svg/database/MySQL.svg"
   },
   {
+    "type": "Oracle",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 1521,
-    "label": "Oracle",
-    "value": "oracle",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1",
+      "required": false
+    },
+    "port": {
+      "label": "端口",
+      "value": 1521,
+      "required": false
+    },
+    "sid": {
+      "label": "SID",
+      "value": "",
+      "required": false
+    },
+    "username": {
+      "label": "用户名",
+      "value": "",
+      "required": false
+    },
+    "password": {
+      "label": "密码",
+      "value": "",
+      "required": false
+    },
     "icon": "/icon/svg/database/Oracle.svg"
   },
   {
+    "type": "PostgreSQL",
     "developed": true,
-    "embedded": false,
-    "label": "PostgreSQL",
-    "defaultPort": 5432,
-    "value": "postgresql",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 5432
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/PostgreSQL.svg"
   },
   {
+    "type": "SqlServer",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 1433,
-    "label": "SqlServer",
-    "value": "sqlserver",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 1433
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/SQLServer.svg"
   },
   {
+    "type": "MariaDB",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 3306,
-    "label": "MariaDB",
-    "value": "mariadb",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 3306
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/MariaDB.svg"
   },
   {
+    "type": "DB2",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 50000,
-    "label": "DB2",
-    "value": "db2",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 50000
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/DB2.svg"
   },
   {
+    "type": "Clickhouse",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 8123,
-    "label": "Clickhouse",
-    "value": "clickhouse",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 8123
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/clickhouse.svg"
   },
   {
+    "type": "Dm8",
+    "name": "达梦",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 5236,
-    "label": "达梦",
-    "value": "dm8",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 5236
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/dm8.svg"
   },
   {
-    "developed": false,
-    "embedded": false,
-    "defaultPort": 5866,
-    "label": "瀚高",
-    "value": "highgo",
-    "icon": "/icon/svg/database/瀚高.svg"
-  },
-  {
-    "developed": false,
-    "embedded": false,
-    "defaultPort": 54321,
-    "label": "人大金仓",
-    "value": "kingbase",
-    "icon": "/icon/svg/database/人大金仓.svg"
-  },
-  {
-    "developed": false,
-    "embedded": false,
-    "defaultPort": 5138,
-    "label": "虚谷",
-    "value": "xugu",
-    "icon": "/icon/svg/database/虚谷.svg"
-  },
-  {
+    "type": "TIDB",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 4000,
-    "label": "TIDB",
-    "value": "tidb",
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 4000
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/tidb.svg"
   },
   {
+    "type": "HANGAO",
+    "name": "瀚高",
+    "developed": false,
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 5866
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
+    "icon": "/icon/svg/database/瀚高.svg"
+  },
+  {
+    "type": "RENDAJINCHANG",
+    "name": "人大金仓",
+    "developed": false,
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 54321
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
+    "icon": "/icon/svg/database/人大金仓.svg"
+  },
+  {
+    "type": "XUGU",
+    "name": "虚谷",
+    "developed": false,
+    "host": {
+      "label": "主机",
+      "value": "127.0.0.1"
+    },
+    "port": {
+      "label": "端口",
+      "value": 5138
+    },
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
+    "icon": "/icon/svg/database/虚谷.svg"
+  },
+  {
+    "type": "Derby",
     "developed": true,
-    "embedded": true,
-    "label": "Derby",
-    "value": "derby",
-    "hostVisible": false,
-    "portVisible": false,
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/derby.svg"
   },
   {
+    "type": "H2",
     "developed": true,
-    "embedded": true,
-    "label": "H2",
-    "value": "h2",
-    "hostVisible": false,
-    "portVisible": false,
+    "database": {
+      "label": "数据库",
+      "value": ""
+    },
+    "username": {
+      "label": "用户名",
+      "value": ""
+    },
+    "password": {
+      "label": "密码",
+      "value": ""
+    },
     "icon": "/icon/svg/database/H2.svg"
   },
   {
+    "type": "SQLite3",
     "developed": true,
-    "embedded": true,
-    "label": "SQLite3",
-    "value": "sqlite3",
-    "hostVisible": false,
-    "portVisible": false,
-    "usernameVisible": false,
-    "passwordVisible": false,
+    "database": {
+      "label": "文件路径",
+      "value": ""
+    },
     "icon": "/icon/svg/database/sqlite.svg"
   }
 ]

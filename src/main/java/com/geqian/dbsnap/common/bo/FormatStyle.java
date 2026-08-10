@@ -1,4 +1,4 @@
-package com.geqian.dbsnap.bo;
+package com.geqian.dbsnap.common.bo;
 
 import lombok.Data;
 

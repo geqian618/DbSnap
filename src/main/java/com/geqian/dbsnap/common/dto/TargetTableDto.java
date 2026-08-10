@@ -1,7 +1,7 @@
 package com.geqian.dbsnap.common.dto;
 
-import com.geqian.dbsnap.bo.FieldDefinition;
-import com.geqian.dbsnap.bo.FormatStyle;
+import com.geqian.dbsnap.common.bo.FieldDefinition;
+import com.geqian.dbsnap.common.bo.FormatStyle;
 import com.geqian.dbsnap.entity.TreeNode;
 import lombok.Data;
 

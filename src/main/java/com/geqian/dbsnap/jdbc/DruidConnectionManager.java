@@ -2,7 +2,7 @@ package com.geqian.dbsnap.jdbc;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.geqian.dbsnap.common.dto.ConnectionInfoDto;
+import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.db.CurrentDatabaseMetadataHolder;
 import com.geqian.dbsnap.db.DatabaseMetaData;
 import com.geqian.dbsnap.db.DatabaseMetadataFactory;
@@ -18,18 +18,18 @@ public class DruidConnectionManager {
 
     private static volatile DruidDataSource dataSource;
 
-    private static ConnectionInfoDto connectionInfo;
+    private static AbstractDataSourceProperties dataSourceProperties;
 
 
-    public static void setConnectionInfo(ConnectionInfoDto connectionInfoDto) {
-        DruidConnectionManager.connectionInfo = connectionInfoDto;
+    public static void setConnectionInfo(AbstractDataSourceProperties dataSourceProperties) {
+        DruidConnectionManager.dataSourceProperties = dataSourceProperties;
     }
 
     public static void initDataSource() {
         try {
-            DatabaseMetaData metadata = DatabaseMetadataFactory.getMetaData(connectionInfo.getDatabaseType());
+            DatabaseMetaData metadata = DatabaseMetadataFactory.getMetaData(dataSourceProperties.getType());
             Class.forName(metadata.getDriverClass());
-            String url = metadata.getUrl(connectionInfo.getDatabase(), connectionInfo.getHost(), connectionInfo.getPort());
+            String url = dataSourceProperties.buildUrl(metadata.getUrl());
             Properties properties = new Properties();
             String threadSize = String.valueOf(Runtime.getRuntime().availableProcessors() + 1);
             //初始化连接数量
@@ -40,8 +40,8 @@ public class DruidConnectionManager {
             properties.setProperty("maxWait", "30000");
             properties.setProperty("driverClassName", metadata.getDriverClass());
             properties.setProperty("url", url);
-            properties.setProperty("username", connectionInfo.getUsername());
-            properties.setProperty("password", connectionInfo.getPassword());
+            properties.setProperty("username", dataSourceProperties.getUsername());
+            properties.setProperty("password", dataSourceProperties.getPassword());
             dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
             // 失败后重连的次数
             dataSource.setConnectionErrorRetryAttempts(0);
@@ -69,8 +69,8 @@ public class DruidConnectionManager {
     }
 
 
-    public static ConnectionInfoDto getConnectionInfo() {
-        return connectionInfo;
+    public static AbstractDataSourceProperties getDataSourceProperties() {
+        return dataSourceProperties;
     }
 
     public static void clearDatasource() {

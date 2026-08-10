@@ -6,7 +6,7 @@ import com.geqian.dbsnap.jdbc.DruidConnectionManager;
 import com.geqian.dbsnap.jdbc.JDBCHelper;
 import com.geqian.dbsnap.entity.TableStructure;
 import com.geqian.dbsnap.context.TableStructureFactory;
-import com.geqian.dbsnap.bo.TableDefinition;
+import com.geqian.dbsnap.common.bo.TableDefinition;
 import com.geqian.dbsnap.entity.TreeNode;
 import com.geqian.dbsnap.utils.UUIDUtils;
 import lombok.SneakyThrows;
@@ -110,8 +110,8 @@ public class DatabaseMapper {
      */
     @SneakyThrows(Exception.class)
     public List<? extends TableStructure> getTableStructureList(String schemaName, String tableName) {
-        String databaseType = DruidConnectionManager.getConnectionInfo().getDatabaseType();
-        Class<? extends TableStructure> classType = TableStructureFactory.getTableStructureType(databaseType);
+        String dbType = DruidConnectionManager.getDataSourceProperties().getType();
+        Class<? extends TableStructure> classType = TableStructureFactory.getType(dbType);
         if (classType != null) {
             DatabaseMetaData metadata = CurrentDatabaseMetadataHolder.getMetaData();
             String sql = metadata.getTableStructure();

@@ -1,5 +1,6 @@
 package com.geqian.dbsnap.utils;
 
+import com.geqian.dbsnap.annotation.Marker;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -12,9 +13,11 @@ import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ClassResourceScanner {
 
@@ -25,6 +28,16 @@ public class ClassResourceScanner {
      */
     public List<ClassResourceWrapper> doScan(String packageName, Predicate<ClassResourceWrapper> typeFilter) {
         return doScan(Collections.singletonList(packageName), typeFilter);
+    }
+
+
+    /**
+     * @param packageNames 扫描的包
+     * @param typeFilter  过滤器，参数说明：①包路径 ②文件名称
+     * @return
+     */
+    public List<ClassResourceWrapper> doScan(String[] packageNames, Predicate<ClassResourceWrapper> typeFilter) {
+        return doScan(Arrays.stream(packageNames).collect(Collectors.toList()), typeFilter);
     }
 
 
@@ -103,7 +116,7 @@ public class ClassResourceScanner {
             return type != null && type.isInterface() && !type.isAnnotation();
         }
 
-        public boolean isAnnotation() {
+        public boolean isAnnotation(Class<Marker> markerClass) {
             return type != null && type.isAnnotation();
         }
 

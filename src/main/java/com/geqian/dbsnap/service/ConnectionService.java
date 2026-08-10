@@ -1,7 +1,7 @@
 package com.geqian.dbsnap.service;
 
-import com.geqian.dbsnap.common.dto.ConnectionInfoDto;
 import com.geqian.dbsnap.common.ResponseResult;
+import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
 
 /**
  * @author geqian
@@ -9,7 +9,7 @@ import com.geqian.dbsnap.common.ResponseResult;
  */
 public interface ConnectionService {
 
-    ResponseResult<String> connection(ConnectionInfoDto dataSourceDto);
+    ResponseResult<String> connection(AbstractDataSourceProperties properties);
 
     ResponseResult<String> getDatabaseConfig();
 

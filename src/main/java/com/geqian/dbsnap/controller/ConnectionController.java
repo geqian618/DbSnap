@@ -1,7 +1,7 @@
 package com.geqian.dbsnap.controller;
 
-import com.geqian.dbsnap.common.dto.ConnectionInfoDto;
 import com.geqian.dbsnap.common.ResponseResult;
+import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.jdbc.DruidConnectionManager;
 import com.geqian.dbsnap.service.ConnectionService;
 import org.springframework.stereotype.Controller;
@@ -44,7 +44,9 @@ public class ConnectionController {
 
     @ResponseBody
     @PostMapping(value = "/dataSource/connection")
-    public ResponseResult<String> connection(@RequestBody ConnectionInfoDto dataSourceDto) {
-        return connectionService.connection(dataSourceDto);
+    public ResponseResult<String> connection(@RequestBody AbstractDataSourceProperties properties) {
+        System.out.println(properties.getClass());
+        System.out.println(properties);
+        return connectionService.connection(properties);
     }
 }

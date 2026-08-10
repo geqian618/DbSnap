@@ -1,9 +1,9 @@
 package com.geqian.dbsnap.service.impl;
 
-import com.geqian.dbsnap.bo.FieldDefinition;
-import com.geqian.dbsnap.bo.FormatStyle;
-import com.geqian.dbsnap.bo.TableDefinition;
-import com.geqian.dbsnap.bo.TableInfo;
+import com.geqian.dbsnap.common.bo.FieldDefinition;
+import com.geqian.dbsnap.common.bo.FormatStyle;
+import com.geqian.dbsnap.common.bo.TableDefinition;
+import com.geqian.dbsnap.common.bo.TableInfo;
 import com.geqian.dbsnap.common.ResponseResult;
 import com.geqian.dbsnap.common.dto.TableSelectDto;
 import com.geqian.dbsnap.common.dto.TargetTableDto;
@@ -142,9 +142,9 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         ColumnsVo columnsVo = new ColumnsVo();
 
-        String dbType = DruidConnectionManager.getConnectionInfo().getDatabaseType();
+        String dbType = DruidConnectionManager.getDataSourceProperties().getType();
 
-        Class<? extends TableStructure> classType = TableStructureFactory.getTableStructureType(dbType);
+        Class<? extends TableStructure> classType = TableStructureFactory.getType(dbType);
 
         List<Field> fields = ReflectionUtils.getFieldAllContainSuperclass(classType, field -> true);
 

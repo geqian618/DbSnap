@@ -1,6 +1,6 @@
 package com.geqian.dbsnap.common.vo;
 
-import com.geqian.dbsnap.bo.FieldDefinition;
+import com.geqian.dbsnap.common.bo.FieldDefinition;
 import lombok.Data;
 
 import java.util.List;
