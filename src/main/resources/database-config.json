@@ -16,9 +16,9 @@
     "developed": true,
     "icon": "/icon/svg/database/Oracle.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": false },
-      { "key": "port", "label": "端口", "value": 1521, "required": false },
-      { "key": "sid", "label": "SID", "value": "", "required": false },
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 1521, "required": true },
+      { "key": "sid", "label": "SID", "value": "", "required": true },
       { "key": "username", "label": "用户名", "value": "", "required": false },
       { "key": "password", "label": "密码", "value": "", "required": false }
     ]
@@ -28,11 +28,11 @@
     "developed": true,
     "icon": "/icon/svg/database/PostgreSQL.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 5432 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 5432, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -40,11 +40,11 @@
     "developed": true,
     "icon": "/icon/svg/database/SQLServer.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 1433 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 1433, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -52,11 +52,11 @@
     "developed": true,
     "icon": "/icon/svg/database/MariaDB.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 3306 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 3306, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -64,11 +64,11 @@
     "developed": true,
     "icon": "/icon/svg/database/DB2.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 50000 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 50000, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -76,24 +76,24 @@
     "developed": true,
     "icon": "/icon/svg/database/clickhouse.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 8123 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 8123, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
-    "type": "Dm8",
-    "name": "达梦",
+    "type": "DM8",
+    "aliasName": "达梦",
     "developed": true,
     "icon": "/icon/svg/database/dm8.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 5236 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 5236, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -101,50 +101,50 @@
     "developed": true,
     "icon": "/icon/svg/database/tidb.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 4000 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 4000, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
-    "type": "HANGAO",
-    "name": "瀚高",
+    "type": "HighGo",
+    "aliasName": "瀚高",
     "developed": false,
     "icon": "/icon/svg/database/瀚高.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 5866 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 5866, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
-    "type": "RENDAJINCHANG",
-    "name": "人大金仓",
+    "type": "Kingbase",
+    "aliasName": "人大金仓",
     "developed": false,
     "icon": "/icon/svg/database/人大金仓.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 54321 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 54321, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
-    "type": "XUGU",
-    "name": "虚谷",
+    "type": "XuGu",
+    "aliasName": "虚谷",
     "developed": false,
     "icon": "/icon/svg/database/虚谷.svg",
     "properties": [
-      { "key": "host", "label": "主机", "value": "127.0.0.1" },
-      { "key": "port", "label": "端口", "value": 5138 },
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 5138, "required": true },
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -152,9 +152,9 @@
     "developed": true,
     "icon": "/icon/svg/database/derby.svg",
     "properties": [
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false}
     ]
   },
   {
@@ -162,9 +162,9 @@
     "developed": true,
     "icon": "/icon/svg/database/H2.svg",
     "properties": [
-      { "key": "database", "label": "数据库", "value": "" },
-      { "key": "username", "label": "用户名", "value": "" },
-      { "key": "password", "label": "密码", "value": "" }
+      { "key": "database", "label": "数据库", "value": "", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
     ]
   },
   {
@@ -172,7 +172,7 @@
     "developed": true,
     "icon": "/icon/svg/database/sqlite.svg",
     "properties": [
-      { "key": "database", "label": "数据库", "value": "" }
+      { "key": "database", "label": "数据库", "value": "", "required": true }
     ]
   }
 ]

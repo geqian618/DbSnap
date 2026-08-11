@@ -12,10 +12,10 @@ public final class DatabaseTypes {
     public static final String MARIADB = "MariaDB";
     public static final String DB2 = "DB2";
     public static final String CLICKHOUSE = "Clickhouse";
-    public static final String DM8 = "Dm8";
-    public static final String HANGAO = "HANGAO";
-    public static final String RENDAJINCHANG = "RENDAJINCHANG";
-    public static final String XUGU = "XUGU";
+    public static final String DM8 = "DM8";
+    public static final String HIGH_GO  = "HighGo";
+    public static final String KING_BASE = "Kingbase";
+    public static final String XU_GU = "XuGu";
     public static final String TIDB = "TIDB";
     public static final String DERBY = "Derby";
     public static final String H2 = "H2";

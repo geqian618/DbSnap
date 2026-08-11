@@ -24,18 +24,18 @@
         <div class="action-items">
             <el-tooltip class="item" effect="dark" content="前往Gitee" placement="bottom">
                 <a href="https://gitee.com/geqian618/DbSnap">
-                    <img src="/icon/svg/gitee.svg" width="35">
+                    <img src="/icon/svg/gitee.svg" width="35" alt="gitee">
                 </a>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="前往Github" placement="bottom">
                 <a href="https://github.com/geqian618/DBSnap">
-                    <img src="/icon/svg/github.svg" width="35">
+                    <img src="/icon/svg/github.svg" width="35" alt="github">
                 </a>
             </el-tooltip>
 
             <el-popover placement="bottom" width="300" trigger="hover">
-                <img src="/images/赞赏码.jpg" width="300">
-                <img slot="reference" src="/icon/svg/admire.svg" width="35">
+                <img src="/images/赞赏码.jpg" width="300" alt="赞赏码">
+                <img slot="reference" src="/icon/svg/admire.svg" width="35" alt="赞赏">
             </el-popover>
 
         </div>
@@ -46,7 +46,7 @@
                  :key="index"
                  @click="selectDatabase(database)">
                 <img :src="database.icon" width="100" height="100" alt=""/>
-                <span>{{ database.name || database.type }}</span>
+                <span>{{ database.aliasName || database.type }}</span>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
                element-loading-background="rgba(0, 0, 0, 0.8)"
                width="600px"
                title="数据源"
-               @close="closeDialog"
+               @close="handleClose"
                :visible.sync="dialogFormVisible">
         <el-form :model="form" :rules="rules" ref="ruleForm">
             <el-form-item v-for="({key,label}, index) in properties"
@@ -82,23 +82,12 @@
         el: '#app',
         data: {
             dialogFormVisible: false,
-            appreciationCodeVisible: false,
             formLabelWidth: '120px',
             loading: false,
-            form: {},
-            properties: [],
             databases: [],
-            rules: {
-                host: [
-                    {required: true, message: '主机不能为空', trigger: 'blur'}
-                ],
-                port: [
-                    {required: true, message: '端口不能为空', trigger: 'blur'}
-                ],
-                database: [
-                    {required: true, message: '数据不能为空', trigger: 'blur'}
-                ],
-            },
+            properties: [],
+            form: {},
+            rules: {},
         },
         mounted() {
 
@@ -116,15 +105,22 @@
                 if (args && typeof args === 'object') {
                     // 遍历传入对象的每个键值对
                     for (const [key, value] of Object.entries(args)) {
+                        const newRules = {}
                         if (key === 'properties' && Array.isArray(value)) {
-                            for (const {key: propKey, value: propValue} of value) {
+                            for (const {key: propKey, value: propValue, label, required = false} of value) {
                                 this.$set(this.form, propKey, propValue);
+                                newRules[propKey] = [{
+                                    required,
+                                    message: `${label}不能为空`,
+                                    trigger: 'blur'
+                                }]
                             }
                             this.properties = value;
                         } else {
                             // 普通值直接赋值
                             this.$set(this.form, key, value);
                         }
+                        this.rules = newRules;
                     }
                 }
             },
@@ -137,8 +133,12 @@
                     }
                 });
             },
-            closeDialog() {
-                this.$refs['ruleForm'].resetFields();
+            handleClose() {
+                if (this.$refs.ruleForm) {
+                    this.$refs.ruleForm.clearValidate();
+                }
+                this.form = {};
+                this.rules = {};
             },
             connection() {
                 this.loading = true

@@ -188,7 +188,7 @@ database:
         WHERE COLUMNS.table_schema = #{0} and table_name = #{1}
 
     #########################################  达梦数据库 #############################################
-    Dm8:
+    DM8:
       driverClass: dm.jdbc.driver.DmDriver
 
       url: jdbc:dm://${host}:${port}/${database}
