@@ -60,12 +60,12 @@
                @close="closeDialog"
                :visible.sync="dialogFormVisible">
         <el-form :model="form" :rules="rules" ref="ruleForm">
-            <el-form-item v-for="(value, key, index) in properties"
+            <el-form-item v-for="({key,label}, index) in properties"
                           :key="index"
-                          :label="value.label"
+                          :label="label"
                           :label-width="formLabelWidth"
                           :prop="key">
-                <el-input v-model="form[key]" :placeholder="`请输入${value.label}`"></el-input>
+                <el-input v-model="form[key]" :placeholder="`请输入${label}`"></el-input>
             </el-form-item>
         </el-form>
 
@@ -86,7 +86,7 @@
             formLabelWidth: '120px',
             loading: false,
             form: {},
-            properties: {},
+            properties: [],
             databases: [],
             rules: {
                 host: [
@@ -116,12 +116,11 @@
                 if (args && typeof args === 'object') {
                     // 遍历传入对象的每个键值对
                     for (const [key, value] of Object.entries(args)) {
-                        if (key === 'properties' && typeof value === 'object') {
-                            const properties = value;
-                            for (const [propKey, propValue] of Object.entries(properties)) {
-                                this.$set(this.form, propKey, propValue?.value);
+                        if (key === 'properties' && Array.isArray(value)) {
+                            for (const {key: propKey, value: propValue} of value) {
+                                this.$set(this.form, propKey, propValue);
                             }
-                            this.properties = properties;
+                            this.properties = value;
                         } else {
                             // 普通值直接赋值
                             this.$set(this.form, key, value);
