@@ -56,9 +56,10 @@
                element-loading-spinner="el-icon-loading"
                element-loading-background="rgba(0, 0, 0, 0.8)"
                width="600px"
-               title="数据源"
+               title="数据库连接信息"
                destroy-on-close
                @close="handleClose"
+               @closed="handleClosed"
                :visible.sync="dialogFormVisible">
         <el-form :model="form" :rules="rules" ref="ruleForm">
             <el-form-item v-for="({key,label}, index) in properties"
@@ -135,14 +136,16 @@
                 });
             },
             handleClose() {
-                this.form = {};
-                this.rules = {};
-                this.properties = [];
                 this.$nextTick(() => {
                     if (this.$refs.ruleForm) {
                         this.$refs.ruleForm.clearValidate();
                     }
                 });
+            },
+            handleClosed() {
+                this.form = {};
+                this.rules = {};
+                this.properties = [];
             },
             connection() {
                 this.loading = true
