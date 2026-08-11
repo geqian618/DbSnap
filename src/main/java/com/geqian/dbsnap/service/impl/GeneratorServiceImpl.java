@@ -193,6 +193,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             WordStyle.Font tableNameFontSize = WordStyle.Font.fontSize(tableFontSize);
             WordStyle.Font cellFontSize = WordStyle.Font.fontSize(10);
 
+            WordStyle.Paragraph spacing = WordStyle.Paragraph.spacing((int) (0.3 * tableFontSize), (int) (0.3 * tableFontSize));
 
             for (TreeNode schemaNode : schemaNodes) {
                 String schemaName = schemaNode.getLabelName();
@@ -229,7 +230,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        wordBuilder.paragraph(tableName, calibri, tableBold ? WordStyle.Font.BOLD : null, tableNameFontSize);
+                        wordBuilder.paragraph(tableName, calibri, tableBold ? WordStyle.Font.BOLD : null, tableNameFontSize, spacing);
                     }
                     wordBuilder.table(tableInfo.getDataList(), calibri, cellFontSize);
                     wordBuilder.blankRow().blankRow();
@@ -268,8 +269,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
             PDFStyle.Font cellFontSize = PDFStyle.Font.fontSize(10);
 
-            PDFStyle.Paragraph paragraphSpacing = PDFStyle.Paragraph.paragraphSpacing(1.3f);
-
+            PDFStyle.Paragraph paragraphSpacing = PDFStyle.Paragraph.spacing(0.3F, 0.3F);
 
             for (TreeNode schemaNode : schemaNodes) {
 
