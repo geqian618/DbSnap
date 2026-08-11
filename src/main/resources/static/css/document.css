@@ -182,18 +182,16 @@ iframe {
 .checkbox-group {
     padding: 0 25px;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    column-gap: 40px;
 }
 
-.checkbox-group {
-    padding: 0 25px;
-    display: flex;
-    flex-wrap: wrap;
+.checkbox-group .el-checkbox {
+    margin-right: 0;
 }
 
 .checkbox-group .el-checkbox .el-checkbox__label {
-    width: 150px;
+    width: 200px;
 }
 
 .checkbox-group .el-input-number {
@@ -202,6 +200,42 @@ iframe {
 
 .checkbox-item {
     padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item .drag-handle {
+    width: 16px;
+    height: 24px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    cursor: move;
+    background-image: radial-gradient(circle, #a8abb2 1.2px, transparent 1.6px);
+    background-size: 8px 8px;
+    background-repeat: repeat;
+    transition: background-image .2s;
+}
+
+.checkbox-item:hover .drag-handle {
+    background-image: radial-gradient(circle, #606266 1.2px, transparent 1.6px);
+}
+
+.checkbox-item .order-badge {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #e4e7ed;
+    color: #606266;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    user-select: none;
+}
+
+.checkbox-item.dragging {
+    opacity: 0.4;
 }
 
 
@@ -216,5 +250,63 @@ iframe {
 
 .el-dialog .el-form-item .el-slider {
     width: 200px
+}
+
+/* 输出格式对话框 - 板块卡片分组 */
+.format-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.format-group {
+    background: #f7f8fa;
+    border: 1px solid #ebeef5;
+    border-radius: 8px;
+    padding: 14px 16px 12px;
+}
+
+.format-group__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #303133;
+    margin-bottom: 12px;
+    padding-left: 10px;
+    border-left: 3px solid #409eff;
+    line-height: 1.2;
+}
+
+.format-group__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+}
+
+.format-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.format-item__label {
+    width: 60px;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #606266;
+}
+
+.format-item .el-input,
+.format-item .el-slider,
+.format-item .el-checkbox {
+    flex: 1;
+    min-width: 0;
+}
+
+.format-item--span-2 {
+    grid-column: span 2;
+}
+
+.el-dialog__body {
+    padding: 16px 20px;
 }
 

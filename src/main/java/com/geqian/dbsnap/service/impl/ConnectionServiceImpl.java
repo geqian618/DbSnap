@@ -2,7 +2,7 @@ package com.geqian.dbsnap.service.impl;
 
 import cn.hutool.core.io.IoUtil;
 import com.geqian.dbsnap.common.ResponseResult;
-import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
+import com.geqian.dbsnap.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.jdbc.DruidConnectionManager;
 import com.geqian.dbsnap.service.ConnectionService;
 import com.geqian.dbsnap.utils.ThrowableUtils;

@@ -172,7 +172,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        WordBuilder wordBuilder = WordBuilder.create(outputStream);
+        WordBuilder wordBuilder = WordBuilder.create();
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -192,6 +192,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             WordStyle.Font titleFontSize = WordStyle.Font.fontSize(databaseFontSize);
             WordStyle.Font tableNameFontSize = WordStyle.Font.fontSize(tableFontSize);
             WordStyle.Font cellFontSize = WordStyle.Font.fontSize(10);
+
 
             for (TreeNode schemaNode : schemaNodes) {
                 String schemaName = schemaNode.getLabelName();
@@ -235,7 +236,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 }
             }
         }
-        wordBuilder.build();
+        wordBuilder.asOutputStream(outputStream);
     }
 
 
@@ -330,7 +331,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        MarkDownBuilder markDownBuilder = MarkDownBuilder.create(outputStream);
+        MarkDownBuilder markDownBuilder = MarkDownBuilder.create();
 
         MarkDownStyle.Font databaseNameFontSize = MarkDownStyle.Font.fontSize(databaseFontSize);
         MarkDownStyle.Font tableNameFontSize = MarkDownStyle.Font.fontSize(tableFontSize);
@@ -388,7 +389,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 markDownBuilder.blankRow();
             }
         }
-        markDownBuilder.build();
+        markDownBuilder.asOutputStream(outputStream);
     }
 
 
@@ -397,7 +398,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         DefaultColumnHolder.setDefaultColumns(targetTableDto.getDefaultColumns());
 
-        HTMLBuilder htmlBuilder = HTMLBuilder.create(outputStream).setCatalogue(true);
+        HTMLBuilder htmlBuilder = HTMLBuilder.create().setCatalogue(true);
 
         htmlBuilder.setStyleSelector("table{font-size:12px}");
         FormatStyle formatStyle = targetTableDto.getFormatStyle();
@@ -410,7 +411,8 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         HTMLStyle.Font schemaNameFontSize = HTMLStyle.Font.fontsize(databaseFontSize + "px");
         HTMLStyle.Font tableNameFontSize = HTMLStyle.Font.fontsize(tableFontSize + "px");
-        HTMLStyle.Padding paddingBottom = HTMLStyle.Padding.bottom("15px");
+        HTMLStyle.Padding padding = HTMLStyle.Padding.bottom("10px");
+
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
         if (!CollectionUtils.isEmpty(treeNodeList)) {
@@ -424,7 +426,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    htmlBuilder.title(databaseName, HTMLStyle.Title.LEVEL_1, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, paddingBottom);
+                    htmlBuilder.title(databaseName, HTMLStyle.Title.LEVEL_1, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, padding);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
@@ -454,7 +456,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        htmlBuilder.title(tableName, HTMLStyle.Title.LEVEL_2, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, paddingBottom);
+                        htmlBuilder.title(tableName, HTMLStyle.Title.LEVEL_2, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, padding);
                     }
                     htmlBuilder.table(tableInfo.getDataList());
                     htmlBuilder.blankRow().blankRow();
@@ -465,7 +467,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                 htmlBuilder.blankRow();
             }
         }
-        htmlBuilder.build();
+        htmlBuilder.asOutputStream(outputStream);
     }
 
 }

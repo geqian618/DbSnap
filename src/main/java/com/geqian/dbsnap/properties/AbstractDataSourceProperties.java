@@ -1,4 +1,4 @@
-package com.geqian.dbsnap.common.properties;
+package com.geqian.dbsnap.properties;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

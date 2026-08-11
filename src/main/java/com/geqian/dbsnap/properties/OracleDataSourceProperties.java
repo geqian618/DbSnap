@@ -1,4 +1,4 @@
-package com.geqian.dbsnap.common.properties;
+package com.geqian.dbsnap.properties;
 
 import com.geqian.dbsnap.annotation.Marker;
 import com.geqian.dbsnap.constants.DatabaseTypes;

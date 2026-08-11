@@ -1,7 +1,7 @@
 package com.geqian.dbsnap.service;
 
 import com.geqian.dbsnap.common.ResponseResult;
-import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
+import com.geqian.dbsnap.properties.AbstractDataSourceProperties;
 
 /**
  * @author geqian

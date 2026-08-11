@@ -2,7 +2,7 @@ package com.geqian.dbsnap.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
+import com.geqian.dbsnap.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.serializer.DataSourcePropertiesDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -3,7 +3,7 @@ package com.geqian.dbsnap.context;
 import com.geqian.dbsnap.DbSnapApplication;
 import com.geqian.dbsnap.annotation.Marker;
 import com.geqian.dbsnap.annotation.PackageScan;
-import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
+import com.geqian.dbsnap.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.utils.ClassResourceScanner;
 import org.springframework.util.CollectionUtils;
 

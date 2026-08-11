@@ -56,7 +56,7 @@
                element-loading-spinner="el-icon-loading"
                element-loading-background="rgba(0, 0, 0, 0.8)"
                width="600px"
-               title="数据库连接信息"
+               title="连接数据库"
                destroy-on-close
                @close="handleClose"
                @closed="handleClosed"
@@ -67,7 +67,10 @@
                           :label="label"
                           :label-width="formLabelWidth"
                           :prop="key">
-                <el-input v-model="form[key]" :placeholder="`请输入${label}`"></el-input>
+                <el-input v-model="form[key]"
+                          :placeholder="`请输入${label}`"
+                          :show-password="key === 'password'">
+                </el-input>
             </el-form-item>
         </el-form>
 
@@ -92,16 +95,17 @@
             rules: {},
         },
         mounted() {
-
             this.getDatabaseConfig()
-
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    this.submitForm('ruleForm')
-                }
-            });
+            this.handleKeyDown();
         },
         methods: {
+            handleKeyDown() {
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        this.submitForm('ruleForm')
+                    }
+                });
+            },
             selectDatabase(args) {
                 this.dialogFormVisible = true;
                 if (args && typeof args === 'object') {

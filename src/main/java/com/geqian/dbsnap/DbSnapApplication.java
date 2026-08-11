@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@PackageScan({"com.geqian.dbsnap.entity", "com.geqian.dbsnap.common.properties"})
+@PackageScan({"com.geqian.dbsnap.entity", "com.geqian.dbsnap.properties"})
 public class DbSnapApplication {
 
     public static void main(String[] args) {

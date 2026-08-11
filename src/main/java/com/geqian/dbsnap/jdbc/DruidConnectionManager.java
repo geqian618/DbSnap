@@ -2,7 +2,7 @@ package com.geqian.dbsnap.jdbc;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.geqian.dbsnap.common.properties.AbstractDataSourceProperties;
+import com.geqian.dbsnap.properties.AbstractDataSourceProperties;
 import com.geqian.dbsnap.db.CurrentDatabaseMetadataHolder;
 import com.geqian.dbsnap.db.DatabaseMetaData;
 import com.geqian.dbsnap.db.DatabaseMetadataFactory;

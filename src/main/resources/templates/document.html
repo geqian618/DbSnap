@@ -26,8 +26,8 @@
                     <div class="title">DbSnap</div>
                 </div>
                 <div class="button-bar">
-                    <el-button @click="formatDialogVisible = true" type="text">输出格式</el-button>
-                    <el-button @click="fieldDialogVisible = true" type="text">列名编辑</el-button>
+                    <el-button @click="formatDialogVisible = true" type="text">文档格式</el-button>
+                    <el-button @click="fieldDialogVisible = true" type="text">表格列编辑</el-button>
                     <el-button @click="preview" type="text">预览文档</el-button>
                     <el-dropdown class="unselectable" @command="download" trigger="click">
                         <span class="el-dropdown-link">下载文档
@@ -85,57 +85,89 @@
     </div>
 
     <el-dialog :lock-scroll="false"
-               title="列名编辑"
+               title="表格列编辑"
                @close="resetColumns"
                :visible.sync="fieldDialogVisible"
                width="660px">
         <el-checkbox-group class="checkbox-group" v-model="tempDefaultColumns">
-            <div :key="index" v-for="(item,index) of tempColumns" class="checkbox-item">
+            <div :key="item.value"
+                 v-for="(item,index) of tempColumns"
+                 class="checkbox-item"
+                 :class="{dragging: index === dragIndex}"
+                 @dragover.prevent="dragOver(index)"
+                 @drop="dropItem"
+                 @dragend="dragEnd">
+                <span class="order-badge">{{ index + 1 }}</span>
+                <i class="drag-handle" title="拖拽排序" draggable="true"
+                   @dragstart="dragStart(index, $event)"></i>
                 <el-checkbox class="checkbox" :label="item.value">
-                    <el-input size="small" v-model="item.label" :placeholder="placeholders[index]"></el-input>
+                    <el-input size="small" v-model="item.label" :placeholder="placeholderMap[item.value]"></el-input>
                 </el-checkbox>
-                <el-input-number size="small" v-model="item.order"></el-input-number>
             </div>
         </el-checkbox-group>
         <span slot="footer" class="dialog-footer">
-             <el-button size="small" type="info" @click="resetDefault">恢复默认</el-button>
+             <el-button size="small" type="info" @click="reloadColumns">恢复默认</el-button>
             <el-button size="small" @click="fieldDialogVisible = false">取 消</el-button>
             <el-button size="small" type="primary" @click="changeColumns">确 定</el-button>
         </span>
     </el-dialog>
 
-    <el-dialog width="800px"
+    <el-dialog width="650px"
                :lock-scroll="false"
-               title="输出格式"
+               title="文档格式"
+               custom-class="format-dialog"
                :visible.sync="formatDialogVisible">
-        <el-form label-width="80px" :model="formatStyle" :inline="true">
-            <el-form-item label="数据库名称格式" label-width='120px'>
-                <el-input v-model="formatStyle.database.format" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="字体大小" label-width='120px'>
-                <el-slider v-model="formatStyle.database.fontSize" size="small"></el-slider>
-            </el-form-item>
-            <el-form-item label="字体样式" label-width='120px'>
-                <el-checkbox v-model="formatStyle.database.bold">加粗</el-checkbox>
-            </el-form-item>
-            <el-form-item label="" label-width='120px'>
-            </el-form-item>
-            <el-form-item label="表名称格式" label-width='120px'>
-                <el-input v-model="formatStyle.table.format" size="small"></el-input>
-            </el-form-item>
-            <el-form-item label="字体大小" label-width='120px'>
-                <el-slider :min="10" :max="25" v-model="formatStyle.table.fontSize" size="small"></el-slider>
-            </el-form-item>
-            <el-form-item label="字体样式" label-width='120px'>
-                <el-checkbox v-model="formatStyle.table.bold">加粗</el-checkbox>
-            </el-form-item>
-            <el-form-item label="" label-width='120px'>
-            </el-form-item>
-            <el-form-item label="文件名称格式" label-width='120px'>
-                <el-input v-model="formatStyle.fileName" size="small"></el-input>
-            </el-form-item>
-        </el-form>
+        <div class="format-groups">
+            <div class="format-group">
+                <div class="format-group__title">数据库名称</div>
+                <div class="format-group__body">
+                    <div class="format-item">
+                        <div class="format-item__label">名称格式</div>
+                        <el-input v-model="formatStyle.database.format" size="small"></el-input>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-item__label">字体大小</div>
+                        <el-slider :min="1" :max="200" v-model="formatStyle.database.fontSize"
+                                   size="small"></el-slider>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-item__label">字体样式</div>
+                        <el-checkbox v-model="formatStyle.database.bold">加粗</el-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="format-group">
+                <div class="format-group__title">表名称</div>
+                <div class="format-group__body">
+                    <div class="format-item">
+                        <div class="format-item__label">名称格式</div>
+                        <el-input v-model="formatStyle.table.format" size="small"></el-input>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-item__label">字体大小</div>
+                        <el-slider :min="1" :max="200" v-model="formatStyle.table.fontSize"
+                                   size="small"></el-slider>
+                    </div>
+                    <div class="format-item">
+                        <div class="format-item__label">字体样式</div>
+                        <el-checkbox v-model="formatStyle.table.bold">加粗</el-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="format-group">
+                <div class="format-group__title">文件名称</div>
+                <div class="format-group__body">
+                    <div class="format-item format-item--span-2">
+                        <div class="format-item__label">名称格式</div>
+                        <el-input v-model="formatStyle.fileName" size="small"></el-input>
+                    </div>
+                </div>
+            </div>
+        </div>
         <span slot="footer" class="dialog-footer">
+            <el-button size="small" type="info" @click="resetFormatStyle">恢复默认</el-button>
             <el-button size="small" @click="formatDialogVisible = false">取 消</el-button>
             <el-button size="small" type="primary" @click="saveFormatStyle">确 定</el-button>
         </span>
@@ -153,33 +185,35 @@
             formatDialogVisible: false,
             allColumns: [],
             tempColumns: [],
-            placeholders: [],
+            placeholderMap: {},
             defaultColumns: [],
             tempDefaultColumns: [],
+            dragIndex: -1,
+            pdf: '',
             defaultProps: {
                 children: 'children',
                 label: 'labelName'
             },
-            formatStyle: {
+            formatStyle: {},
+            defaultFormatStyle: {
                 database: {
                     format: '数据库名称 ${databaseName}',
-                    fontSize: 15,
+                    fontSize: 25,
                     bold: true
                 },
                 table: {
                     format: '${tableName} ${description}',
-                    fontSize: 15,
+                    fontSize: 20,
                     bold: false
                 },
                 fileName: '数据库文档_yyyy-MM-dd'
-            },
-            pdf: ''
+            }
         },
         methods: {
             goBack() {
                 window.location.href = '/'
             },
-            resetDefault() {
+            reloadColumns() {
                 this.getTableColumns();
             },
             resetColumns() {
@@ -187,10 +221,46 @@
                 this.tempDefaultColumns = [...this.defaultColumns];
             },
             changeColumns() {
+                this.syncOrder();
                 this.allColumns = this.tempColumns;
                 this.defaultColumns = this.tempDefaultColumns;
                 this.saveColumnConfig()
                 this.fieldDialogVisible = false;
+            },
+            buildPlaceholderMap(columns) {
+                const map = {};
+                columns.forEach(item => {
+                    map[item.value] = item.label;
+                });
+                return map;
+            },
+            dragStart(index, event) {
+                this.dragIndex = index;
+                // Firefox 需要显式设置 dataTransfer 才能启动拖拽
+                if (event && event.dataTransfer) {
+                    event.dataTransfer.effectAllowed = 'move';
+                    event.dataTransfer.setData('text/plain', String(index));
+                }
+            },
+            dragOver(index) {
+                // 拖拽经过其他项时实时交换位置
+                if (this.dragIndex !== -1 && this.dragIndex !== index) {
+                    const moved = this.tempColumns.splice(this.dragIndex, 1)[0];
+                    this.tempColumns.splice(index, 0, moved);
+                    this.dragIndex = index;
+                }
+            },
+            dropItem() {
+                this.syncOrder();
+            },
+            dragEnd() {
+                this.dragIndex = -1;
+                this.syncOrder();
+            },
+            syncOrder() {
+                this.tempColumns.forEach((item, index) => {
+                    item.order = index + 1;
+                });
             },
             async selectNode(data, selected) {
                 let structureTree = this.$refs.structureTree;
@@ -279,7 +349,7 @@
                     this.tempColumns = config.allColumns;
                     this.defaultColumns = config.defaultColumns;
                     this.tempDefaultColumns = config.defaultColumns;
-                    this.placeholders = this.allColumns.map(item => item.label);
+                    this.placeholderMap = this.buildPlaceholderMap(this.allColumns);
                 } else {
                     this.getTableColumns();
                 }
@@ -289,7 +359,7 @@
                     if (res.data.code === 200) {
                         this.allColumns = res.data.data.allColumns;
                         this.tempColumns = JSON.parse(JSON.stringify(this.allColumns));
-                        this.placeholders = this.allColumns.map(item => item.label);
+                        this.placeholderMap = this.buildPlaceholderMap(this.allColumns);
                         this.defaultColumns = res.data.data.defaultColumns;
                         this.tempDefaultColumns = [...this.defaultColumns];
                         this.saveColumnConfig()
@@ -391,15 +461,22 @@
                 });
             },
             saveFormatStyle() {
-                let formatStyleJson = JSON.stringify(this.formatStyle);
+                const formatStyleJson = JSON.stringify(this.formatStyle);
                 localStorage.setItem('DbSnap:formatStyle', formatStyleJson)
                 this.formatDialogVisible = false
             },
             initFormatStyle() {
                 const formatStyleJson = localStorage.getItem('DbSnap:formatStyle');
-                if (formatStyleJson) {
-                    this.formatStyle = JSON.parse(formatStyleJson)
+                try {
+                    this.formatStyle = formatStyleJson ? JSON.parse(formatStyleJson) : JSON.parse(JSON.stringify(this.defaultFormatStyle));
+                } catch (e) {
+                    this.formatStyle = JSON.parse(JSON.stringify(this.defaultFormatStyle));
                 }
+            },
+            resetFormatStyle() {
+                this.formatStyle = JSON.parse(JSON.stringify(this.defaultFormatStyle));
+                const formatStyleJson = JSON.stringify(this.formatStyle);
+                localStorage.setItem('DbSnap:formatStyle', formatStyleJson)
             },
             enableDragBar() {
                 const container = document.querySelector('.container');

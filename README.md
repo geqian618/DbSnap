@@ -89,13 +89,13 @@
 <br>
 <br>
 
-**3. 输出格式编辑**
-![image-20230719021014570](src/main/resources/static/images/格式编辑.png)
+**3. 文档格式**
+![image-20230719021014570](src/main/resources/static/images/文档格式.png)
 
 - ① ${databaseName} 数据库名称
 - ② ${tableName} 表名称
 - ③ ${description} 表注释
-- ④ yyyy-MM-dd 日期格式（例如：2024.01.01）
+- ④ yyyy-MM-dd 日期格式（例如：2024-01-01）
 
 > 说明：上述标识符会在文件输出过程中替换为其对应的信息，可根据需求添加、更改上述标识符来实现是否显示标识符对应的信息及显示位置
 
@@ -107,8 +107,8 @@
 <br>
 <br>
 
-**5. 列名编辑**
-![image-20230719013433699](src/main/resources/static/images/列名编辑.png)  
+**5. 表格列编辑**
+![image-20230719013433699](src/main/resources/static/images/表格列编辑.png)  
 <br>
 <br>
 
