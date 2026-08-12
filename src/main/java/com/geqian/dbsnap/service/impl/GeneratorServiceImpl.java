@@ -193,13 +193,14 @@ public class GeneratorServiceImpl implements GeneratorService {
             WordStyle.Font tableNameFontSize = WordStyle.Font.fontSize(tableFontSize);
             WordStyle.Font cellFontSize = WordStyle.Font.fontSize(10);
 
+            WordStyle.Paragraph notSpacing = WordStyle.Paragraph.spacing(0, 0);
             WordStyle.Paragraph spacing = WordStyle.Paragraph.spacing((int) (0.3 * tableFontSize), (int) (0.3 * tableFontSize));
 
             for (TreeNode schemaNode : schemaNodes) {
                 String schemaName = schemaNode.getLabelName();
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    wordBuilder.paragraph(databaseName, calibri, databaseBold ? WordStyle.Font.BOLD : null, titleFontSize);
+                    wordBuilder.heading(databaseName, WordStyle.Heading.LEVEL_1, calibri, databaseBold ? WordStyle.Font.BOLD : null, titleFontSize, notSpacing);
                 }
                 //过滤出指定 Schema节点下的全部 table节点
                 List<TreeNode> tableNodes = treeNodeList.stream()
@@ -230,7 +231,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        wordBuilder.paragraph(tableName, calibri, tableBold ? WordStyle.Font.BOLD : null, tableNameFontSize, spacing);
+                        wordBuilder.heading(tableName, WordStyle.Heading.LEVEL_2, calibri, tableBold ? WordStyle.Font.BOLD : WordStyle.Font.NOT_BOLD, tableNameFontSize, spacing);
                     }
                     wordBuilder.table(tableInfo.getDataList(), calibri, cellFontSize);
                     wordBuilder.blankRow().blankRow();
@@ -277,7 +278,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    pdfBuilder.paragraph(databaseName, databaseBold ? PDFStyle.Font.BOLD : null, titleFontSize);
+                    pdfBuilder.heading(databaseName, PDFStyle.Heading.LEVEL_1, databaseBold ? PDFStyle.Font.BOLD : null, titleFontSize);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
@@ -307,7 +308,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        pdfBuilder.paragraph(tableName, tableBold ? PDFStyle.Font.BOLD : null, tableNameFontSize, paragraphSpacing);
+                        pdfBuilder.heading(tableName, PDFStyle.Heading.LEVEL_2, tableBold ? PDFStyle.Font.BOLD : PDFStyle.Font.NOT_BOLD, tableNameFontSize, paragraphSpacing);
                     }
                     pdfBuilder.table(tableInfo.getDataList(), cellFontSize);
                     pdfBuilder.blankRow().blankRow();
@@ -349,7 +350,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    markDownBuilder.title(databaseName, MarkDownStyle.Title.LEVEL_3, databaseBold ? MarkDownStyle.Font.BOLD : null, databaseNameFontSize);
+                    markDownBuilder.heading(databaseName, MarkDownStyle.Heading.LEVEL_1, databaseBold ? MarkDownStyle.Font.BOLD : null, databaseNameFontSize);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
@@ -380,7 +381,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        markDownBuilder.paragraph(tableName, tableBold ? MarkDownStyle.Font.BOLD : null, tableNameFontSize);
+                        markDownBuilder.heading(tableName, MarkDownStyle.Heading.LEVEL_2, tableBold ? MarkDownStyle.Font.BOLD : null, tableNameFontSize);
                     }
                     markDownBuilder.table(tableInfo.getDataList(), MarkDownStyle.CellAlignment.LEFT);
                     markDownBuilder.blankRow();
@@ -411,7 +412,8 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         HTMLStyle.Font schemaNameFontSize = HTMLStyle.Font.fontsize(databaseFontSize + "px");
         HTMLStyle.Font tableNameFontSize = HTMLStyle.Font.fontsize(tableFontSize + "px");
-        HTMLStyle.Padding padding = HTMLStyle.Padding.bottom("10px");
+
+        HTMLStyle.Padding padding = HTMLStyle.Padding.padding(tableFontSize / 2 + "px", "0");
 
         List<TreeNode> treeNodeList = targetTableDto.getDataList();
 
@@ -426,7 +428,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
                 if (StringUtils.hasText(databaseFormat)) {
                     String databaseName = databaseFormat.replace("${databaseName}", schemaName);
-                    htmlBuilder.title(databaseName, HTMLStyle.Title.LEVEL_1, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize, padding);
+                    htmlBuilder.heading(databaseName, HTMLStyle.Heading.LEVEL_1, databaseBold ? HTMLStyle.Font.BOLD : null, schemaNameFontSize);
                 }
 
                 //过滤出指定 Schema节点下的全部 table节点
@@ -456,7 +458,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     TableDefinition tableDefinition = tableInfo.getTableDefinition();
                     if (StringUtils.hasText(tableFormat)) {
                         String tableName = tableFormat.replace("${tableName}", tableDefinition.getTableName()).replace("${description}", tableDefinition.getTableComment());
-                        htmlBuilder.title(tableName, HTMLStyle.Title.LEVEL_2, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, padding);
+                        htmlBuilder.heading(tableName, HTMLStyle.Heading.LEVEL_2, tableBold ? HTMLStyle.Font.BOLD : null, tableNameFontSize, padding);
                     }
                     htmlBuilder.table(tableInfo.getDataList());
                     htmlBuilder.blankRow().blankRow();
