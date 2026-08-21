@@ -183,7 +183,7 @@ database:
 - `url: jdbc:mysql://${host}:${port}/${database}` 中的 ${host}、${port}、${database} 为占位标识，分别表示  主机名称、数据库端口号、创建连接的数据库名称的具体值<br>
 - #{0}、#{1} 为占位标识，分别表示 SQL 查询条件中数据库名称、表名称的具体值 
 - 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
-- <span style="color:red">特殊情况：某些查询 SQL 语句不支持起别名，请查看步骤五</sapn>
+- <span style="color:red">特殊情况：某些查询 SQL 语句不支持起别名，请查看步骤六</sapn>
 
 <br>
 
