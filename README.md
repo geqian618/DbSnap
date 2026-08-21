@@ -18,41 +18,36 @@
 
 ## 简介
 
-一个简单易用且高效的数据库表结构文档生成工具，让编写数据库表结构文档变得简单
+一个简单易用且高效的数据库表结构文档导出工具，让编写数据库表结构文档变得十分简单 ！！！
 <br>
 
 ## 开发缘由
 
-在工作中编写开发文档时，通常会涉及到数据库表结构这个部分。最开始使用各类文档编辑软件新建表格，然后逐个复制和粘贴内容，屏幕来回切换到头昏眼花，CV操作到手抽筋，不注意还可能看错数据或填写表格时填错数据。之前也有尝试过编码+修改配置文件的方式，但是在更改数据库连接信息、导出哪些表及列信息时需要手动修改配置文件，使用起来并不是很方便。于是就萌生了开发该项目的想法，以简化数据库文档的编写。
-<br>
+在工作中编写开发文档时，通常会涉及到数据库表结构这个部分。最开始使用各类文档编辑软件新建表格，然后逐个复制和粘贴内容，屏幕来回切换到头昏眼花，CV 操作到手抽筋，不注意还可能看错数据或填写表格时填错数据。之前也有尝试过编码 + 修改配置文件的方式，但是在更改数据库连接信息、导出哪些表及列信息时需要手动修改配置文件，使用起来并不是很方便。于是就萌生了开发该项目的想法，以简化数据库文档的编写。
 <br>
 
 ## 技术栈
 
 ### 后端
-
-- 采用 SpringBoot 作为基础框架
-- 采用 apache poi 生成 word 文档
-- 采用 itextpdf 生成 pdf 文档
+- 核心框架：Spring Boot —— 提供便捷的配置与自动装配能力，快速构建稳健的微服务应用。
+- 文档生成：
+  - Apache POI —— 用于编写和生成 Word 文档
+  - iTextPDF —— 用于编写和生成 PDF 文档
 
 ### 前端
-
-- 采用 Vue2 作为基础框架
-- 采用 Element ui 作为组件库
-  <br>
-  <br>
+- 核心框架：Vue 2 —— 轻量高效，提供响应式数据绑定与组件化开发模式。
+- UI 组件库：Element UI —— 丰富的组件集合，助力快速搭建前端界面。
+<br>
 
 ## 优势
-
 - 灵活性高，可根据需求灵活选择导出的表列数据
-- 扩展性良好，适配新的数据库类型，只需提供对应的查询SQL语句，几乎不需要额外的编码
+- 扩展性良好，适配新型数据库，只需编写相关的配置与实体类，几乎不需要额外的业务逻辑编码
 - 树形控件采用懒加载模式加载数据，避免数据量太大时，一次性加载全部数据，造成严重卡顿
 - 多线程加载数据，提高数据量较大时的导出速度
-- 文档导出内容灵活，很多文档输出格式可自定义
+- 文档导出格式灵活，文档输出格式可自定义
 <br>
 
 ## 支持数据库类型
-
 - MySQL
 - Oracle
 - PostgreSQL
@@ -65,16 +60,13 @@
 - Derby（内嵌式）
 - H2（内嵌式）
 - SQLite3（内嵌式）
-
 <br>
 
 ## 支持文档类型
-
 - Word
 - PDF
 - Markdown
 - HTML
-
 <br>
 
 ## 项目演示
@@ -159,26 +151,26 @@
 ```
 <br>
 
-#### 2. 配置数据源及查询SQL语句
-在 `application.yml` 文件中配置数据源及相关SQL语句，如下以 MySQL 数据库为例
+#### 2. 配置数据源及查询 SQL 语句
+在 `application.yml` 文件中配置数据源及相关 SQL 语句，以 MySQL 数据库为例：
 ```yaml
 database:
-  info:
-    # 作为定义 TableStructure 类的前缀（最好直接设置为数据库类型），mysql数据库定义为 MySQLTableStructure（步骤四类命名使用）
-    mysql:
+  definitions:
+    MySQL:
       driverClass: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://${host}:${port}/${database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&&allowPublicKeyRetrieval=true
-
-      # 查询所有数据库名称
+      # 查询所有schemata
       databases: SELECT schema_name as labelName FROM information_schema.schemata
 
-      # 查询指定数据库下所有的表名称及表注释
-      tables: select table_name as labelName, table_comment as description
+      # 查询指定schema下所有表
+      tables: >
+        select table_name as labelName, table_comment as description
         from information_schema.tables 
         where table_schema = #{0}
 
-      # 查询指定指定数据库下指定的表字段信息
-      tableStructure: select column_name as columnName, data_type as columnType,
+      # 查询指定schema下指定数据表字段信息
+      tableStructure: >
+        select column_name as columnName, data_type as columnType,
                column_comment as columnComment, is_nullable as isNullable,
                column_default as columnDefault, character_maximum_length as length,
                column_key as columnKey, extra as extra
@@ -189,16 +181,17 @@ database:
 
 **说明：**
 - `url: jdbc:mysql://${host}:${port}/${database}` 中的 ${host}、${port}、${database} 为占位标识，分别表示  主机名称、数据库端口号、创建连接的数据库名称的具体值<br>
-- #{0}、#{1} 为占位标识，分别表示SQL查询条件中数据库名称、表名称的具体值 
+- #{0}、#{1} 为占位标识，分别表示 SQL 查询条件中数据库名称、表名称的具体值 
 - 上述占位标识会在指定时期自动使用具体值进行替换，配置时直接将占位标识当作具体值使用即可
-- <span style="color:red">特殊情况：某些查询SQL语句不支持起别名，请查看步骤五</sapn>
+- <span style="color:red">特殊情况：某些查询 SQL 语句不支持起别名，请查看步骤五</sapn>
 
 <br>
 
 #### 3. 定义表结构实体类
-在 entity目录下创建 TableStructure 类，以 MySQL 为例
+在 entity 目录下创建 TableStructure 实现类，以 MySQL 为例：
 ```java
 @Data
+@Marker("MySQL")
 public class MySQLTableStructure extends TableStructure {
 
     @TableField(value = "键类型", order = 6, exclude = true, enums = {"PRI->主键", "UNI->唯一键"})
@@ -213,7 +206,7 @@ public class MySQLTableStructure extends TableStructure {
 }
 ```
 **说明：**
-- 自定义 TableStructure 类命名格式必须为 xxxTableStructure，其中 xxx 部分需与步骤二中 database.info 后面的 key （示例中的 mysql）的命名相相同，不区分大小写。例如 MySQL 数据库命名为 MySQLTableStructure 其中的 MySQL 前缀对应步骤二中的 mysql
+- Marker 注解设置的值需与 application.yml 配置文件 database.definitions 下的数据库类型 key 对应的属性名匹配（对应步骤二中的 MySQL）。
 - MySQLTableStructure 继承 TableStructure，TableStructure 默认包含了一些属性
 - MySQLTableStructure 中定义的属性为各类数据库表结构特有字段，可自定义所需属性
 - @TableField 中 value 表示表格标题，order 表示输出顺序，exclude 表示是否输出该列数据。enums 表示值映射，例如 0->NO 表示当属性的值为 0 时，将被替换为 NO 输出到表格中
@@ -248,60 +241,65 @@ public abstract class TableStructure implements WordTableInterceptor, PDFTableIn
 
 <br>
 
-#### 4. 配置前端数据
+#### 4. 编写数据库连接信息配置
 在 database-config.json 文件下配置前端数据，示例如下
 ```json
 [
-  //非内嵌式数据库
   {
+    "type": "MySQL",
     "developed": true,
-    "embedded": false,
-    "defaultPort": 3306,
-    "label": "MySQL",
-    "value": "mysql",
-    // 图标路径
-    "icon": ""
-  },
-  //内嵌式数据库
-  {
-    "developed": true,
-    "embedded": true,
-    "label": "SQLite3",
-    "value": "sqlite3",
-    "hostVisible": false,
-    "portVisible": false,
-    "usernameVisible": false,
-    "passwordVisible": false,
-    // 图标路径
-    "icon": ""
+    "icon": "/icon/svg/database/MySQL.svg",
+    "properties": [
+      { "key": "host", "label": "主机", "value": "127.0.0.1", "required": true },
+      { "key": "port", "label": "端口", "value": 3306, "required": true },
+      { "key": "database", "label": "数据库", "value": "mysql", "required": true },
+      { "key": "username", "label": "用户名", "value": "", "required": false },
+      { "key": "password", "label": "密码", "value": "", "required": false }
+    ]
   }
 ]
 ```
 
 **参数说明：**
-- developed 是否开发完成，false 时前端显示该数据库
-- embedded 是否是内嵌式数据库
-- defaultPort 默认端口
-- label 数据库名称
-- value 匹配 application.yml 文件中数据源及 SQL 语句的 key（一般设置为数据库名称）
-- icon 数据库图标，值为 svg 编码
-- hostVisible 隐藏IP地址项，部分内嵌式数据库通过文件地址读取数据
-- portVisible: 隐藏端口项，部分内嵌式数据库通过文件地址读取数据
-- usernameVisible: 隐藏用户名项
-- passwordVisible: 隐藏密码项
+- type 数据库类型， 值需与 application.yml 配置文件 database.definitions 下的数据库类型 key 对应的属性名匹配（对应步骤二中的 MySQL）。
+- developed 是否开发完成，当设置为 false 时前端页面不显示该数据库，反之则显示
+- icon 前端页面显示的数据库图标
+- properties 连接数据库需要用户填写的内容
+  - key 属性名
+  - label 属性描述
+  - value 属性值
+  - required 是否必要，设置为 false 表示可选属性，前端不做非空校验；设置为 true 表示必须属性，前端做非空校验
 
 <br>
 
+#### 5. 编写数据库连接信息接收类
+```java
+@Marker(DatabaseTypes.MYSQL)
+public class MySQLDataSourceProperties extends ServerDataSourceProperties {
+  //@Override
+  //public String buildUrl(String url) {
+  //    return url.replace("${host}", this.host).replace("${port}", String.valueOf(this.port)).replace("${database}", this.database);
+  //}
+}
+```
+**说明**
+- DataSourceProperties 实现类中定义的属性需与步骤四中 properties 中对象的 key 一一对应，确保反序列化时能够接受 properties 中定义的所有属性值
+- Marker 注解设置的值需与 application.yml 配置文件 database.definitions 下的数据库类型 key 对应的属性名匹配（对应步骤二中的 MySQL）。
+- MySQLDataSourceProperties 继承 ServerDataSourceProperties，ServerDataSourceProperties 默认包含了一些属性与构建数据源 url 的方法。
+- MySQLDataSourceProperties 中定义的属性为各类数据库特有的连接信息字段，可自定义所需属性与重写 buildUrl 方法
+- 当父类包含的默认属性与 buildUrl 无法正确构建数据源 url 时，需在子类新增属性与重写 buildUrl 方法自行构建并返回 url
+
+
+<br>
 
 #### 5. SQL不支持起别名情况
-
 不能起别名的 sql 语句前添加 tag 标识（必须唯一）
 ```yml
 /* [TAG:xxx] */ PRAGMA database_list
 ```
 
 
-创建 ResultSetInterceptor 查询结果拦截器，自行进行结果封装，并将其注入 Spring 容器
+创建 ResultSetInterceptor 查询结果拦截器，自行处理结果封装，并将其注入 Spring 容器
 ```java
 @Component
 public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
@@ -313,7 +311,7 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
    */
     @Override
     public boolean support(DatabaseMetaData metaData, String tag) {
-        //true 拦截, false 不拦截
+        // 返回 true 拦截, false 不拦截
         return false;
     }
 
@@ -331,7 +329,6 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
 }
 ```
 <br>
-<br>
 
 
 ## 使用说明
@@ -340,25 +337,21 @@ public class MySQLInterceptor implements ResultSetInterceptor<TableStructure> {
 > 项目启成功后自动打开浏览器进行访问
 
 <br>
-<br>
 
 ## Docker安装
 <br>
-<br>
 
 ## windows下载
-
 ```shell
 百度网盘链接：https://pan.baidu.com/s/175okyv8fiVAQBOB_q2jKjg?pwd=w7rq
 ```
-
 <br>
 
 
 
 ## 联系作者
 <br>
-<img style="border: 1px solid gainsboro;" src="src/main/resources/static/images/wchat.jpg" alt="微信码"  width="300">
+<img style="border: 1px solid gainsboro;" src="src/main/resources/static/images/wchat.jpg" alt="微信码"  width="300" height="400">
 
 
 ## 赞赏
