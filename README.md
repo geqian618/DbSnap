@@ -292,7 +292,7 @@ public class MySQLDataSourceProperties extends ServerDataSourceProperties {
 
 <br>
 
-#### 5. SQL不支持起别名情况
+#### 6. SQL不支持起别名情况
 不能起别名的 sql 语句前添加 tag 标识（必须唯一）
 ```yml
 /* [TAG:xxx] */ PRAGMA database_list
