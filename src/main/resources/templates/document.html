@@ -194,7 +194,19 @@
                 children: 'children',
                 label: 'labelName'
             },
-            formatStyle: {},
+            formatStyle: {
+                database: {
+                    format: '数据库名称 ${databaseName}',
+                    fontSize: 25,
+                    bold: true
+                },
+                table: {
+                    format: '${tableName} ${description}',
+                    fontSize: 20,
+                    bold: false
+                },
+                fileName: '数据库文档_yyyy-MM-dd'
+            },
             defaultFormatStyle: {
                 database: {
                     format: '数据库名称 ${databaseName}',
